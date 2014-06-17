@@ -10,6 +10,15 @@
 		361A5EA319483347000B51A0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 361A5EA219483347000B51A0 /* AppDelegate.swift */; };
 		361A5EA519483347000B51A0 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 361A5EA419483347000B51A0 /* Images.xcassets */; };
 		361A5EB119483347000B51A0 /* TestAudioTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 361A5EB019483347000B51A0 /* TestAudioTests.swift */; };
+		361A5EBB1948337A000B51A0 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 361A5EBA1948337A000B51A0 /* AVFoundation.framework */; };
+		361C3005194CE2CE00A61A63 /* PLMusicPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 361C3004194CE2CE00A61A63 /* PLMusicPlayer.swift */; };
+		361C300A194CE44500A61A63 /* PLMusicPlayerNote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 361C3009194CE44500A61A63 /* PLMusicPlayerNote.swift */; };
+		361C300C194E4CF700A61A63 /* TestMusicPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 361C300B194E4CF700A61A63 /* TestMusicPlayer.swift */; };
+		361C300F194E70C600A61A63 /* AccurateDispatchTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 361C300E194E70C600A61A63 /* AccurateDispatchTimer.swift */; };
+		361C3013194FEFC300A61A63 /* ChordData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 361C3012194FEFC300A61A63 /* ChordData.swift */; };
+		361C3015194FF1F700A61A63 /* JazzChordGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 361C3014194FF1F700A61A63 /* JazzChordGenerator.swift */; };
+		361C3017194FF27E00A61A63 /* ChordMeasure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 361C3016194FF27E00A61A63 /* ChordMeasure.swift */; };
+		361C301A194FF4E400A61A63 /* RandomArrayExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 361C3019194FF4E400A61A63 /* RandomArrayExtension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -30,6 +39,15 @@
 		361A5EAA19483347000B51A0 /* TestAudioTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TestAudioTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		361A5EAF19483347000B51A0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		361A5EB019483347000B51A0 /* TestAudioTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestAudioTests.swift; sourceTree = "<group>"; };
+		361A5EBA1948337A000B51A0 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		361C3004194CE2CE00A61A63 /* PLMusicPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLMusicPlayer.swift; sourceTree = "<group>"; };
+		361C3009194CE44500A61A63 /* PLMusicPlayerNote.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLMusicPlayerNote.swift; sourceTree = "<group>"; };
+		361C300B194E4CF700A61A63 /* TestMusicPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestMusicPlayer.swift; sourceTree = "<group>"; };
+		361C300E194E70C600A61A63 /* AccurateDispatchTimer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccurateDispatchTimer.swift; sourceTree = "<group>"; };
+		361C3012194FEFC300A61A63 /* ChordData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChordData.swift; sourceTree = "<group>"; };
+		361C3014194FF1F700A61A63 /* JazzChordGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JazzChordGenerator.swift; sourceTree = "<group>"; };
+		361C3016194FF27E00A61A63 /* ChordMeasure.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChordMeasure.swift; sourceTree = "<group>"; };
+		361C3019194FF4E400A61A63 /* RandomArrayExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RandomArrayExtension.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -37,6 +55,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				361A5EBB1948337A000B51A0 /* AVFoundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -53,6 +72,7 @@
 		361A5E9419483347000B51A0 = {
 			isa = PBXGroup;
 			children = (
+				361A5EBA1948337A000B51A0 /* AVFoundation.framework */,
 				361A5E9F19483347000B51A0 /* TestAudio */,
 				361A5EAD19483347000B51A0 /* TestAudioTests */,
 				361A5E9E19483347000B51A0 /* Products */,
@@ -71,6 +91,10 @@
 		361A5E9F19483347000B51A0 /* TestAudio */ = {
 			isa = PBXGroup;
 			children = (
+				361C3018194FF4CB00A61A63 /* PLRandomHelpers */,
+				361C300D194E708C00A61A63 /* PLAccurateTimer */,
+				361C3010194FEF7700A61A63 /* PLJazzChordGenerator */,
+				361C3003194CE25100A61A63 /* PLMusicPlayer */,
 				361A5EA219483347000B51A0 /* AppDelegate.swift */,
 				361A5EA419483347000B51A0 /* Images.xcassets */,
 				361A5EA019483347000B51A0 /* Supporting Files */,
@@ -101,6 +125,58 @@
 				361A5EAF19483347000B51A0 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		361C3003194CE25100A61A63 /* PLMusicPlayer */ = {
+			isa = PBXGroup;
+			children = (
+				361C3008194CE44500A61A63 /* DataStructures */,
+				361C3004194CE2CE00A61A63 /* PLMusicPlayer.swift */,
+				361C300B194E4CF700A61A63 /* TestMusicPlayer.swift */,
+			);
+			path = PLMusicPlayer;
+			sourceTree = "<group>";
+		};
+		361C3008194CE44500A61A63 /* DataStructures */ = {
+			isa = PBXGroup;
+			children = (
+				361C3009194CE44500A61A63 /* PLMusicPlayerNote.swift */,
+			);
+			path = DataStructures;
+			sourceTree = "<group>";
+		};
+		361C300D194E708C00A61A63 /* PLAccurateTimer */ = {
+			isa = PBXGroup;
+			children = (
+				361C300E194E70C600A61A63 /* AccurateDispatchTimer.swift */,
+			);
+			path = PLAccurateTimer;
+			sourceTree = "<group>";
+		};
+		361C3010194FEF7700A61A63 /* PLJazzChordGenerator */ = {
+			isa = PBXGroup;
+			children = (
+				361C3011194FEF9000A61A63 /* DataStructures */,
+				361C3014194FF1F700A61A63 /* JazzChordGenerator.swift */,
+			);
+			path = PLJazzChordGenerator;
+			sourceTree = "<group>";
+		};
+		361C3011194FEF9000A61A63 /* DataStructures */ = {
+			isa = PBXGroup;
+			children = (
+				361C3012194FEFC300A61A63 /* ChordData.swift */,
+				361C3016194FF27E00A61A63 /* ChordMeasure.swift */,
+			);
+			path = DataStructures;
+			sourceTree = "<group>";
+		};
+		361C3018194FF4CB00A61A63 /* PLRandomHelpers */ = {
+			isa = PBXGroup;
+			children = (
+				361C3019194FF4E400A61A63 /* RandomArrayExtension.swift */,
+			);
+			path = PLRandomHelpers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -200,7 +276,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				361C3013194FEFC300A61A63 /* ChordData.swift in Sources */,
+				361C300F194E70C600A61A63 /* AccurateDispatchTimer.swift in Sources */,
+				361C3015194FF1F700A61A63 /* JazzChordGenerator.swift in Sources */,
+				361C3005194CE2CE00A61A63 /* PLMusicPlayer.swift in Sources */,
+				361C300A194CE44500A61A63 /* PLMusicPlayerNote.swift in Sources */,
+				361C300C194E4CF700A61A63 /* TestMusicPlayer.swift in Sources */,
 				361A5EA319483347000B51A0 /* AppDelegate.swift in Sources */,
+				361C3017194FF27E00A61A63 /* ChordMeasure.swift in Sources */,
+				361C301A194FF4E400A61A63 /* RandomArrayExtension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -377,6 +461,7 @@
 				361A5EB619483347000B51A0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		361A5EB719483347000B51A0 /* Build configuration list for PBXNativeTarget "TestAudioTests" */ = {
 			isa = XCConfigurationList;
@@ -385,6 +470,7 @@
 				361A5EB919483347000B51A0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
