@@ -19,6 +19,8 @@
 		361C3015194FF1F700A61A63 /* JazzChordGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 361C3014194FF1F700A61A63 /* JazzChordGenerator.swift */; };
 		361C3017194FF27E00A61A63 /* ChordMeasure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 361C3016194FF27E00A61A63 /* ChordMeasure.swift */; };
 		361C301A194FF4E400A61A63 /* RandomArrayExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 361C3019194FF4E400A61A63 /* RandomArrayExtension.swift */; };
+		361C301E195161F200A61A63 /* jazzBass.sf2 in Resources */ = {isa = PBXBuildFile; fileRef = 361C301D195161F200A61A63 /* jazzBass.sf2 */; };
+		361C30201952B85300A61A63 /* ChordFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 361C301F1952B85300A61A63 /* ChordFactory.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +50,8 @@
 		361C3014194FF1F700A61A63 /* JazzChordGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JazzChordGenerator.swift; sourceTree = "<group>"; };
 		361C3016194FF27E00A61A63 /* ChordMeasure.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChordMeasure.swift; sourceTree = "<group>"; };
 		361C3019194FF4E400A61A63 /* RandomArrayExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RandomArrayExtension.swift; sourceTree = "<group>"; };
+		361C301D195161F200A61A63 /* jazzBass.sf2 */ = {isa = PBXFileReference; lastKnownFileType = file; name = jazzBass.sf2; path = ../../../Downloads/Bass/jazzBass.sf2; sourceTree = "<group>"; };
+		361C301F1952B85300A61A63 /* ChordFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChordFactory.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,6 +100,7 @@
 				361C3010194FEF7700A61A63 /* PLJazzChordGenerator */,
 				361C3003194CE25100A61A63 /* PLMusicPlayer */,
 				361A5EA219483347000B51A0 /* AppDelegate.swift */,
+				361C301D195161F200A61A63 /* jazzBass.sf2 */,
 				361A5EA419483347000B51A0 /* Images.xcassets */,
 				361A5EA019483347000B51A0 /* Supporting Files */,
 			);
@@ -158,6 +163,7 @@
 			children = (
 				361C3011194FEF9000A61A63 /* DataStructures */,
 				361C3014194FF1F700A61A63 /* JazzChordGenerator.swift */,
+				361C301F1952B85300A61A63 /* ChordFactory.swift */,
 			);
 			path = PLJazzChordGenerator;
 			sourceTree = "<group>";
@@ -259,6 +265,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				361A5EA519483347000B51A0 /* Images.xcassets in Resources */,
+				361C301E195161F200A61A63 /* jazzBass.sf2 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -283,6 +290,7 @@
 				361C300A194CE44500A61A63 /* PLMusicPlayerNote.swift in Sources */,
 				361C300C194E4CF700A61A63 /* TestMusicPlayer.swift in Sources */,
 				361A5EA319483347000B51A0 /* AppDelegate.swift in Sources */,
+				361C30201952B85300A61A63 /* ChordFactory.swift in Sources */,
 				361C3017194FF27E00A61A63 /* ChordMeasure.swift in Sources */,
 				361C301A194FF4E400A61A63 /* RandomArrayExtension.swift in Sources */,
 			);

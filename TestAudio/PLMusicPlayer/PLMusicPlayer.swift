@@ -15,8 +15,8 @@ import AVFoundation
 class PLMusicPlayer {
   // Private
   let audioEngine = AVAudioEngine()
-  
   let instrument: AVAudioUnitMIDIInstrument
+  var playingNotes = Dictionary<UInt8, Int>()
   
   class var sharedInstance:PLMusicPlayer {
     get {
@@ -35,15 +35,30 @@ class PLMusicPlayer {
   init() {
     let mixer = audioEngine.mainMixerNode
     
-    // Hack. This should be kAudioUnitType_MusicDevice, but doesn't compile currently
-    let component: OSType = 1635085685
-    
-    let description = AudioComponentDescription(componentType: component,
-      componentSubType: 0,
-      componentManufacturer: 0,
+    let description = AudioComponentDescription(componentType: OSType(kAudioUnitType_MusicDevice),
+      componentSubType: 0, //OSType(kAudioUnitSubType_Sampler),
+      componentManufacturer: OSType(kAudioUnitManufacturer_Apple),
       componentFlags: 0,
       componentFlagsMask: 0)
+    
     instrument = AVAudioUnitMIDIInstrument(audioComponentDescription: description)
+    
+//    let soundBankPath = NSBundle.mainBundle().pathForResource("jazzBass", ofType: "sf2")
+//    let soundBankURL = NSURL.fileURLWithPath(soundBankPath)
+//    
+//    let samplerAudioUnit = instrument.audioUnit
+//    var result: OSStatus = OSStatus(noErr)
+//    
+//    // fill out a bank preset data structure
+//    var bpData = AUSamplerBankPresetData(bankURL: Unmanaged<CFURL>(_private: soundBankURL), bankMSB: UInt8(kAUSampler_DefaultMelodicBankMSB), bankLSB: UInt8(kAUSampler_DefaultBankLSB), presetID: 1, reserved: 0)
+//    
+//    var bpDataPointer: CConstVoidPointer = &bpData
+//    
+//    // set the kAUSamplerProperty_LoadPresetFromBank property
+//    result = AudioUnitSetProperty(samplerAudioUnit,
+//      UInt32(kAUSamplerProperty_LoadPresetFromBank),
+//      UInt32(kAudioUnitScope_Global),
+//      0, bpDataPointer, 8)
     
     audioEngine.attachNode(instrument)
     audioEngine.connect(instrument, to: mixer, format:instrument.outputFormatForBus(0))
@@ -61,9 +76,7 @@ class PLMusicPlayer {
   
   func playMusic(music: PLMusicPlayerNote[], maxNumberOfTimers: Int, playedSoFar: Float) {
     // TODO: Clean up
-    // TODO: Add a dictionary to handle duplicate notes
     var index = 0
-    let dispatchNow = DISPATCH_TIME_NOW
     for _ in 0..maxNumberOfTimers {
       if (index >= countElements(music)) {
         break;
@@ -78,12 +91,21 @@ class PLMusicPlayer {
         for i in 0..countElements(chord) {
           let note = chord[i].note
           let velocity = chord[i].velocity
-          self.instrument.startNote(note, withVelocity:velocity, onChannel:0)
+          self.instrument.startNote(note, withVelocity:velocity, onChannel:1)
+          if let num = self.playingNotes[note] {
+            self.playingNotes[note] = num + 1
+          } else {
+            self.playingNotes[note] = 1
+          }
         }
         dispatchAccuratelyAfter(chord[0].duration, queue:dispatch_get_main_queue()) {
           for i in 0..countElements(chord) {
             let note = chord[i].note
-            self.instrument.stopNote(note, onChannel: 0)
+            // We can unwrap this because we'll always have set this when we started the note
+            self.playingNotes[note] = self.playingNotes[note]! - 1
+            if (self.playingNotes[note] == 0) {
+              self.instrument.stopNote(note, onChannel: 1)
+            }
           }
         }
       }

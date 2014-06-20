@@ -8,37 +8,28 @@
 
 import Foundation
 
+enum ChordType {
+  case Major7
+  case Minor7
+  case Dom7
+  case MinorMajor7
+  case DimPartial
+  case DimFully
+}
+
 struct ChordData {
-  enum ChordType {
-    case Major7
-    case Minor7
-    case Dom7
-    case MinorMajor7
-    case DimPartial
-    case DimFully
-  }
-  let baseNote: Int
-  let type: ChordType
-  let root: Int
   
-  func chordNotes() -> Int[] {
-    var baseArray = Int[]()
-    switch type {
-    case .Major7:
-      baseArray = [0, 4, 7, 11]
-    case .Minor7:
-      baseArray = [0, 3, 7, 10]
-    case .Dom7:
-      baseArray = [0, 4, 7, 10]
-    case .MinorMajor7:
-      baseArray = [0, 3, 7, 11]
-    case .DimFully:
-      baseArray = [0, 3, 6, 9]
-    case .DimPartial:
-      baseArray = [0, 3, 6, 10]
-    }
-    return baseArray.map {
-      $0 + self.baseNote
+  let baseNote: Int8
+  let type: ChordType
+  // The notes of the chords in 3rds from bottom
+  let chordScale: Int8[][]
+  let importantScaleIndexes: Int[]
+  let chordNotes: Int8[]
+  let root: Int8
+  
+  var mainChordScale: Int8[] {
+    get {
+      return chordScale[0]
     }
   }
   
@@ -55,7 +46,7 @@ struct ChordData {
     case 2:
       des += "D"
     case 3:
-      des += "D#"
+      des += "Eb"
     case 4:
       des += "E"
     case 5:
@@ -65,7 +56,7 @@ struct ChordData {
     case 7:
       des += "G"
     case 8:
-      des += "G#"
+      des += "Ab"
     case 9:
       des += "A"
     case 10:
@@ -94,3 +85,5 @@ struct ChordData {
     return des
   }
 }
+
+

@@ -19,7 +19,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
     
 //    testDuplicateNotes()
-    let chords = generateRandomChords()
+    var chords = generateRandomChords()
+    // Let's finish on I
+    chords.append(chords[0])
     for measure in chords {
       for chord in measure.chords {
         println("Playing chord: \(chord.chord.description()) for beats: \(chord.beats)")
