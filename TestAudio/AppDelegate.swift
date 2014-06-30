@@ -24,11 +24,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     chords.append(chords[0])
     for measure in chords {
       for chord in measure.chords {
-        println("Playing chord: \(chord.chord.description()) for beats: \(chord.beats)")
+        println("Playing chord: \(chord.chord) for beats: \(chord.beats)")
       }
     }
-    let music = createSimpleMusicFromChords(chords, 0.5)
-    PLMusicPlayer.sharedInstance.playMusic(music, maxNumberOfTimers: 2)
+    
+    let melody = JazzMelodyGenerator.generateMelodyMeasures(chordMeasures: chords)
+    for measure in melody {
+      print("Measure: ")
+      for note in measure.notes {
+        let value = note.note
+        let zeroBased = value % 12
+        print("\(MusicUtil.noteToString(zeroBased)) (\(value)) ")
+      }
+      println()
+    }
+    
+    let music = createScore(chords, melody: melody, secondsPerBeat: 0.5)
+//    let music = createSimpleMusicFromChords(chords, 0.5)
+    
+    PLMusicPlayer.sharedInstance.playMusic(music, maxNumberOfTimers: 4)
     
     self.window!.backgroundColor = UIColor.whiteColor()
     self.window!.makeKeyAndVisible()

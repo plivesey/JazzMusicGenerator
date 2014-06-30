@@ -129,8 +129,9 @@ class PLMusicPlayer {
     var chord = PLMusicPlayerNote[]()
     let firstNote = music[startIndex]
     chord.append(firstNote)
+    let duration = firstNote.duration
     for i in startIndex+1..countElements(music) {
-      if (music[i].start == firstNote.start) {
+      if (music[i].start == firstNote.start && music[i].duration == firstNote.duration) {
         chord.append(music[i])
       } else {
         // End of the chord, so let's return the chord and i

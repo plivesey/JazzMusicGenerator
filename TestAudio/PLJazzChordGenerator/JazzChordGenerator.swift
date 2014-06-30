@@ -8,24 +8,25 @@
 
 import Foundation
 
-let scale: (note: Int8, major: Bool)[] = [(note:62, major:false), (note:64, major:false), (note:65, major:true), (note:67, major:true), (note:69, major:false)]
+let scale: (note: Int8, major: Bool)[] = [(note:50, major:false), (note:52, major:false), (note:53, major:true), (note:55, major:true), (note:57, major:false)]
 
 func generateRandomChords() -> ChordMeasure[] {
-  var nextChord = IChordMajor(transposition: 60)
+  var nextChord = IChordMajor(key: .C)
   var chords = ChordMeasure[]()
   while (countElements(chords) < 12) {
+    println("Chords: \(chords.count)")
     if (countElements(chords) == 8) {
       chords.append(ChordMeasure(chords: [(nextChord, 4)]))
       chords.append(ChordMeasure(chords: [(nextChord, 4)]))
-      chords.append(ChordMeasure(chords: [(iiChordMajorABForm(transposition: 60), 4)]))
-      chords.append(ChordMeasure(chords: [(VChordMajorABForm(transposition: 60), 4)]))
+      chords.append(ChordMeasure(chords: [(iiChordMajorABForm(key: .C), 4)]))
+      chords.append(ChordMeasure(chords: [(VChordMajorABForm(key: .C), 4)]))
     } else if (countElements(chords) == 10) {
       chords.append(ChordMeasure(chords: [(nextChord, 4)]))
-      chords.append(ChordMeasure(chords: [(iiChordMajorABForm(transposition: 60), 2), (VChordMajorABForm(transposition: 60), 2)]))
+      chords.append(ChordMeasure(chords: [(iiChordMajorABForm(key: .C), 2), (VChordMajorABForm(key: .C), 2)]))
     } else {
       let numberOfMeasures = (arc4random_uniform(2)+1)*2
       let result = generateNextChords(startingChord: nextChord, numberOfMeasures: Int(numberOfMeasures))
-      nextChord = result.nextChord.chord
+      nextChord = result.nextChord
       for chordMeasure in result.chords {
         chords.append(chordMeasure)
       }
@@ -35,67 +36,53 @@ func generateRandomChords() -> ChordMeasure[] {
 }
 
 func generateNextChords(#startingChord: ChordData, #numberOfMeasures: Int)
-  -> (chords:ChordMeasure[], nextChord: (chord:ChordData, measures:Int)) {
-    let x = generateTwoFiveOne(startingChord: startingChord, numberOfMeasures: numberOfMeasures, possibleDestinations: scale)
-    return x
+  -> (chords:ChordMeasure[], nextChord: ChordData) {
+    return generateTwoFiveOne(startingChord: startingChord, numberOfMeasures: numberOfMeasures, possibleDestinations: scale)
 }
 
 func generateTwoFiveOne(#startingChord: ChordData, #numberOfMeasures: Int, #possibleDestinations: (note: Int8, major: Bool)[])
-  -> (chords:ChordMeasure[], nextChord: (chord:ChordData, measures:Int)) {
+  -> (chords:ChordMeasure[], nextChord: ChordData) {
     var oneNote = possibleDestinations.randomElement()
     while (oneNote.note == startingChord.baseNote) {
       oneNote = possibleDestinations.randomElement()
     }
+    let key = CBasedNote.fromRaw(oneNote.note % 12)!
+    
     if (oneNote.major) {
+      println("MAJOR")
       // TODO: Sometimes go to 6
-      let one = IChordMajor(transposition: oneNote.note)
-      let two = iiChordMajorABForm(transposition: oneNote.note)
-      let five = VChordMajorABForm(transposition: oneNote.note)
+      let one = IChordMajor(key: key)
+      let two = iiChordMajorABForm(key: key)
+      let five = VChordMajorABForm(key: key)
       if (numberOfMeasures == 2) {
         let measure1 = ChordMeasure(chords: [(startingChord, 4)])
         let measure2 = ChordMeasure(chords: [(two, 2), (five, 2)])
-        return ([measure1, measure2], (one, 1))
+        return ([measure1, measure2], one)
       } else {
         // Assume 4
         let measure1 = ChordMeasure(chords: [(startingChord, 4)])
         let measure2 = ChordMeasure(chords: [(startingChord, 4)])
         let measure3 = ChordMeasure(chords: [(two, 4)])
         let measure4 = ChordMeasure(chords: [(five, 4)])
-        return ([measure1, measure2, measure3, measure4], (one, 2))
+        return ([measure1, measure2, measure3, measure4], one)
       }
     } else {
       // TODO: Sometimes go to other ones
-      let one = iChordMinor(transposition: oneNote.note)
-      let two = iiChordMinorABForm(transposition: oneNote.note)
-      let five = VChordMinorABForm(transposition: oneNote.note)
+      let one = iChordMinor(key: key)
+      let two = iiChordMinorABForm(key: key)
+      let five = VChordMinorABForm(key: key)
       if (numberOfMeasures == 2) {
         let measure1 = ChordMeasure(chords: [(startingChord, 4)])
         let measure2 = ChordMeasure(chords: [(two, 2), (five, 2)])
-        return ([measure1, measure2], (one, 1))
+        return ([measure1, measure2], one)
       } else {
         // Assume 4
         let measure1 = ChordMeasure(chords: [(startingChord, 4)])
         let measure2 = ChordMeasure(chords: [(startingChord, 4)])
         let measure3 = ChordMeasure(chords: [(two, 4)])
         let measure4 = ChordMeasure(chords: [(five, 4)])
-        return ([measure1, measure2, measure3, measure4], (one, 2))
+        return ([measure1, measure2, measure3, measure4], one)
       }
     }
-}
-
-func createSimpleMusicFromChords(chords: ChordMeasure[], secondsPerBeat: Float) -> PLMusicPlayerNote[] {
-  var music = PLMusicPlayerNote[]()
-  var start: Float = 0
-  for measure in chords {
-    for chord in measure.chords {
-      let duration = secondsPerBeat * chord.beats
-      for note in chord.chord.chordNotes {
-        let playerNote = PLMusicPlayerNote(note: UInt8(note-12), velocity: 98, start: start, duration: duration, channel: 0)
-        music.append(playerNote)
-      }
-      start += duration
-    }
-  }
-  return music
 }
 

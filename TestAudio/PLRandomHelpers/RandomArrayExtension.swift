@@ -14,3 +14,7 @@ extension Array {
     return self[Int(index)]
   }
 }
+
+func randomNumberInclusive(min: Int, max: Int) -> Int {
+  return Int(arc4random_uniform(UInt32(max)-UInt32(min)+1) + UInt32(min))
+}
