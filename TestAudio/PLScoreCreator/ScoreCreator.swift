@@ -9,6 +9,7 @@
 import Foundation
 
 let CHORD_TRANSPOSITION: Int8 = 48
+let SONG_TRANSPOSITION: Int8 = 5
 
 func createScore(chords: ChordMeasure[], #melody: MelodyMeasure[], #secondsPerBeat: Float) -> PLMusicPlayerNote[] {
   var music = PLMusicPlayerNote[]()
@@ -28,10 +29,16 @@ func createScore(chords: ChordMeasure[], #melody: MelodyMeasure[], #secondsPerBe
       if (nextChordStart < nextMelodyStart) {
         // Add next chord
         let duration = chordMeasure.chords[chordIndex].beats * secondsPerBeat
-        for note in chordMeasure.chords[chordIndex].chord.chordNotes {
-          let playerNote = PLMusicPlayerNote(note: UInt8(note+CHORD_TRANSPOSITION), velocity: 70, start: start+chordStart, duration: duration, channel: 0)
+        
+        let chord = chordMeasure.chords[chordIndex].chord
+        for note in chord.chordNotes {
+          let playerNote = PLMusicPlayerNote(note: UInt8(note+CHORD_TRANSPOSITION+SONG_TRANSPOSITION), velocity: 35, start: start+chordStart, duration: duration, channel: 0)
           music.append(playerNote)
         }
+        // Bass note
+        let playerNote = PLMusicPlayerNote(note: UInt8(chord.baseNote+CHORD_TRANSPOSITION-12+SONG_TRANSPOSITION), velocity: 50, start: start+chordStart, duration: duration, channel: 0)
+        music.append(playerNote)
+        
         chordIndex++
         chordStart += duration
       } else {
@@ -39,7 +46,7 @@ func createScore(chords: ChordMeasure[], #melody: MelodyMeasure[], #secondsPerBe
         let note = melodyMeasure.notes[melodyIndex]
         let duration = note.beats * secondsPerBeat
         if (note.note != -1) {
-          let playerNote = PLMusicPlayerNote(note: UInt8(note.note), velocity: 60, start: start+melodyStart, duration: duration, channel: 0)
+          let playerNote = PLMusicPlayerNote(note: UInt8(note.note+SONG_TRANSPOSITION), velocity: 50, start: start+melodyStart, duration: duration, channel: 0)
           music.append(playerNote)
         }
         

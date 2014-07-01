@@ -14,7 +14,6 @@ func generateRandomChords() -> ChordMeasure[] {
   var nextChord = IChordMajor(key: .C)
   var chords = ChordMeasure[]()
   while (countElements(chords) < 12) {
-    println("Chords: \(chords.count)")
     if (countElements(chords) == 8) {
       chords.append(ChordMeasure(chords: [(nextChord, 4)]))
       chords.append(ChordMeasure(chords: [(nextChord, 4)]))
@@ -46,10 +45,10 @@ func generateTwoFiveOne(#startingChord: ChordData, #numberOfMeasures: Int, #poss
     while (oneNote.note == startingChord.baseNote) {
       oneNote = possibleDestinations.randomElement()
     }
+    
     let key = CBasedNote.fromRaw(oneNote.note % 12)!
     
     if (oneNote.major) {
-      println("MAJOR")
       // TODO: Sometimes go to 6
       let one = IChordMajor(key: key)
       let two = iiChordMajorABForm(key: key)

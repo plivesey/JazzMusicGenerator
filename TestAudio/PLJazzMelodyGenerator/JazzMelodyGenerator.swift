@@ -157,21 +157,24 @@ func generateNext2Beats(#chord: ChordData, #startNote: Int8, #rhythms: Float[][]
 }
 
 func noteAbove(note: Int8, #scale: Int8[]) -> Int8 {
-  let zeroedScale: Int8[] = scale.map {
-    x in return x % 12
+  var zeroedNote = note % 12
+  
+  // Sort of a hack, revisit later
+  if zeroedNote < scale[0] {
+    zeroedNote += 12
   }
-  let zeroedNote = note % 12
+  
   // Default. use this if noone is higher
   var index = 0
-  for i in 0..zeroedScale.count {
-    if (zeroedScale[i] > zeroedNote) {
+  for i in 0..scale.count {
+    if (scale[i] > zeroedNote) {
       index = i
-      // TODO: This line sometimes crashes
+      // TODO: This line sometimes crashes. Maybe this was just the infinite loop?
       break;
     }
   }
   
-  var returnNote = zeroedScale[index]
+  var returnNote = scale[index]
   while (returnNote < note) {
     returnNote += 12
   }
@@ -179,20 +182,22 @@ func noteAbove(note: Int8, #scale: Int8[]) -> Int8 {
 }
 
 func noteBelow(note: Int8, #scale: Int8[]) -> Int8 {
-  let zeroedScale: Int8[] = scale.map {
-    x in return x % 12
+  var zeroedNote = note % 12
+  
+  // Sort of a hack, revisit later
+  if zeroedNote < scale[0] {
+    zeroedNote += 12
   }
-  let zeroedNote = note % 12
   // Default. use this if noone is higher
-  var index = zeroedScale.count-1
-  for i in reverse(0..zeroedScale.count-1) {
-    if (zeroedScale[i] < zeroedNote) {
+  var index = scale.count-1
+  for i in reverse(0..scale.count-1) {
+    if (scale[i] < zeroedNote) {
       index = i
       break;
     }
   }
   
-  var returnNote = zeroedScale[index]
+  var returnNote = scale[index]
   while (returnNote < note-12) {
     returnNote += 12
   }
@@ -292,6 +297,9 @@ func approachNotes(note: Int8, #scaleAbove: Int8, #scaleBelow: Int8) -> MelodyNo
     // chrom from below
     return [(note - 1, 1)]
   case 1:
+    // chrom from above
+    return [(note + 1, 1)]
+  case 2:
     // scale from below
     return [(scaleBelow, 1)]
   default:

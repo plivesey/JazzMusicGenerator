@@ -18,31 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: NSDictionary?) -> Bool {
     self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
     
-//    testDuplicateNotes()
-    var chords = generateRandomChords()
-    // Let's finish on I
-    chords.append(chords[0])
-    for measure in chords {
-      for chord in measure.chords {
-        println("Playing chord: \(chord.chord) for beats: \(chord.beats)")
-      }
-    }
-    
-    let melody = JazzMelodyGenerator.generateMelodyMeasures(chordMeasures: chords)
-    for measure in melody {
-      print("Measure: ")
-      for note in measure.notes {
-        let value = note.note
-        let zeroBased = value % 12
-        print("\(MusicUtil.noteToString(zeroBased)) (\(value)) ")
-      }
-      println()
-    }
-    
-    let music = createScore(chords, melody: melody, secondsPerBeat: 0.5)
-//    let music = createSimpleMusicFromChords(chords, 0.5)
-    
-    PLMusicPlayer.sharedInstance.playMusic(music, maxNumberOfTimers: 4)
+    self.window!.rootViewController = MainViewController(nibName: "MainViewController", bundle: nil)
     
     self.window!.backgroundColor = UIColor.whiteColor()
     self.window!.makeKeyAndVisible()
