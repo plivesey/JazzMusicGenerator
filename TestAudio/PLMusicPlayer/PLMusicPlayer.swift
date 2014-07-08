@@ -18,6 +18,7 @@ class PLMusicPlayer {
     case Piano
     case Bass
     case Sax
+    case Drums
   }
   
   // Private
@@ -26,6 +27,7 @@ class PLMusicPlayer {
   let piano: AVAudioUnitMIDIInstrument
   let bass: AVAudioUnitMIDIInstrument
   let sax: AVAudioUnitMIDIInstrument
+  let drums: AVAudioUnitMIDIInstrument
   
   var playingNotes = Dictionary<PlayingNote, Int>()
   
@@ -46,53 +48,56 @@ class PLMusicPlayer {
   init() {
     let mixer = audioEngine.mainMixerNode
     
-    func instrumentWithFileName(fileName: String) -> AVAudioUnitMIDIInstrument {
-      let description = AudioComponentDescription(componentType: OSType(kAudioUnitType_MusicDevice),
-        componentSubType: OSType(kAudioUnitSubType_Sampler),
-        componentManufacturer: OSType(kAudioUnitManufacturer_Apple),
-        componentFlags: 0,
-        componentFlagsMask: 0)
-      
-      let instrument = AVAudioUnitMIDIInstrument(audioComponentDescription: description)
-      
-      let soundBankPath = NSBundle.mainBundle().pathForResource(fileName, ofType: "sf2")
-      let soundBankURL = NSURL.fileURLWithPath(soundBankPath)
-      
-      let samplerAudioUnit = instrument.audioUnit
-      var result = OSStatus(noErr)
-      
-      // fill out a bank preset data structure
-      var bpData = AUSamplerBankPresetData(bankURL: Unmanaged<CFURL>(_private: soundBankURL), bankMSB: UInt8(kAUSampler_DefaultMelodicBankMSB), bankLSB: UInt8(kAUSampler_DefaultBankLSB), presetID: 1, reserved: 0)
-      
-      var bpDataPointer: CConstVoidPointer = &bpData
-      
-      // set the kAUSamplerProperty_LoadPresetFromBank property
-      result = AudioUnitSetProperty(samplerAudioUnit,
-        UInt32(kAUSamplerProperty_LoadPresetFromBank),
-        UInt32(kAudioUnitScope_Global),
-        0, bpDataPointer, 8)
-      
-      return instrument
-    }
-    
-    piano = instrumentWithFileName("Piano")
-    bass = instrumentWithFileName("jazzBass")
-    sax = instrumentWithFileName("sax")
+    piano = PLMusicPlayer.instrumentWithFileName("Piano", presetID: 1)
+    bass = PLMusicPlayer.instrumentWithFileName("jazzBass", presetID: 1)
+    sax = PLMusicPlayer.instrumentWithFileName("sax", presetID: 0)
+    drums = PLMusicPlayer.instrumentWithFileName("drums", presetID: 0)
     
     // Attach Instruments
     
     audioEngine.attachNode(bass)
     audioEngine.attachNode(piano)
     audioEngine.attachNode(sax)
+    audioEngine.attachNode(drums)
     audioEngine.connect(bass, to: mixer, format:bass.outputFormatForBus(0))
     audioEngine.connect(piano, to: mixer, format: piano.outputFormatForBus(0))
     audioEngine.connect(sax, to: mixer, format: sax.outputFormatForBus(0))
+    audioEngine.connect(drums, to: mixer, format: drums.outputFormatForBus(0))
     
     var error: NSError? = nil
     audioEngine.startAndReturnError(&error)
     if error {
       println("ERROR \(error)")
     }
+  }
+  
+  class func instrumentWithFileName(fileName: String, presetID: UInt8) -> AVAudioUnitMIDIInstrument {
+    let description = AudioComponentDescription(componentType: OSType(kAudioUnitType_MusicDevice),
+      componentSubType: OSType(kAudioUnitSubType_Sampler),
+      componentManufacturer: OSType(kAudioUnitManufacturer_Apple),
+      componentFlags: 0,
+      componentFlagsMask: 0)
+    
+    let instrument = AVAudioUnitMIDIInstrument(audioComponentDescription: description)
+    
+    let soundBankPath = NSBundle.mainBundle().pathForResource(fileName, ofType: "sf2")
+    let soundBankURL = NSURL.fileURLWithPath(soundBankPath)
+    
+    let samplerAudioUnit = instrument.audioUnit
+    var result = OSStatus(noErr)
+    
+    // fill out a bank preset data structure
+    var bpData = AUSamplerBankPresetData(bankURL: Unmanaged<CFURL>(_private: soundBankURL), bankMSB: UInt8(kAUSampler_DefaultMelodicBankMSB), bankLSB: UInt8(kAUSampler_DefaultBankLSB), presetID: presetID, reserved: 0)
+    
+    var bpDataPointer: CConstVoidPointer = &bpData
+    
+    // set the kAUSamplerProperty_LoadPresetFromBank property
+    result = AudioUnitSetProperty(samplerAudioUnit,
+      UInt32(kAUSamplerProperty_LoadPresetFromBank),
+      UInt32(kAudioUnitScope_Global),
+      0, bpDataPointer, 8)
+    
+    return instrument
   }
   
   func playMusic(music: PLMusicPlayerNote[], maxNumberOfTimers: Int) {
@@ -123,6 +128,8 @@ class PLMusicPlayer {
             self.bass.startNote(note, withVelocity: velocity, onChannel: 1)
           case .Sax:
             self.sax.startNote(note, withVelocity: velocity, onChannel: 1)
+          case .Drums:
+            self.drums.startNote(note, withVelocity: velocity, onChannel: 1)
           }
           
           let playingNote = PlayingNote(instrument: chord[i].instrument, note: note)
@@ -146,6 +153,8 @@ class PLMusicPlayer {
                 self.bass.stopNote(playingNote.note, onChannel: 1)
               case .Sax:
                 self.sax.stopNote(playingNote.note, onChannel: 1)
+              case .Drums:
+                self.drums.stopNote(playingNote.note, onChannel: 1)
               }
             }
           }

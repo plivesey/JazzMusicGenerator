@@ -27,6 +27,8 @@ class MainViewController: UIViewController {
     
     let rhythm = RhythmSectionGenerator.rhythmSectionFromChords(chords)
     
+    let drums = DrumGenerator.generateDrums(numberOfMeasures: 13)
+    
     for measure in rhythm {
       println("New measure")
       for chord in measure.notes {
@@ -49,7 +51,7 @@ class MainViewController: UIViewController {
       scoreText += "\n"
     }
     
-    music = createScore(chords: rhythm, melody: melody, bassline: bassline, secondsPerBeat: 0.5)
+    music = createScore(chords: rhythm, melody: melody, bassline: bassline, drums: drums, secondsPerBeat: 0.5)
     
     for note in music {
       println("S: \(note.start) P: \(note.note)")

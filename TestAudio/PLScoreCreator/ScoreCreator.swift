@@ -10,17 +10,20 @@ import Foundation
 
 let SONG_TRANSPOSITION: Int8 = 0
 
-func createScore(#chords: ChordNoteMeasure[], #melody: MelodyMeasure[], #bassline: MelodyMeasure[], #secondsPerBeat: Float) -> PLMusicPlayerNote[] {
+func createScore(#chords: ChordNoteMeasure[], #melody: MelodyMeasure[], #bassline: MelodyMeasure[], #drums: ChordNoteMeasure[], #secondsPerBeat: Float) -> PLMusicPlayerNote[] {
   var music = PLMusicPlayerNote[]()
   
   // Rhythm section
-  music.extend(notesFromChords(chords, instrument: .Piano, velocity: 28, secondsPerBeat: secondsPerBeat))
+  music.extend(notesFromChords(chords, instrument: .Piano, velocity: 40, secondsPerBeat: secondsPerBeat))
   
   // Add melody
   music.extend(notesFromMelody(melody, instrument: .Sax, velocity: 40, secondsPerBeat: secondsPerBeat))
 
   // Add bassline
-  music.extend(notesFromMelody(bassline, instrument: .Bass, velocity: 30, secondsPerBeat: secondsPerBeat))
+  music.extend(notesFromMelody(bassline, instrument: .Bass, velocity: 40, secondsPerBeat: secondsPerBeat))
+  
+  // Add drums
+  music.extend(notesFromChords(drums, instrument: .Drums, velocity: 40, secondsPerBeat: secondsPerBeat))
   
   // Sort the notes
   music.sort({
@@ -42,7 +45,7 @@ func notesFromChords(melody: ChordNoteMeasure[], #instrument: PLMusicPlayer.Inst
       let duration = chord.beats
       
       for note in chord.notes {
-        let playerNote = PLMusicPlayerNote(note: UInt8(note+SONG_TRANSPOSITION), instrument: instrument, velocity: velocity, start: start+measureStart, duration: duration, channel: 0)
+        let playerNote = PLMusicPlayerNote(note: UInt8(note+SONG_TRANSPOSITION), instrument: instrument, velocity: velocity, start: start+measureStart, duration: duration * secondsPerBeat, channel: 0)
         music.append(playerNote)
       }
       start += duration * secondsPerBeat
@@ -58,21 +61,13 @@ func notesFromMelody(melody: MelodyMeasure[], #instrument: PLMusicPlayer.Instrum
   for (index, measure) in enumerate(melody) {
     let measureStart = Float(index * 4) * secondsPerBeat
     var start: Float = 0
-    var beat: Float = 0
     for note in measure.notes {
       let duration = note.beats
-      var vel = velocity
-      // TODO: Sometimes this crashes?
-      if beat == 0 || beat == 2 {
-        vel += 5
-      }
-      
       if note.note != -1 {
-        let playerNote = PLMusicPlayerNote(note: UInt8(note.note+SONG_TRANSPOSITION), instrument: instrument, velocity: vel, start: start+measureStart, duration: duration, channel: 0)
+        let playerNote = PLMusicPlayerNote(note: UInt8(note.note+SONG_TRANSPOSITION), instrument: instrument, velocity: velocity, start: start+measureStart, duration: duration * secondsPerBeat, channel: 0)
         music.append(playerNote)
       }
       start += duration * secondsPerBeat
-      beat += duration
     }
   }
   

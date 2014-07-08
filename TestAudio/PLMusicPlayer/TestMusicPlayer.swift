@@ -8,6 +8,23 @@
 
 import Foundation
 
+func testDrums() {
+  // Chromatic scale
+  var music = PLMusicPlayerNote[]()
+  for i in 33..127 {
+    let note = UInt8(i)
+    let playerNote = PLMusicPlayerNote(note: note, instrument: .Drums, velocity: 90, start:Float(i-32)*2, duration:1, channel:0)
+    music.append(playerNote)
+  }
+  
+  PLMusicPlayer.sharedInstance.playMusic(music, maxNumberOfTimers: 3)
+}
+
+// bass 36
+// snare 38
+// ride 51
+// high hat 44
+
 //func testMusicSimple() {
 //  // Chromatic scale
 //  var music = PLMusicPlayerNote[]()
