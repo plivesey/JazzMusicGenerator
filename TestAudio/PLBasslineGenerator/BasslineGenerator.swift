@@ -10,11 +10,12 @@ import Foundation
 
 class BasslineGenerator {
   
-  class func generateBasslineForChordMeasures(chordMeasures: ChordMeasure[], transpose: Int8) -> MelodyMeasure[] {
+  class func generateBasslineForChordMeasures(chordMeasures: ChordMeasure[]) -> MelodyMeasure[] {
     var measures = MelodyMeasure[]()
     
     // Initialize
-    var currentNote = chordMeasures[0].chords[0].chord.root + transpose
+    // Should be a constant for 36
+    var currentNote = chordMeasures[0].chords[0].chord.root + 36
     
     for (measureIndex, measure) in enumerate(chordMeasures) {
       var notes = MelodyNote[]()
@@ -60,11 +61,11 @@ class BasslineGenerator {
     }
     let lowNote = highNote - 12
     // TODO: Should be a constant
-    if lowNote < 24 {
+    if lowNote < 36 {
       return highNote
     }
     // TODO: Should be a constant
-    if highNote > 48 {
+    if highNote > 53 {
       return lowNote
     }
     if currentNote - lowNote > highNote - currentNote {

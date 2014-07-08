@@ -21,9 +21,18 @@ class MainViewController: UIViewController {
     // Let's finish on I
     chords.append(chords[0])
     
-//    let melody = JazzMelodyGenerator.generateMelodyMeasures(chordMeasures: chords)
+    let melody = JazzMelodyGenerator.generateMelodyMeasures(chordMeasures: chords)
     
-    let melody = BasslineGenerator.generateBasslineForChordMeasures(chords, transpose: 36)
+    let bassline = BasslineGenerator.generateBasslineForChordMeasures(chords)
+    
+    let rhythm = RhythmSectionGenerator.rhythmSectionFromChords(chords)
+    
+    for measure in rhythm {
+      println("New measure")
+      for chord in measure.notes {
+        println("B: \(chord.beats) R: \(chord.notes.count == 0)")
+      }
+    }
     
     scoreText = ""
     for i in 0..chords.count {
@@ -40,7 +49,11 @@ class MainViewController: UIViewController {
       scoreText += "\n"
     }
     
-    music = createScore(chords, melody: melody, secondsPerBeat: 0.3)
+    music = createScore(chords: rhythm, melody: melody, bassline: bassline, secondsPerBeat: 0.5)
+    
+    for note in music {
+      println("S: \(note.start) P: \(note.note)")
+    }
     
     super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
   }

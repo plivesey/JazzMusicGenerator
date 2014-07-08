@@ -15,11 +15,11 @@ key: Represents which key these chords should be in. Should be the same for the 
 */
 
 func IChordMajor(#key: CBasedNote) -> ChordData {
-  println("I major")
   let bassNote = (CBasedNote.C.toRaw() + key.toRaw()) % 12
   let type = ChordType.Major7
   let chordScales = [
-    noteArray([.C, .D, .E, .F, .G, .A, .B], key: key)
+    noteArray([.C, .D, .E, .F, .G, .A, .B], key: key),
+    noteArray([.C, .D, .Eb, .E, .G, .A], key: key)
   ]
   let chord = noteArray([.C, .E, .G, .B], key: key)
   let important = [0, 2, 4, 6]
@@ -27,11 +27,11 @@ func IChordMajor(#key: CBasedNote) -> ChordData {
 }
 
 func iiChordMajorABForm(#key: CBasedNote) -> ChordData {
-  println("ii major")
   let bassNote = (CBasedNote.D.toRaw() + key.toRaw()) % 12
   let type = ChordType.Minor7
   let chordScales = [
-    noteArray([.D, .E, .F, .G, .A, .B, .C], key: key)
+    noteArray([.D, .E, .F, .G, .A, .B, .C], key: key),
+    noteArray([.D, .F, .G, .Ab, .A, .C], key: key)
   ]
   let chord = noteArray([.F, .A, .C, .E], key: key)
   let important = [0, 2, 4, 6]
@@ -39,12 +39,12 @@ func iiChordMajorABForm(#key: CBasedNote) -> ChordData {
 }
 
 func VChordMajorABForm(#key: CBasedNote) -> ChordData {
-  println("V major")
   let bassNote = (CBasedNote.G.toRaw() + key.toRaw()) % 12
   let type = ChordType.Dom7
   // Mixolydian scale and a whole tone scale
   let chordScales = [
     noteArray([.G, .A, .B, .C, .D, .E, .F], key: key),
+    noteArray([.G, .A, .Ab, .B, .D, .E], key: key),
     noteArray([.G, .A, .B, .Db, .Eb, .F], key: key)
   ]
   let chord = noteArray([.B, .E, .F, .A], key: key)
@@ -56,11 +56,11 @@ func VChordMajorABForm(#key: CBasedNote) -> ChordData {
  Minor ii-V-i chords
 */
 func iChordMinor(#key: CBasedNote) -> ChordData {
-  println("i minor")
   let bassNote = (CBasedNote.C.toRaw() + key.toRaw()) % 12
   let type = ChordType.Minor7
   let chordScales = [
-    noteArray([.C, .D, .Eb, .F, .G, .Ab, .Bb], key: key)
+    noteArray([.C, .D, .Eb, .F, .G, .Ab, .Bb], key: key),
+    noteArray([.C, .Eb, .F, .Gb, .G, .Bb], key: key)
   ]
   let chord = noteArray([.C, .Eb, .G, .Bb], key: key)
   let important = [0, 2, 4, 6]
@@ -69,7 +69,6 @@ func iChordMinor(#key: CBasedNote) -> ChordData {
 }
 
 func iiChordMinorABForm(#key: CBasedNote) -> ChordData {
-  println("ii minor")
   let bassNote = (CBasedNote.D.toRaw() + key.toRaw()) % 12
   let type = ChordType.DimPartial
   let chordScales = [
@@ -83,7 +82,6 @@ func iiChordMinorABForm(#key: CBasedNote) -> ChordData {
 }
 
 func VChordMinorABForm(#key: CBasedNote) -> ChordData {
-  println("V minor")
   let bassNote = (CBasedNote.G.toRaw() + key.toRaw()) % 12
   let type = ChordType.Dom7
   let chordScales = [

@@ -13,10 +13,21 @@ import AVFoundation
 
 
 class PLMusicPlayer {
+  
+  enum InstrumentType {
+    case Piano
+    case Bass
+    case Sax
+  }
+  
   // Private
   let audioEngine = AVAudioEngine()
-  let instrument: AVAudioUnitMIDIInstrument
-  var playingNotes = Dictionary<UInt8, Int>()
+  // Instruments
+  let piano: AVAudioUnitMIDIInstrument
+  let bass: AVAudioUnitMIDIInstrument
+  let sax: AVAudioUnitMIDIInstrument
+  
+  var playingNotes = Dictionary<PlayingNote, Int>()
   
   class var sharedInstance:PLMusicPlayer {
     get {
@@ -35,33 +46,47 @@ class PLMusicPlayer {
   init() {
     let mixer = audioEngine.mainMixerNode
     
-    let description = AudioComponentDescription(componentType: OSType(kAudioUnitType_MusicDevice),
-      componentSubType: 0, //OSType(kAudioUnitSubType_Sampler),
-      componentManufacturer: OSType(kAudioUnitManufacturer_Apple),
-      componentFlags: 0,
-      componentFlagsMask: 0)
+    func instrumentWithFileName(fileName: String) -> AVAudioUnitMIDIInstrument {
+      let description = AudioComponentDescription(componentType: OSType(kAudioUnitType_MusicDevice),
+        componentSubType: OSType(kAudioUnitSubType_Sampler),
+        componentManufacturer: OSType(kAudioUnitManufacturer_Apple),
+        componentFlags: 0,
+        componentFlagsMask: 0)
+      
+      let instrument = AVAudioUnitMIDIInstrument(audioComponentDescription: description)
+      
+      let soundBankPath = NSBundle.mainBundle().pathForResource(fileName, ofType: "sf2")
+      let soundBankURL = NSURL.fileURLWithPath(soundBankPath)
+      
+      let samplerAudioUnit = instrument.audioUnit
+      var result = OSStatus(noErr)
+      
+      // fill out a bank preset data structure
+      var bpData = AUSamplerBankPresetData(bankURL: Unmanaged<CFURL>(_private: soundBankURL), bankMSB: UInt8(kAUSampler_DefaultMelodicBankMSB), bankLSB: UInt8(kAUSampler_DefaultBankLSB), presetID: 1, reserved: 0)
+      
+      var bpDataPointer: CConstVoidPointer = &bpData
+      
+      // set the kAUSamplerProperty_LoadPresetFromBank property
+      result = AudioUnitSetProperty(samplerAudioUnit,
+        UInt32(kAUSamplerProperty_LoadPresetFromBank),
+        UInt32(kAudioUnitScope_Global),
+        0, bpDataPointer, 8)
+      
+      return instrument
+    }
     
-    instrument = AVAudioUnitMIDIInstrument(audioComponentDescription: description)
+    piano = instrumentWithFileName("Piano")
+    bass = instrumentWithFileName("jazzBass")
+    sax = instrumentWithFileName("sax")
     
-//    let soundBankPath = NSBundle.mainBundle().pathForResource("jazzBass", ofType: "sf2")
-//    let soundBankURL = NSURL.fileURLWithPath(soundBankPath)
-//    
-//    let samplerAudioUnit = instrument.audioUnit
-//    var result: OSStatus = OSStatus(noErr)
-//    
-//    // fill out a bank preset data structure
-//    var bpData = AUSamplerBankPresetData(bankURL: Unmanaged<CFURL>(_private: soundBankURL), bankMSB: UInt8(kAUSampler_DefaultMelodicBankMSB), bankLSB: UInt8(kAUSampler_DefaultBankLSB), presetID: 1, reserved: 0)
-//    
-//    var bpDataPointer: CConstVoidPointer = &bpData
-//    
-//    // set the kAUSamplerProperty_LoadPresetFromBank property
-//    result = AudioUnitSetProperty(samplerAudioUnit,
-//      UInt32(kAUSamplerProperty_LoadPresetFromBank),
-//      UInt32(kAudioUnitScope_Global),
-//      0, bpDataPointer, 8)
+    // Attach Instruments
     
-    audioEngine.attachNode(instrument)
-    audioEngine.connect(instrument, to: mixer, format:instrument.outputFormatForBus(0))
+    audioEngine.attachNode(bass)
+    audioEngine.attachNode(piano)
+    audioEngine.attachNode(sax)
+    audioEngine.connect(bass, to: mixer, format:bass.outputFormatForBus(0))
+    audioEngine.connect(piano, to: mixer, format: piano.outputFormatForBus(0))
+    audioEngine.connect(sax, to: mixer, format: sax.outputFormatForBus(0))
     
     var error: NSError? = nil
     audioEngine.startAndReturnError(&error)
@@ -91,20 +116,37 @@ class PLMusicPlayer {
         for i in 0..countElements(chord) {
           let note = chord[i].note
           let velocity = chord[i].velocity
-          self.instrument.startNote(note, withVelocity:velocity, onChannel:1)
-          if let num = self.playingNotes[note] {
-            self.playingNotes[note] = num + 1
+          switch chord[i].instrument {
+          case .Piano:
+            self.piano.startNote(note, withVelocity: velocity, onChannel: 1)
+          case .Bass:
+            self.bass.startNote(note, withVelocity: velocity, onChannel: 1)
+          case .Sax:
+            self.sax.startNote(note, withVelocity: velocity, onChannel: 1)
+          }
+          
+          let playingNote = PlayingNote(instrument: chord[i].instrument, note: note)
+          
+          if let num = self.playingNotes[playingNote] {
+            self.playingNotes[playingNote] = num + 1
           } else {
-            self.playingNotes[note] = 1
+            self.playingNotes[playingNote] = 1
           }
         }
         dispatchAccuratelyAfter(chord[0].duration, queue:dispatch_get_main_queue()) {
           for i in 0..countElements(chord) {
-            let note = chord[i].note
+            let playingNote = PlayingNote(instrument: chord[i].instrument, note: chord[i].note)
             // We can unwrap this because we'll always have set this when we started the note
-            self.playingNotes[note] = self.playingNotes[note]! - 1
-            if (self.playingNotes[note] == 0) {
-              self.instrument.stopNote(note, onChannel: 1)
+            self.playingNotes[playingNote] = self.playingNotes[playingNote]! - 1
+            if (self.playingNotes[playingNote] == 0) {
+              switch playingNote.instrument {
+              case .Piano:
+                self.piano.stopNote(playingNote.note, onChannel: 1)
+              case .Bass:
+                self.bass.stopNote(playingNote.note, onChannel: 1)
+              case .Sax:
+                self.sax.stopNote(playingNote.note, onChannel: 1)
+              }
             }
           }
         }
@@ -141,4 +183,18 @@ class PLMusicPlayer {
     // We've reached the end of the music, so we'll return the count of the music array
     return (chord, countElements(music))
   }
+  
+  struct PlayingNote: Hashable {
+    let instrument: InstrumentType
+    let note: UInt8
+    
+    var hashValue: Int { get {
+      // Using overflow operator
+      return instrument.hashValue &+ note.hashValue
+    }}
+  }
+}
+
+func == (lhs: PLMusicPlayer.PlayingNote, rhs: PLMusicPlayer.PlayingNote) -> Bool {
+  return lhs.instrument == rhs.instrument && lhs.note == rhs.note
 }

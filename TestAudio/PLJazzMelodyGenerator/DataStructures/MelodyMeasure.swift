@@ -13,3 +13,12 @@ typealias MelodyNote = (note: Int8, beats: Float)
 struct MelodyMeasure {
   let notes: MelodyNote[]
 }
+
+struct ChordNoteMeasure {
+  let notes: ChordNote[]
+}
+
+struct ChordNote {
+  let notes: Int8[]
+  let beats: Float
+}

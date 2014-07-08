@@ -10,6 +10,7 @@ import Foundation
 
 struct PLMusicPlayerNote {
   let note: UInt8
+  let instrument: PLMusicPlayer.InstrumentType
   let velocity: UInt8
   let start: Float
   let duration: Float
