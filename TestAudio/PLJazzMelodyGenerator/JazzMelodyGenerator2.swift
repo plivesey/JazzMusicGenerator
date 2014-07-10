@@ -53,7 +53,7 @@ class JazzMelodyGenerator {
   }
   
   class func nextNotes(#currentNote: Int8, chord: ChordData, destinationChord: ChordData) -> (melody: MelodyNote[], newCurrent: Int8) {
-    let index = randomNumberInclusive(0, destinationChord.importantScaleIndexes.count-1)
+    let index = RandomHelpers.randomNumberInclusive(0, destinationChord.importantScaleIndexes.count-1)
     let zeroBasedNote = destinationChord.mainChordScale[destinationChord.importantScaleIndexes[index]]
     let lowHigh = surroundingNotes(currentNote, zeroBasedDestination: zeroBasedNote)
     let destination = selectDestination(lowHigh, currentNote:currentNote)
@@ -125,7 +125,7 @@ class JazzMelodyGenerator {
           
           // 50% main scale, 50% random scale (maybe main scale)
           var scale = chord.mainChordScale
-          if randomNumberInclusive(0, 1) == 1 || solo {
+          if RandomHelpers.randomNumberInclusive(0, 1) == 1 || solo {
             scale = chord.chordScale.randomElement()
           }
           
@@ -161,7 +161,7 @@ class JazzMelodyGenerator {
     var notes = MelodyNote[]()
     
     // Don't hit the down beat. Instead, play an approach pattern
-    if rhythm.count >= 2 && rhythm[0] <= 1 && randomNumberInclusive(0, 2) == 0 {
+    if rhythm.count >= 2 && rhythm[0] <= 1 && RandomHelpers.randomNumberInclusive(0, 2) == 0 {
       let aNotes = approachNotes(currentNote, scaleAbove: stepNote(currentNote, destinationNote: currentNote+8, chordScale: scale), scaleBelow: stepNote(currentNote, destinationNote: currentNote-8, chordScale: scale))
       let approachNote = aNotes.randomElement().note
       notes.append((approachNote, rhythm[0]))
@@ -247,7 +247,7 @@ class JazzMelodyGenerator {
     } else {
       pivot = 2
     }
-    let randomOption = randomNumberInclusive(0, 3)
+    let randomOption = RandomHelpers.randomNumberInclusive(0, 3)
     
     if (randomOption <= pivot) {
       return lowHigh.low
