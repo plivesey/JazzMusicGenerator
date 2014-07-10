@@ -10,14 +10,14 @@ import Foundation
 
 let SONG_TRANSPOSITION: Int8 = 0
 
-func createScore(#chords: ChordNoteMeasure[], #melody: MelodyMeasure[], #bassline: MelodyMeasure[], #drums: ChordNoteMeasure[], #secondsPerBeat: Float) -> PLMusicPlayerNote[] {
-  var music = PLMusicPlayerNote[]()
+func createScore(#chords: [ChordNoteMeasure], #melody: [MelodyMeasure], #bassline: [MelodyMeasure], #drums: [ChordNoteMeasure], #secondsPerBeat: Float) -> [PLMusicPlayerNote] {
+  var music = [PLMusicPlayerNote]()
   
   // Rhythm section
   music.extend(notesFromChords(chords, instrument: .Piano, velocity: 65, secondsPerBeat: secondsPerBeat))
   
   // Add melody
-//  music.extend(notesFromMelody(melody, instrument: .Piano, velocity: 80, secondsPerBeat: secondsPerBeat))
+  music.extend(notesFromMelody(melody, instrument: .Piano, velocity: 80, secondsPerBeat: secondsPerBeat))
 
   // Add bassline
   music.extend(notesFromMelody(bassline, instrument: .Bass, velocity: 80, secondsPerBeat: secondsPerBeat))
@@ -35,8 +35,8 @@ func createScore(#chords: ChordNoteMeasure[], #melody: MelodyMeasure[], #basslin
   return music
 }
 
-func notesFromChords(melody: ChordNoteMeasure[], #instrument: PLMusicPlayer.InstrumentType, #velocity: UInt8, #secondsPerBeat: Float) -> PLMusicPlayerNote[] {
-  var music = PLMusicPlayerNote[]()
+func notesFromChords(melody: [ChordNoteMeasure], #instrument: PLMusicPlayer.InstrumentType, #velocity: UInt8, #secondsPerBeat: Float) -> [PLMusicPlayerNote] {
+  var music = [PLMusicPlayerNote]()
   
   for (index, measure) in enumerate(melody) {
     let measureStart = Float(index * 4) * secondsPerBeat
@@ -55,8 +55,8 @@ func notesFromChords(melody: ChordNoteMeasure[], #instrument: PLMusicPlayer.Inst
   return music
 }
 
-func notesFromMelody(melody: MelodyMeasure[], #instrument: PLMusicPlayer.InstrumentType, #velocity: UInt8, #secondsPerBeat: Float) -> PLMusicPlayerNote[] {
-  var music = PLMusicPlayerNote[]()
+func notesFromMelody(melody: [MelodyMeasure], #instrument: PLMusicPlayer.InstrumentType, #velocity: UInt8, #secondsPerBeat: Float) -> [PLMusicPlayerNote] {
+  var music = [PLMusicPlayerNote]()
   
   for (index, measure) in enumerate(melody) {
     let measureStart = Float(index * 4) * secondsPerBeat
@@ -74,8 +74,8 @@ func notesFromMelody(melody: MelodyMeasure[], #instrument: PLMusicPlayer.Instrum
   return music
 }
 
-func createSimpleMusicFromChords(chords: ChordMeasure[], secondsPerBeat: Float) -> PLMusicPlayerNote[] {
-  var music = PLMusicPlayerNote[]()
+func createSimpleMusicFromChords(chords: [ChordMeasure], secondsPerBeat: Float) -> [PLMusicPlayerNote] {
+  var music = [PLMusicPlayerNote]()
   var start: Float = 0
   for measure in chords {
     for chord in measure.chords {

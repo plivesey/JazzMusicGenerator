@@ -16,9 +16,9 @@ let highHat: Int8 = 44
 
 class DrumGenerator {
   
-  class func generateDrums(#numberOfMeasures: Int) -> ChordNoteMeasure[] {
-    var measures = ChordNoteMeasure[]()
-    for _ in 0..numberOfMeasures {
+  class func generateDrums(#numberOfMeasures: Int) -> [ChordNoteMeasure] {
+    var measures = [ChordNoteMeasure]()
+    for _ in 0..<numberOfMeasures {
       let notes = drumMeasureNotes()
       let measure = ChordNoteMeasure(notes: notes)
       measures.append(measure)
@@ -26,8 +26,8 @@ class DrumGenerator {
     return measures
   }
   
-  class func drumMeasureNotes() -> ChordNote[] {
-    var notes = ChordNote[]()
+  class func drumMeasureNotes() -> [ChordNote] {
+    var notes = [ChordNote]()
     notes.append(ChordNote(notes: [ ride, bass ], beats: 0.66))
     notes.append(ChordNote(notes: [ bass ], beats: 0.34))
     

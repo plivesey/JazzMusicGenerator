@@ -28,12 +28,12 @@ class RandomHelpers {
     return Int(arc4random_uniform(UInt32(range.endIndex - range.startIndex)) + UInt32(range.startIndex))
   }
   
-  class func randomElementFromWeightedList<T>(list: (T, weight: Int)[]) -> T {
+  class func randomElementFromWeightedList<T>(list: [(T, weight: Int)]) -> T {
     let sum = list.reduce(0) {
       current, nextElement in
         return current + nextElement.weight
     }
-    let random = randomNumberFromRange(0..sum)
+    let random = randomNumberFromRange(0..<sum)
     var currentSum = 0
     for element in list {
       currentSum += element.weight

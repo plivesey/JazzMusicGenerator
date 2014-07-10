@@ -16,7 +16,7 @@ class MelodyRhythmGenerator {
     case ExtendedFast
   }
   
-  class func rhythmForState(state: Speed, solo: Bool) -> (rhythm: Float[], nextState: Speed) {
+  class func rhythmForState(state: Speed, solo: Bool) -> (rhythm: [Float], nextState: Speed) {
     let rhythms = twoBeatRhythmForSpeed(state)
     
     if solo {
@@ -71,7 +71,7 @@ class MelodyRhythmGenerator {
     }
   }
   
-  class func twoBeatRhythmForSpeed(speed: Speed) -> Float[] {
+  class func twoBeatRhythmForSpeed(speed: Speed) -> [Float] {
     switch speed {
     case .Slow:
       return [

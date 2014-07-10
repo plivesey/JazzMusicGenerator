@@ -10,7 +10,7 @@ import Foundation
 
 extension MusicUtil {
   
-  class func notesToDestination(destination: Int8, fromStart start: Int8, numberOfNotes: Int, chordScale: Int8[]) -> Int8[] {
+  class func notesToDestination(destination: Int8, fromStart start: Int8, numberOfNotes: Int, chordScale: [Int8]) -> [Int8] {
     assert(numberOfNotes > 0)
     
     let notesBetween = scaleNotesBetween(start: start, destination: destination, chordScale: chordScale)
@@ -21,7 +21,7 @@ extension MusicUtil {
     notes between is too many - play all the notes then end on above/below
     notes between arn't enough - skip over some of the notes
     */
-    var notes = Int8[]()
+    var notes = [Int8]()
     if notesBetween.count + 1 <= numberOfNotes {
       notes.append(start)
       notes.extend(notesBetween)
@@ -40,7 +40,7 @@ extension MusicUtil {
       let notesLeft = numberOfNotes - 1
       // Example: 5 notes, we want 2. Index jump is 2. So use index 0 + .5 * jump and 0 + 1.5 * jump
       let indexJump = Float(notesBetween.count) / Float(notesLeft)
-      for i in 0..notesLeft {
+      for i in 0..<notesLeft {
         let indexFloat = (Float(i) + 0.5) * indexJump
         var index = Int(indexFloat)
         if index >= notesBetween.count {
@@ -51,19 +51,14 @@ extension MusicUtil {
       }
     }
     
-    println("PICKING: S: \(start) D:\(destination) N:\(numberOfNotes)")
-    println(chordScale)
-    println(notesBetween)
-    println(notes)
-    
     return notes
   }
   
-  class func scaleNotesBetween(#start: Int8, destination: Int8, chordScale: Int8[]) -> Int8[] {
+  class func scaleNotesBetween(#start: Int8, destination: Int8, chordScale: [Int8]) -> [Int8] {
     if start == destination {
       return []
     }
-    var notes = Int8[]()
+    var notes = [Int8]()
     var currentNote = start
     if start < destination {
       // Need to go up
@@ -84,7 +79,7 @@ extension MusicUtil {
   }
   
   // Steps towards the destination without playing it
-  class func stepNote(var currentNote: Int8, destinationNote: Int8, chordScale: Int8[]) -> Int8 {
+  class func stepNote(var currentNote: Int8, destinationNote: Int8, chordScale: [Int8]) -> Int8 {
     let upwardDirection = currentNote < destinationNote
     do {
       if (upwardDirection) {

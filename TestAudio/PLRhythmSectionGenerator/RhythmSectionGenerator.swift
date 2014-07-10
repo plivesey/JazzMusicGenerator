@@ -13,10 +13,10 @@ let CHORD_TRANSPOSITION: Int8 = 48
 
 class RhythmSectionGenerator {
   
-  class func rhythmSectionFromChords(chords: ChordMeasure[]) -> ChordNoteMeasure[] {
-    var measures = ChordNoteMeasure[]()
+  class func rhythmSectionFromChords(chords: [ChordMeasure]) -> [ChordNoteMeasure] {
+    var measures = [ChordNoteMeasure]()
     for measure in chords {
-      var notes = ChordNote[]()
+      var notes = [ChordNote]()
       for chord in measure.chords {
         let rhythm = rhythms(chord.beats).randomElement()
         let chordNotes = chord.chord.chordNotes.map {
@@ -35,7 +35,7 @@ class RhythmSectionGenerator {
     return measures
   }
   
-  class func rhythms(beats: Float) -> RhythmPart[][] {
+  class func rhythms(beats: Float) -> [[RhythmPart]] {
     if beats == 2 {
       return [
         [RhythmPart(2, false)],

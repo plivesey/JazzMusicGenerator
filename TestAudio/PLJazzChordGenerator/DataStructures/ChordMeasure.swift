@@ -7,5 +7,5 @@
 //
 
 struct ChordMeasure {
-  let chords: (chord: ChordData, beats: Float)[]
+  let chords: [(chord: ChordData, beats: Float)]
 }

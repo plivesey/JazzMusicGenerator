@@ -40,6 +40,7 @@
 		36B973351960BB75007BF730 /* MusicUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36B973341960BB75007BF730 /* MusicUtil.swift */; };
 		36B9734219613CE9007BF730 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36B9734019613CE9007BF730 /* MainViewController.swift */; };
 		36B9734319613CE9007BF730 /* MainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 36B9734119613CE9007BF730 /* MainViewController.xib */; };
+		36F0E125196F340F009A0162 /* AscendingDimChordGen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36F0E124196F340F009A0162 /* AscendingDimChordGen.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -90,6 +91,7 @@
 		36B973341960BB75007BF730 /* MusicUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MusicUtil.swift; sourceTree = "<group>"; };
 		36B9734019613CE9007BF730 /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		36B9734119613CE9007BF730 /* MainViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainViewController.xib; sourceTree = "<group>"; };
+		36F0E124196F340F009A0162 /* AscendingDimChordGen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AscendingDimChordGen.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -284,6 +286,7 @@
 			children = (
 				36A8E900196F0FA70083C2F5 /* ChordGenProtocol.swift */,
 				36A8E902196F10850083C2F5 /* TwoFiveOneChordGen.swift */,
+				36F0E124196F340F009A0162 /* AscendingDimChordGen.swift */,
 			);
 			path = JazzChordGenerators;
 			sourceTree = "<group>";
@@ -426,6 +429,7 @@
 				361C300C194E4CF700A61A63 /* TestMusicPlayer.swift in Sources */,
 				362F1D10196286F100E5D200 /* BasslineGenerator.swift in Sources */,
 				361C30231953DBF500A61A63 /* JazzMelodyGenerator.swift in Sources */,
+				36F0E125196F340F009A0162 /* AscendingDimChordGen.swift in Sources */,
 				362F1D28196BA5C200E5D200 /* DrumGenerator.swift in Sources */,
 				361A5EA319483347000B51A0 /* AppDelegate.swift in Sources */,
 				36AEF2AD1953F84200ACAED1 /* ScoreCreator.swift in Sources */,

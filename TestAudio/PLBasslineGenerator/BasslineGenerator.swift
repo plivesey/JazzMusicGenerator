@@ -10,15 +10,15 @@ import Foundation
 
 class BasslineGenerator {
   
-  class func generateBasslineForChordMeasures(chordMeasures: ChordMeasure[]) -> MelodyMeasure[] {
-    var measures = MelodyMeasure[]()
+  class func generateBasslineForChordMeasures(chordMeasures: [ChordMeasure]) -> [MelodyMeasure] {
+    var measures = [MelodyMeasure]()
     
     // Initialize
     // Should be a constant for 36
     var currentNote = chordMeasures[0].chords[0].chord.root + 36
     
     for (measureIndex, measure) in enumerate(chordMeasures) {
-      var notes = MelodyNote[]()
+      var notes = [MelodyNote]()
       for (chordIndex, chord) in enumerate(measure.chords) {
         let nextChordOp = MusicUtil.findNextChordInMeaures(chordMeasures, measureIndex: measureIndex, chordIndex: chordIndex)
         if let nextChord = nextChordOp {
@@ -45,15 +45,15 @@ class BasslineGenerator {
     return measures
   }
   
-  class func generateBassNotesFromCurrentNote(var currentNote: Int8, destination: Int8, chordScale: Int8[], beats: Float) -> MelodyNote[] {
-    var notes = MelodyNote[]()
+  class func generateBassNotesFromCurrentNote(var currentNote: Int8, destination: Int8, chordScale: [Int8], beats: Float) -> [MelodyNote] {
+    var notes = [MelodyNote]()
     
     let scaleAbove = noteAbove(destination, scale: chordScale)
     let scaleBelow = noteBelow(destination, scale: chordScale)
     let appNotes = approachNotes(destination, scaleAbove: scaleAbove, scaleBelow: scaleBelow)
     let newDestination = appNotes.randomElement().note
     
-    for _ in 0..beats-1 {
+    for _ in 0..<beats-1 {
       notes.append((currentNote, 1))
       let newNote = JazzMelodyGenerator.stepNote(currentNote, destinationNote: newDestination, chordScale: chordScale)
       currentNote = newNote

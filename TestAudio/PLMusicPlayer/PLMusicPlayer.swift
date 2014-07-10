@@ -89,25 +89,31 @@ class PLMusicPlayer {
     // fill out a bank preset data structure
     var bpData = AUSamplerBankPresetData(bankURL: Unmanaged<CFURL>(_private: soundBankURL), bankMSB: UInt8(kAUSampler_DefaultMelodicBankMSB), bankLSB: UInt8(kAUSampler_DefaultBankLSB), presetID: presetID, reserved: 0)
     
-    var bpDataPointer: CConstVoidPointer = &bpData
+    let y: COpaquePointer!
+    var x = ConstUnsafePointer<Void>()
+    let bpDataPointer: ConstUnsafePointer<()> = ConstUnsafePointer()
+    
+//    let i = &bpData as ConstUnsafePointer
+//    var bpDataPointer = UnsafePointer(i)
+//    bpDataPointer.initialize(&bpData)
     
     // set the kAUSamplerProperty_LoadPresetFromBank property
     result = AudioUnitSetProperty(samplerAudioUnit,
       UInt32(kAUSamplerProperty_LoadPresetFromBank),
       UInt32(kAudioUnitScope_Global),
-      0, bpDataPointer, 8)
+      0, &bpData, 8)
     
     return instrument
   }
   
-  func playMusic(music: PLMusicPlayerNote[], maxNumberOfTimers: Int) {
+  func playMusic(music: [PLMusicPlayerNote], maxNumberOfTimers: Int) {
     playMusic(music, maxNumberOfTimers: maxNumberOfTimers, playedSoFar: 0)
   }
   
-  func playMusic(music: PLMusicPlayerNote[], maxNumberOfTimers: Int, playedSoFar: Float) {
+  func playMusic(music: [PLMusicPlayerNote], maxNumberOfTimers: Int, playedSoFar: Float) {
     // TODO: Clean up
     var index = 0
-    for _ in 0..maxNumberOfTimers {
+    for _ in 0..<maxNumberOfTimers {
       if (index >= countElements(music)) {
         break;
       }
@@ -118,7 +124,7 @@ class PLMusicPlayer {
       index = chordTuple.nextIndex
       
       dispatchAccuratelyAfter(start, queue: dispatch_get_main_queue()) {
-        for i in 0..countElements(chord) {
+        for i in 0..<countElements(chord) {
           let note = chord[i].note
           let velocity = chord[i].velocity
           switch chord[i].instrument {
@@ -141,7 +147,7 @@ class PLMusicPlayer {
           }
         }
         dispatchAccuratelyAfter(chord[0].duration, queue:dispatch_get_main_queue()) {
-          for i in 0..countElements(chord) {
+          for i in 0..<countElements(chord) {
             let playingNote = PlayingNote(instrument: chord[i].instrument, note: chord[i].note)
             // We can unwrap this because we'll always have set this when we started the note
             self.playingNotes[playingNote] = self.playingNotes[playingNote]! - 1
@@ -163,9 +169,9 @@ class PLMusicPlayer {
     }
     if (index < countElements(music)) {
       // Let's call this method again with the next part of the music
-      var newMusic = PLMusicPlayerNote[]()
+      var newMusic = [PLMusicPlayerNote]()
       
-      for i in index..countElements(music) {
+      for i in index..<countElements(music) {
         newMusic.append(music[i])
       }
       let newStart = music[index].start
@@ -176,12 +182,12 @@ class PLMusicPlayer {
     }
   }
   
-  func nextChord(music: PLMusicPlayerNote[], startIndex: Int) -> (chord: PLMusicPlayerNote[], nextIndex: Int) {
-    var chord = PLMusicPlayerNote[]()
+  func nextChord(music: [PLMusicPlayerNote], startIndex: Int) -> (chord: [PLMusicPlayerNote], nextIndex: Int) {
+    var chord = [PLMusicPlayerNote]()
     let firstNote = music[startIndex]
     chord.append(firstNote)
     let duration = firstNote.duration
-    for i in startIndex+1..countElements(music) {
+    for i in startIndex+1..<countElements(music) {
       if (music[i].start == firstNote.start && music[i].duration == firstNote.duration) {
         chord.append(music[i])
       } else {

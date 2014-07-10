@@ -10,15 +10,15 @@ import Foundation
 
 class TwoFiveOneChordGen: ChordGenProtocol {
   
-  class func canStartOnChord(chord: ChordData, numberOfMeasures: Int) -> Bool {
+  func canStartOnChord(chord: ChordData, numberOfMeasures: Int) -> Bool {
     return true
   }
   
-  class func generateNextChords(#startingChord: ChordData, numberOfMeasures: Int, scale: (note: Int8, type: ChordType)[])
-    -> (chords:ChordMeasure[], nextChord: ChordData) {
+  func generateNextChords(#startingChord: ChordData, numberOfMeasures: Int, scale: [(note: Int8, type: ChordType)])
+    -> (chords:[ChordMeasure], nextChord: ChordData) {
       
       // Don't go to one
-      var possibleDestinations = Array(scale[1..scale.count])
+      var possibleDestinations = Array(scale[1..<scale.count])
       
       // Make Dom7 into Major7
       // Make Major minor into minor
@@ -45,13 +45,13 @@ class TwoFiveOneChordGen: ChordGenProtocol {
         oneNote = possibleDestinations.randomElement()
       }
       
-      let key = CBasedNote.fromRaw(oneNote.note)!
+      let key = ChordFactory.CBasedNote.fromRaw(oneNote.note)!
       
       if (oneNote.type == ChordType.Major7) {
         // TODO: Sometimes go to 6
-        let one = IChordMajor(key: key)
-        let two = iiChordMajorABForm(key: key)
-        let five = VChordMajorABForm(key: key)
+        let one = ChordFactory.IChordMajor9(key: key)
+        let two = ChordFactory.iiChordMajorABForm(key: key)
+        let five = ChordFactory.VChordMajorABForm(key: key)
         if (numberOfMeasures == 2) {
           let measure1 = ChordMeasure(chords: [(startingChord, 4)])
           let measure2 = ChordMeasure(chords: [(two, 2), (five, 2)])
@@ -66,9 +66,9 @@ class TwoFiveOneChordGen: ChordGenProtocol {
         }
       } else {
         // TODO: Sometimes go to other ones
-        let one = iChordMinor(key: key)
-        let two = iiChordMinorABForm(key: key)
-        let five = VChordMinorABForm(key: key)
+        let one = ChordFactory.iChordMinor9(key: key)
+        let two = ChordFactory.iiChordMinorABForm(key: key)
+        let five = ChordFactory.VChordMinorABForm(key: key)
         if (numberOfMeasures == 2) {
           let measure1 = ChordMeasure(chords: [(startingChord, 4)])
           let measure2 = ChordMeasure(chords: [(two, 2), (five, 2)])

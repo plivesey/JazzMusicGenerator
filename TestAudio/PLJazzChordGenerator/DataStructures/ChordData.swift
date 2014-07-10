@@ -28,16 +28,16 @@ struct ChordData: Printable {
   // Recommended chord scales to use
   // The first element will be 0-11 and represent a note (usually equal to the baseNote)
   // The scale should always be ascending, so the other notes in the scale may go higher than 11
-  let chordScale: Int8[][]
+  let chordScale: [[Int8]]
   
   // Important indexes for strong beats.
   // Use with the main chord scale to calculate these notes
-  let importantScaleIndexes: Int[]
+  let importantScaleIndexes: [Int]
   
   // These notes should be played by any ryhthm section.
   // The first element will always be 0-11
   // The array should always be ascending
-  let chordNotes: Int8[]
+  let chordNotes: [Int8]
   
   // A number from 0-11 which represents the root of the chord
   // This is often equal to the base note, but may be different (as in D/A)
@@ -46,7 +46,7 @@ struct ChordData: Printable {
   let root: Int8
   
   // The main chord scale. Use this with the important scale indexes.
-  var mainChordScale: Int8[] {
+  var mainChordScale: [Int8] {
   get {
     return chordScale[0]
   }
@@ -56,7 +56,7 @@ struct ChordData: Printable {
    * Initializers
    */
   
-  init(baseNote: Int8, type: ChordType, chordScale: Int8[][], importantScaleIndexes: Int[], chordNotes: Int8[], root: Int8) {
+  init(baseNote: Int8, type: ChordType, chordScale: [[Int8]], importantScaleIndexes: [Int], chordNotes: [Int8], root: Int8) {
     self.baseNote = baseNote
     self.type = type
     self.chordScale = chordScale
@@ -77,9 +77,9 @@ struct ChordData: Printable {
     assert(note >= 0 && note <= 11, "First note in chord scale out of range")
   }
   
-  func assertLegitimateScale(scale: Int8[]) {
+  func assertLegitimateScale(scale: [Int8]) {
     assertLegitimateBaseNote(scale[0])
-    for i in 0..scale.count {
+    for i in 0..<scale.count {
       if (i+1 < scale.count) {
         assert(scale[i+1] > scale[i], "Scale is not strictly ascending")
       }
@@ -87,7 +87,7 @@ struct ChordData: Printable {
   }
   
   // Assumes that the root is the base note (1st inversion)
-  init(baseNote: Int8, type: ChordType, chordScale: Int8[][], importantScaleIndexes: Int[], chordNotes: Int8[]) {
+  init(baseNote: Int8, type: ChordType, chordScale: [[Int8]], importantScaleIndexes: [Int], chordNotes: [Int8]) {
     self.init(baseNote: baseNote, type: type, chordScale: chordScale, importantScaleIndexes: importantScaleIndexes, chordNotes: chordNotes, root: baseNote)
   }
   

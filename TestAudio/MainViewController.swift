@@ -10,20 +10,20 @@ import UIKit
 
 class MainViewController: UIViewController {
   
-  let music: PLMusicPlayerNote[]
+  let music: [PLMusicPlayerNote]
   let scoreText: String
   
   @IBOutlet var textView: UITextView
   
   init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
     
-    let chords = generateRandomChords(numMeasures: 8)
+    let chords = JazzChordGenerator.generateRandomChords(numMeasures: 8)
     let melody = JazzMelodyGenerator.generateMelodyMeasures(chordMeasures: chords, solo: false)
     let bassline = BasslineGenerator.generateBasslineForChordMeasures(chords)
     let rhythm = RhythmSectionGenerator.rhythmSectionFromChords(chords)
     let drums = DrumGenerator.generateDrums(numberOfMeasures: chords.count)
     
-    let soloChords = generateRandomChords(numMeasures: 16)
+    let soloChords = JazzChordGenerator.generateRandomChords(numMeasures: 16)
     let soloMelody = JazzMelodyGenerator.generateMelodyMeasures(chordMeasures: soloChords, solo: true)
     let soloBassline = BasslineGenerator.generateBasslineForChordMeasures(soloChords)
     let soloRhythm = RhythmSectionGenerator.rhythmSectionFromChords(soloChords)
@@ -36,7 +36,7 @@ class MainViewController: UIViewController {
     let endDrums = [ChordNoteMeasure(notes: [ChordNote(notes: [52], beats: 4)])]
     
     scoreText = ""
-    for i in 0..chords.count {
+    for i in 0..<chords.count {
       
       scoreText += "---[\(i)]---\n"
       for chord in chords[i].chords {
@@ -56,7 +56,7 @@ class MainViewController: UIViewController {
     
     let sectionLength: Float = 0.5 * 4 * 8
     
-    var song: PLMusicPlayerNote[] = []
+    var song: [PLMusicPlayerNote] = []
     song.extend(main)
     song.extend(main.map {
       (var x) in

@@ -18,8 +18,8 @@ let MELODY_MIN: Int8 = 70
 let MELODY_MAX: Int8 = 90
 let MELODY_VARIANCE = 12
 
-func generateMelodyMeasures(#chordMeasures: ChordMeasure[]) -> MelodyMeasure[] {
-  var melody = MelodyMeasure[]()
+func generateMelodyMeasures(#chordMeasures: [ChordMeasure]) -> [MelodyMeasure] {
+  var melody = [MelodyMeasure]()
   var currentIndex = 0
   while (melody.count < chordMeasures.count) {
     let melodyMeasuresLeft = chordMeasures.count - melody.count
@@ -30,7 +30,7 @@ func generateMelodyMeasures(#chordMeasures: ChordMeasure[]) -> MelodyMeasure[] {
       break;
     }
     let highIndex = min(melodyNumber + currentIndex, chordMeasures.count)
-    let chords = Array(chordMeasures[currentIndex..highIndex])
+    let chords = Array(chordMeasures[currentIndex..<highIndex])
     
     let newMelody = melodicPhrase2(chords:chords)
     melody.extend(newMelody)
@@ -42,7 +42,7 @@ func generateMelodyMeasures(#chordMeasures: ChordMeasure[]) -> MelodyMeasure[] {
       let melodyMeasuresLeft = chordMeasures.count - melody.count
       let maxNumberOfRests = RandomHelpers.randomNumberInclusive(MIN_NUMBER_OF_RESTS, MAX_NUMBER_OF_RESTS)
       let numberOfRests = min(melodyMeasuresLeft, maxNumberOfRests)
-      for _ in 0..numberOfRests {
+      for _ in 0..<numberOfRests {
         melody.append(MelodyMeasure(notes: []))
         currentIndex++
       }
@@ -61,7 +61,7 @@ func generateMelodyMeasures(#chordMeasures: ChordMeasure[]) -> MelodyMeasure[] {
 //    let melodyNumber = RandomHelpers.randomNumberInclusive(min(MIN_NUMBER_OF_MELODY, melodyMeasuresLeft), min(MAX_NUMBER_OF_MELODY, melodyMeasuresLeft))
 //    let melodyOutlineArray = melodyOutline(numberOfMeasures: melodyNumber)
 //    
-//    let chords = Array(chordMeasures[currentIndex..chordMeasures.count])
+//    let chords = Array(chordMeasures[currentIndex..<chordMeasures.count])
 //    
 //    let newMelody = melodicPhrase(melodyOutline: melodyOutlineArray, chords:chords)
 //    melody.extend(newMelody)
@@ -73,7 +73,7 @@ func generateMelodyMeasures(#chordMeasures: ChordMeasure[]) -> MelodyMeasure[] {
 //      let melodyMeasuresLeft = chordMeasures.count - melody.count
 //      let maxNumberOfRests = RandomHelpers.randomNumberInclusive(MIN_NUMBER_OF_RESTS, MAX_NUMBER_OF_RESTS)
 //      let numberOfRests = min(melodyMeasuresLeft, maxNumberOfRests)
-//      for _ in 0..numberOfRests {
+//      for _ in 0..<numberOfRests {
 //        melody.append(MelodyMeasure(notes: []))
 //        currentIndex++
 //      }
@@ -82,10 +82,10 @@ func generateMelodyMeasures(#chordMeasures: ChordMeasure[]) -> MelodyMeasure[] {
 //  return melody
 //}
 
-func melodyOutline(#numberOfMeasures: Int) -> Int8[] {
-  var melodyOutline = Int8[]()
-  var currentValue = Int8(randomNumberInclusive(Int(MELODY_MIN), Int(MELODY_MAX)))
-  for _ in 0..numberOfMeasures {
+func melodyOutline(#numberOfMeasures: Int) -> [Int8] {
+  var melodyOutline = [Int8]()
+  var currentValue = Int8(RandomHelpers.randomNumberInclusive(Int(MELODY_MIN), Int(MELODY_MAX)))
+  for _ in 0..<numberOfMeasures {
     melodyOutline.append(currentValue)
     let difference = RandomHelpers.randomNumberInclusive(0, MELODY_VARIANCE*2) - MELODY_VARIANCE
     currentValue += Int8(difference)
@@ -95,13 +95,13 @@ func melodyOutline(#numberOfMeasures: Int) -> Int8[] {
   return melodyOutline
 }
 
-func melodicPhrase2(#chords: ChordMeasure[]) -> MelodyMeasure[] {
-  var melody = MelodyMeasure[]()
+func melodicPhrase2(#chords: [ChordMeasure]) -> [MelodyMeasure] {
+  var melody = [MelodyMeasure]()
   
   let rhythms = rhythmMotifs()
-  var currentNote = Int8(randomNumberInclusive(Int(MELODY_MIN), Int(MELODY_MAX)))
+  var currentNote = Int8(RandomHelpers.randomNumberInclusive(Int(MELODY_MIN), Int(MELODY_MAX)))
   for chordMeasure in chords {
-    var notes = MelodyNote[]()
+    var notes = [MelodyNote]()
     let chord = chordMeasure.chords[0].chord
     
     let firstNotes = generateNext2Beats(chord: chord, startNote: currentNote, rhythms: rhythms)
@@ -118,8 +118,8 @@ func melodicPhrase2(#chords: ChordMeasure[]) -> MelodyMeasure[] {
   return melody
 }
 
-func generateNext2Beats(#chord: ChordData, #startNote: Int8, #rhythms: Float[][]) -> (notes: MelodyNote[], nextNote: Int8) {
-  var notes = MelodyNote[]()
+func generateNext2Beats(#chord: ChordData, #startNote: Int8, #rhythms: [[Float]]) -> (notes: [MelodyNote], nextNote: Int8) {
+  var notes = [MelodyNote]()
   let scale = chord.mainChordScale
   var currentNote = startNote
   
@@ -130,7 +130,7 @@ func generateNext2Beats(#chord: ChordData, #startNote: Int8, #rhythms: Float[][]
   let motif = rhythms.randomElement()
   let arpeg = RandomHelpers.randomNumberInclusive(0, 2) == 0
   for beat in motif {
-    if (randomNumberInclusive(0, 9) == 0) {
+    if (RandomHelpers.randomNumberInclusive(0, 9) == 0) {
       // Add a rest
       notes.append((-1, beat))
     } else {
@@ -156,7 +156,7 @@ func generateNext2Beats(#chord: ChordData, #startNote: Int8, #rhythms: Float[][]
   return (notes, currentNote)
 }
 
-func noteAbove(note: Int8, #scale: Int8[]) -> Int8 {
+func noteAbove(note: Int8, #scale: [Int8]) -> Int8 {
   var zeroedNote = note % 12
   
   // Sort of a hack, revisit later
@@ -166,7 +166,7 @@ func noteAbove(note: Int8, #scale: Int8[]) -> Int8 {
   
   // Default. use this if noone is higher
   var index = 0
-  for i in 0..scale.count {
+  for i in 0..<scale.count {
     if (scale[i] > zeroedNote) {
       index = i
       // TODO: This line sometimes crashes. Maybe this was just the infinite loop?
@@ -181,7 +181,7 @@ func noteAbove(note: Int8, #scale: Int8[]) -> Int8 {
   return returnNote
 }
 
-func noteBelow(note: Int8, #scale: Int8[]) -> Int8 {
+func noteBelow(note: Int8, #scale: [Int8]) -> Int8 {
   var zeroedNote = note % 12
   
   // Sort of a hack, revisit later
@@ -190,7 +190,7 @@ func noteBelow(note: Int8, #scale: Int8[]) -> Int8 {
   }
   // Default. use this if noone is higher
   var index = scale.count-1
-  for i in reverse(0..scale.count-1) {
+  for i in reverse(0..<scale.count-1) {
     if (scale[i] < zeroedNote) {
       index = i
       break;
@@ -204,8 +204,8 @@ func noteBelow(note: Int8, #scale: Int8[]) -> Int8 {
   return returnNote
 }
 
-func rhythmMotifs() -> Float[][] {
-  var result = Float[][]()
+func rhythmMotifs() -> [[Float]] {
+  var result = [[Float]]()
   result.append([0.6, 1, 0.4])
   result.append([0.33, 0.33, 0.34, 0.6, 0.4])
   result.append([1, 0.6, 0.4])
@@ -217,10 +217,10 @@ func rhythmMotifs() -> Float[][] {
   return result
 }
 
-func melodicPhrase(#melodyOutline: Int8[], #chords: ChordMeasure[]) -> MelodyMeasure[] {
-  var melody = MelodyMeasure[]()
-  for i in 0..melodyOutline.count/2 {
-    var notes = MelodyNote[]()
+func melodicPhrase(#melodyOutline: [Int8], #chords: [ChordMeasure]) -> [MelodyMeasure] {
+  var melody = [MelodyMeasure]()
+  for i in 0..<melodyOutline.count/2 {
+    var notes = [MelodyNote]()
     let chordMeasure = chords[i]
     let currentChord = chordMeasure.chords[0].chord
     let goalChord = chordBeat3(chordMeasure)
@@ -241,8 +241,8 @@ func melodicPhrase(#melodyOutline: Int8[], #chords: ChordMeasure[]) -> MelodyMea
   return melody
 }
 
-func nextTwoBeats(#chord: ChordData, #nextChord: ChordData, #melodyOutlineNotes: Slice<Int8>) -> MelodyNote[] {
-  var notes = MelodyNote[]()
+func nextTwoBeats(#chord: ChordData, #nextChord: ChordData, #melodyOutlineNotes: Slice<Int8>) -> [MelodyNote] {
+  var notes = [MelodyNote]()
   
   let startTuple = importantNote(chord: chord, melodyOutlineNote: melodyOutlineNotes[melodyOutlineNotes.startIndex])
   notes.append((note: startTuple.note, beats: 1))
@@ -258,7 +258,7 @@ func nextTwoBeats(#chord: ChordData, #nextChord: ChordData, #melodyOutlineNotes:
   return notes
 }
 
-func scaleFromAbove(scale: Int8[], #index: Int) -> Int8 {
+func scaleFromAbove(scale: [Int8], #index: Int) -> Int8 {
   if (index + 1 < scale.count) {
     return scale[index + 1]
   } else {
@@ -266,7 +266,7 @@ func scaleFromAbove(scale: Int8[], #index: Int) -> Int8 {
   }
 }
 
-func scaleFromBelow(scale: Int8[], #index: Int) -> Int8 {
+func scaleFromBelow(scale: [Int8], #index: Int) -> Int8 {
   if (index - 1 > 0) {
     return scale[index - 1]
   } else {
@@ -290,7 +290,7 @@ func chordBeat3(chordMeasure: ChordMeasure) -> ChordData {
   return nil!
 }
 
-func approachNotes(note: Int8, #scaleAbove: Int8, #scaleBelow: Int8) -> MelodyNote[] {
+func approachNotes(note: Int8, #scaleAbove: Int8, #scaleBelow: Int8) -> [MelodyNote] {
   let random = RandomHelpers.randomNumberInclusive(0, 2)
   switch(random) {
   case 0:
@@ -308,8 +308,8 @@ func approachNotes(note: Int8, #scaleAbove: Int8, #scaleBelow: Int8) -> MelodyNo
   }
 }
 
-func closestNoteIndex(notes:Int8[], #indexesToCheck: Int[], #toNote: Int8) -> (index: Int, transposition:Int8) {
-  let zeroBasedNotes: Int8[] = notes.map {
+func closestNoteIndex(notes:[Int8], #indexesToCheck: [Int], #toNote: Int8) -> (index: Int, transposition:Int8) {
+  let zeroBasedNotes: [Int8] = notes.map {
     x in return x % 12
   }
   let zeroBasedTarget = toNote % 12

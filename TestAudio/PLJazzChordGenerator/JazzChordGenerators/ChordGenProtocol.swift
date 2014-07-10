@@ -9,7 +9,7 @@
 import Foundation
 
 protocol ChordGenProtocol {
-  class func canStartOnChord(chord: ChordData, numberOfMeasures: Int) -> Bool
-  class func generateNextChords(#startingChord: ChordData, numberOfMeasures: Int, scale: (note: Int8, type: ChordType)[])
-    -> (chords:ChordMeasure[], nextChord: ChordData)
+  func canStartOnChord(chord: ChordData, numberOfMeasures: Int) -> Bool
+  func generateNextChords(#startingChord: ChordData, numberOfMeasures: Int, scale: [(note: Int8, type: ChordType)])
+    -> (chords:[ChordMeasure], nextChord: ChordData)
 }
