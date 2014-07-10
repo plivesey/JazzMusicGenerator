@@ -17,24 +17,23 @@ class MainViewController: UIViewController {
   
   init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
     
-    var chords = generateRandomChords()
-    // Let's finish on I
-    chords.append(chords[0])
-    
-    let melody = JazzMelodyGenerator.generateMelodyMeasures(chordMeasures: chords)
-    
+    let chords = generateRandomChords(numMeasures: 8)
+    let melody = JazzMelodyGenerator.generateMelodyMeasures(chordMeasures: chords, solo: false)
     let bassline = BasslineGenerator.generateBasslineForChordMeasures(chords)
-    
     let rhythm = RhythmSectionGenerator.rhythmSectionFromChords(chords)
+    let drums = DrumGenerator.generateDrums(numberOfMeasures: chords.count)
     
-    let drums = DrumGenerator.generateDrums(numberOfMeasures: 13)
+    let soloChords = generateRandomChords(numMeasures: 16)
+    let soloMelody = JazzMelodyGenerator.generateMelodyMeasures(chordMeasures: soloChords, solo: true)
+    let soloBassline = BasslineGenerator.generateBasslineForChordMeasures(soloChords)
+    let soloRhythm = RhythmSectionGenerator.rhythmSectionFromChords(soloChords)
+    let soloDrums = DrumGenerator.generateDrums(numberOfMeasures: soloChords.count)
     
-    for measure in rhythm {
-      println("New measure")
-      for chord in measure.notes {
-        println("B: \(chord.beats) R: \(chord.notes.count == 0)")
-      }
-    }
+    let endChord = chords[0]
+    let endMelody = [MelodyMeasure(notes: [(melody[0].notes[0].note, 4)])]
+    let endBassline = [MelodyMeasure(notes: [(bassline[0].notes[0].note, 4)])]
+    let endRhythm = [ChordNoteMeasure(notes: [ChordNote(notes: [bassline[0].notes[0].note], beats: 4)])]
+    let endDrums = [ChordNoteMeasure(notes: [ChordNote(notes: [52], beats: 4)])]
     
     scoreText = ""
     for i in 0..chords.count {
@@ -51,11 +50,36 @@ class MainViewController: UIViewController {
       scoreText += "\n"
     }
     
-    music = createScore(chords: rhythm, melody: melody, bassline: bassline, drums: drums, secondsPerBeat: 0.5)
+    let main = createScore(chords: rhythm, melody: melody, bassline: bassline, drums: drums, secondsPerBeat: 0.5)
+    let solo = createScore(chords: soloRhythm, melody: soloMelody, bassline: soloBassline, drums: soloDrums, secondsPerBeat: 0.5)
+    let end = createScore(chords: endRhythm, melody: endMelody, bassline: endBassline, drums: endDrums, secondsPerBeat: 0.5)
     
-    for note in music {
-      println("S: \(note.start) P: \(note.note)")
-    }
+    let sectionLength: Float = 0.5 * 4 * 8
+    
+    var song: PLMusicPlayerNote[] = []
+    song.extend(main)
+    song.extend(main.map {
+      (var x) in
+      x.start = x.start + sectionLength
+      return x
+      })
+    song.extend(solo.map {
+      (var x) in
+      x.start = x.start + sectionLength * 2
+      return x
+      })
+    song.extend(main.map {
+      (var x) in
+      x.start = x.start + sectionLength * 4
+      return x
+      })
+    song.extend(end.map {
+      (var x) in
+      x.start = x.start + sectionLength * 5
+      return x
+      })
+    
+    music = song
     
     super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
   }

@@ -10,16 +10,16 @@ import Foundation
 
 let scale: (note: Int8, major: Bool)[] = [(note:50, major:false), (note:52, major:false), (note:53, major:true), (note:55, major:true), (note:57, major:false)]
 
-func generateRandomChords() -> ChordMeasure[] {
+func generateRandomChords(#numMeasures: Int) -> ChordMeasure[] {
   var nextChord = IChordMajor(key: .C)
   var chords = ChordMeasure[]()
-  while (countElements(chords) < 12) {
-    if (countElements(chords) == 8) {
+  while (countElements(chords) < numMeasures) {
+    if (countElements(chords) == numMeasures - 4) {
       chords.append(ChordMeasure(chords: [(nextChord, 4)]))
       chords.append(ChordMeasure(chords: [(nextChord, 4)]))
       chords.append(ChordMeasure(chords: [(iiChordMajorABForm(key: .C), 4)]))
       chords.append(ChordMeasure(chords: [(VChordMajorABForm(key: .C), 4)]))
-    } else if (countElements(chords) == 10) {
+    } else if (countElements(chords) == numMeasures - 2) {
       chords.append(ChordMeasure(chords: [(nextChord, 4)]))
       chords.append(ChordMeasure(chords: [(iiChordMajorABForm(key: .C), 2), (VChordMajorABForm(key: .C), 2)]))
     } else {

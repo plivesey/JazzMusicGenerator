@@ -14,16 +14,16 @@ func createScore(#chords: ChordNoteMeasure[], #melody: MelodyMeasure[], #basslin
   var music = PLMusicPlayerNote[]()
   
   // Rhythm section
-  music.extend(notesFromChords(chords, instrument: .Piano, velocity: 40, secondsPerBeat: secondsPerBeat))
+  music.extend(notesFromChords(chords, instrument: .Piano, velocity: 70, secondsPerBeat: secondsPerBeat))
   
   // Add melody
-  music.extend(notesFromMelody(melody, instrument: .Sax, velocity: 40, secondsPerBeat: secondsPerBeat))
+  music.extend(notesFromMelody(melody, instrument: .Sax, velocity: 80, secondsPerBeat: secondsPerBeat))
 
   // Add bassline
-  music.extend(notesFromMelody(bassline, instrument: .Bass, velocity: 40, secondsPerBeat: secondsPerBeat))
+  music.extend(notesFromMelody(bassline, instrument: .Bass, velocity: 80, secondsPerBeat: secondsPerBeat))
   
   // Add drums
-  music.extend(notesFromChords(drums, instrument: .Drums, velocity: 40, secondsPerBeat: secondsPerBeat))
+  music.extend(notesFromChords(drums, instrument: .Drums, velocity: 70, secondsPerBeat: secondsPerBeat))
   
   // Sort the notes
   music.sort({

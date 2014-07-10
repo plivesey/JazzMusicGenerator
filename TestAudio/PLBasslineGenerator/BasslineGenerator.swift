@@ -23,6 +23,16 @@ class BasslineGenerator {
         let nextChordOp = MusicUtil.findNextChordInMeaures(chordMeasures, measureIndex: measureIndex, chordIndex: chordIndex)
         if let nextChord = nextChordOp {
           let destinationNote = destinationNoteForChord(currentNote: currentNote, destinationChord: nextChord)
+          
+          var chordScale = chord.chord.mainChordScale
+          if abs(currentNote - destinationNote) > 5 {
+            // If we need to make a 'large' jump, let's use the chord's notes instead of stepped notes
+            chordScale = chord.chord.importantScaleIndexes.map {
+              index in
+              return chord.chord.mainChordScale[index]
+            }
+          }
+          
           let nextNotes = generateBassNotesFromCurrentNote(currentNote, destination: destinationNote, chordScale: chord.chord.mainChordScale, beats: chord.beats)
           notes.extend(nextNotes)
           currentNote = destinationNote

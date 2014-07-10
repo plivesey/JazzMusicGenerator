@@ -19,7 +19,7 @@ func IChordMajor(#key: CBasedNote) -> ChordData {
   let type = ChordType.Major7
   let chordScales = [
     noteArray([.C, .D, .E, .F, .G, .A, .B], key: key),
-    noteArray([.C, .D, .Eb, .E, .G, .A], key: key)
+    noteArray([.C, .D, .Eb, .E, .F, .G, .A, .B ], key: key)
   ]
   let chord = noteArray([.C, .E, .G, .B], key: key)
   let important = [0, 2, 4, 6]
@@ -31,7 +31,7 @@ func iiChordMajorABForm(#key: CBasedNote) -> ChordData {
   let type = ChordType.Minor7
   let chordScales = [
     noteArray([.D, .E, .F, .G, .A, .B, .C], key: key),
-    noteArray([.D, .F, .G, .Ab, .A, .C], key: key)
+    noteArray([.D, .E, .F, .G, .Ab, .A, .B, .C], key: key)
   ]
   let chord = noteArray([.F, .A, .C, .E], key: key)
   let important = [0, 2, 4, 6]
@@ -44,7 +44,7 @@ func VChordMajorABForm(#key: CBasedNote) -> ChordData {
   // Mixolydian scale and a whole tone scale
   let chordScales = [
     noteArray([.G, .A, .B, .C, .D, .E, .F], key: key),
-    noteArray([.G, .A, .Ab, .B, .D, .E], key: key),
+    noteArray([.G, .A, .Ab, .B, .C, .D, .E, .F], key: key),
     noteArray([.G, .A, .B, .Db, .Eb, .F], key: key)
   ]
   let chord = noteArray([.B, .E, .F, .A], key: key)
@@ -60,7 +60,7 @@ func iChordMinor(#key: CBasedNote) -> ChordData {
   let type = ChordType.Minor7
   let chordScales = [
     noteArray([.C, .D, .Eb, .F, .G, .Ab, .Bb], key: key),
-    noteArray([.C, .Eb, .F, .Gb, .G, .Bb], key: key)
+    noteArray([.C, .D, .Eb, .F, .Gb, .G, .Ab, .Bb], key: key)
   ]
   let chord = noteArray([.C, .Eb, .G, .Bb], key: key)
   let important = [0, 2, 4, 6]

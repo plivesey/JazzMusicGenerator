@@ -38,18 +38,18 @@ class RhythmSectionGenerator {
   class func rhythms(beats: Float) -> RhythmPart[][] {
     if beats == 2 {
       return [
-        [RhythmPart(beats: 2, rest: false)],
-        [RhythmPart(beats: 1, rest: true), RhythmPart(beats: 1, rest: false)],
-        [RhythmPart(beats: 1, rest: false), RhythmPart(beats: 1, rest: false)],
-        [RhythmPart(beats: 0.6, rest: false), RhythmPart(beats: 0.4, rest: false), RhythmPart(beats: 0.6, rest: true), RhythmPart(beats: 0.4, rest: false)]
+        [RhythmPart(2, false)],
+        [RhythmPart(1, true), RhythmPart(1, false)],
+        [RhythmPart(1, false), RhythmPart(1, false)],
+        [RhythmPart(0.66, false), RhythmPart(0.34, false), RhythmPart(0.66, true), RhythmPart(0.34, false)]
       ]
     } else {
       return [
-        [RhythmPart(beats: 4, rest: false)],
-        [RhythmPart(beats: 3, rest: false), RhythmPart(beats: 1, rest: false)],
-        [RhythmPart(beats: 1, rest: true), RhythmPart(beats: 1, rest: false), RhythmPart(beats: 1, rest: true), RhythmPart(beats: 1, rest: false)],
-        [RhythmPart(beats: 1.5, rest: false), RhythmPart(beats: 1.5, rest: false), RhythmPart(beats: 0.5, rest: false)],
-        [RhythmPart(beats: 1, rest: true), RhythmPart(beats: 0.5, rest: false), RhythmPart(beats: 0.5, rest: false), RhythmPart(beats: 1, rest: true), RhythmPart(beats: 1, rest: false)]
+        [RhythmPart(4, false)],
+        [RhythmPart(3, false), RhythmPart(1, false)],
+        [RhythmPart(1, true), RhythmPart(1, false), RhythmPart(1, true), RhythmPart(1, false)],
+        [RhythmPart(1.5, false), RhythmPart(1.5, false), RhythmPart(0.5, false)],
+        [RhythmPart(1, true), RhythmPart(0.5, false), RhythmPart(0.5, false), RhythmPart(1, true), RhythmPart(1, false)]
       ]
     }
   }
@@ -57,5 +57,10 @@ class RhythmSectionGenerator {
   struct RhythmPart {
     let beats: Float
     let rest: Bool
+    
+    init(_ beats: Float, _ rest: Bool) {
+      self.beats = beats
+      self.rest = rest
+    }
   }
 }
