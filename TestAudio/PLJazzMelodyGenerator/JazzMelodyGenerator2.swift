@@ -115,9 +115,9 @@ class JazzMelodyGenerator {
           let beats: Float = 2
           let currentNote = melodyMeasure.notes[noteIndex].note
           var destinationNote = MusicUtil.findNextNoteInMelody(melodyOutline, measureIndex: i, noteIndex: noteIndex)
-          // Why does this happen?
+          // TODO: This is a hack. If there's nothing at the end, should go towards start
           if destinationNote == -1 {
-            destinationNote = currentNote
+            destinationNote = 76
           }
           
           var chord = chordMeasure.chords[0].chord
@@ -127,7 +127,8 @@ class JazzMelodyGenerator {
           
           // 50% main scale, 50% random scale (maybe main scale)
           var scale = chord.mainChordScale
-          if RandomHelpers.randomNumberInclusive(0, 1) == 1 || solo {
+          // TODO: Previously always did this if a solo. Put it back in?
+          if RandomHelpers.randomNumberInclusive(0, 1) == 1 {
             scale = chord.chordScale.randomElement()
           }
           

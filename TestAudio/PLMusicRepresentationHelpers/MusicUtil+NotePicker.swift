@@ -10,6 +10,9 @@ import Foundation
 
 extension MusicUtil {
   
+  /*
+  Returns an array of notes to get to a destination. It never plays the destination note.
+  */
   class func notesToDestination(destination: Int8, fromStart start: Int8, numberOfNotes: Int, chordScale: [Int8]) -> [Int8] {
     assert(numberOfNotes > 0)
     
@@ -29,8 +32,31 @@ extension MusicUtil {
       // Will be at least 1 big
       var currentNote = notes[notes.count - 1]
       
+      var upwardDirection = currentNote < destination
       while notes.count < numberOfNotes {
-        currentNote = stepNote(currentNote, destinationNote: destination, chordScale: chordScale)
+        let newUpwardDirection = currentNote < destination
+        // We want to change direction if we've overshot
+        // BUT, we don't want to keep changing back and forth.
+        // So, if we've already overshot, but have plent of notes left, let's keep going
+        if upwardDirection != newUpwardDirection {
+          // Consider changing
+          let numberOfNotesBetween = scaleNotesBetween(start: currentNote, destination: destination, chordScale: chordScale).count
+          let numberNotesRemaining = numberOfNotes - notes.count
+          if numberNotesRemaining < numberOfNotesBetween + 2 {
+            // We need to play the next note, then back to this note, then all the notes between to get to the destination
+            // If we don't have at least that many notes remaining, then let's change direction now
+            upwardDirection = newUpwardDirection
+          }
+        }
+        // Go to the next note based on direction
+        do {
+          if (upwardDirection) {
+            currentNote = noteAbove(currentNote, scale: chordScale)
+          } else {
+            currentNote = noteBelow(currentNote, scale: chordScale)
+          }
+        } while (currentNote == destination)
+        
         notes.append(currentNote)
       }
     } else {

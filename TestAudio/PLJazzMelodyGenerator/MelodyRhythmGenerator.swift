@@ -24,18 +24,18 @@ class MelodyRhythmGenerator {
       case .Slow:
         return (rhythms, Speed.Medium)
       case .Medium:
-        let rand = RandomHelpers.randomNumberInclusive(0, 10)
-        if rand == 1 {
+        let rand = RandomHelpers.randomNumberInclusive(0, 9)
+        if rand < 3 {
           return (rhythms, Speed.Slow)
-        } else if rand < 3 {
+        } else if rand < 4 {
           return (rhythms, Speed.Medium)
-        } else if rand < 6 {
+        } else if rand < 5 {
           return (rhythms, Speed.ExtendedFast)
         } else {
           return (rhythms, Speed.Fast)
         }
       case .Fast:
-        let rand = RandomHelpers.randomNumberInclusive(0, 10)
+        let rand = RandomHelpers.randomNumberInclusive(0, 9)
         if rand < 4 {
           return (rhythms, Speed.Fast)
         } else if rand < 6 {
@@ -44,7 +44,7 @@ class MelodyRhythmGenerator {
           return (rhythms, Speed.Medium)
         }
       case .ExtendedFast:
-        if RandomHelpers.randomNumberInclusive(0, 10) < 3 {
+        if RandomHelpers.randomNumberInclusive(0, 9) < 3 {
           return (rhythms, Speed.Medium)
         }
         return (rhythms, Speed.ExtendedFast)

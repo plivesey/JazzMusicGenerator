@@ -59,7 +59,10 @@ class JazzChordGenerator {
   class func chordGenerators() -> [(ChordGenProtocol, weight: Int)] {
     return [
       (TwoFiveOneChordGen(), weight: 1), // TODO: Make more important?
-      (AscendingDimChordGen(), weight: 1)
+      (AscendingDimChordGen(), weight: 1),
+      (StrayCatStrutChordGen(), weight: 1),
+      (RhythmChangesOneChordGen(), weight: 1),
+      (RhythmChangesTwoChordGen(), weight: 1)
     ]
   }
 

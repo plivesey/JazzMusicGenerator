@@ -14,7 +14,7 @@ func createScore(#chords: [ChordNoteMeasure], #melody: [MelodyMeasure], #basslin
   var music = [PLMusicPlayerNote]()
   
   // Rhythm section
-  music.extend(notesFromChords(chords, instrument: .Piano, velocity: 65, secondsPerBeat: secondsPerBeat))
+  music.extend(notesFromChords(chords, instrument: .Piano, velocity: 60, secondsPerBeat: secondsPerBeat))
   
   // Add melody
   music.extend(notesFromMelody(melody, instrument: .Piano, velocity: 80, secondsPerBeat: secondsPerBeat))

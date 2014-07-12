@@ -41,6 +41,10 @@
 		36B9734219613CE9007BF730 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36B9734019613CE9007BF730 /* MainViewController.swift */; };
 		36B9734319613CE9007BF730 /* MainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 36B9734119613CE9007BF730 /* MainViewController.xib */; };
 		36F0E125196F340F009A0162 /* AscendingDimChordGen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36F0E124196F340F009A0162 /* AscendingDimChordGen.swift */; };
+		36F0E127196F5EE0009A0162 /* StrayCatStrutChordGen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36F0E126196F5EE0009A0162 /* StrayCatStrutChordGen.swift */; };
+		36F0E129196F723F009A0162 /* RhythmChangesOneChordGen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36F0E128196F723F009A0162 /* RhythmChangesOneChordGen.swift */; };
+		36F0E12B196F752E009A0162 /* RhythmChangesTwoChordGen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36F0E12A196F752E009A0162 /* RhythmChangesTwoChordGen.swift */; };
+		36F0E12D196F7AD3009A0162 /* ToFlatVIIChordGen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36F0E12C196F7AD3009A0162 /* ToFlatVIIChordGen.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -92,6 +96,10 @@
 		36B9734019613CE9007BF730 /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		36B9734119613CE9007BF730 /* MainViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainViewController.xib; sourceTree = "<group>"; };
 		36F0E124196F340F009A0162 /* AscendingDimChordGen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AscendingDimChordGen.swift; sourceTree = "<group>"; };
+		36F0E126196F5EE0009A0162 /* StrayCatStrutChordGen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StrayCatStrutChordGen.swift; sourceTree = "<group>"; };
+		36F0E128196F723F009A0162 /* RhythmChangesOneChordGen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RhythmChangesOneChordGen.swift; sourceTree = "<group>"; };
+		36F0E12A196F752E009A0162 /* RhythmChangesTwoChordGen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RhythmChangesTwoChordGen.swift; sourceTree = "<group>"; };
+		36F0E12C196F7AD3009A0162 /* ToFlatVIIChordGen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToFlatVIIChordGen.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -287,6 +295,10 @@
 				36A8E900196F0FA70083C2F5 /* ChordGenProtocol.swift */,
 				36A8E902196F10850083C2F5 /* TwoFiveOneChordGen.swift */,
 				36F0E124196F340F009A0162 /* AscendingDimChordGen.swift */,
+				36F0E126196F5EE0009A0162 /* StrayCatStrutChordGen.swift */,
+				36F0E128196F723F009A0162 /* RhythmChangesOneChordGen.swift */,
+				36F0E12A196F752E009A0162 /* RhythmChangesTwoChordGen.swift */,
+				36F0E12C196F7AD3009A0162 /* ToFlatVIIChordGen.swift */,
 			);
 			path = JazzChordGenerators;
 			sourceTree = "<group>";
@@ -426,13 +438,17 @@
 				36A8E903196F10850083C2F5 /* TwoFiveOneChordGen.swift in Sources */,
 				362F1D151965204600E5D200 /* RhythmSectionGenerator.swift in Sources */,
 				36B9734219613CE9007BF730 /* MainViewController.swift in Sources */,
+				36F0E12B196F752E009A0162 /* RhythmChangesTwoChordGen.swift in Sources */,
 				361C300C194E4CF700A61A63 /* TestMusicPlayer.swift in Sources */,
 				362F1D10196286F100E5D200 /* BasslineGenerator.swift in Sources */,
 				361C30231953DBF500A61A63 /* JazzMelodyGenerator.swift in Sources */,
+				36F0E129196F723F009A0162 /* RhythmChangesOneChordGen.swift in Sources */,
 				36F0E125196F340F009A0162 /* AscendingDimChordGen.swift in Sources */,
 				362F1D28196BA5C200E5D200 /* DrumGenerator.swift in Sources */,
+				36F0E12D196F7AD3009A0162 /* ToFlatVIIChordGen.swift in Sources */,
 				361A5EA319483347000B51A0 /* AppDelegate.swift in Sources */,
 				36AEF2AD1953F84200ACAED1 /* ScoreCreator.swift in Sources */,
+				36F0E127196F5EE0009A0162 /* StrayCatStrutChordGen.swift in Sources */,
 				361C30201952B85300A61A63 /* ChordFactory.swift in Sources */,
 				36B97332195D3DC4007BF730 /* JazzMelodyGenerator2.swift in Sources */,
 				361C3017194FF27E00A61A63 /* ChordMeasure.swift in Sources */,
