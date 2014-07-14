@@ -26,6 +26,11 @@ class MelodyRhythmGenerator {
   }
   
   class func rhythmMeasuresWithNumber(number: Int, solo: Bool) -> [RhythmMeasure] {
+    // Default to medium speed
+    return MelodyRhythmGenerator.rhythmMeasuresWithNumber(number, solo: solo, state: .Medium).rhythm
+  }
+  
+  class func rhythmMeasuresWithNumber(number: Int, solo: Bool, state: Speed) -> (rhythm: [RhythmMeasure], nextState: Speed) {
     var measures: [RhythmMeasure] = []
     var state = Speed.Medium
     for _ in 0..<number {
@@ -39,7 +44,7 @@ class MelodyRhythmGenerator {
     }
     
     assert(measures.count == number)
-    return measures
+    return (measures, state)
   }
   
   class func rhythmForState(state: Speed, solo: Bool) -> (rhythm: [Float], nextState: Speed) {

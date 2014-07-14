@@ -90,6 +90,7 @@ class MainViewController: UIViewController {
       })
     
     music = song
+//    music = solo
     
     super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
   }

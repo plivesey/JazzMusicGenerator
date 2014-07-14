@@ -18,9 +18,7 @@ class ChordVoicer {
     
     // Find the bass note which is closer. Build up from there.
     // If out of bounds, step in the direction until you get there
-    let zeroBasedNotes: [Int8] = chordNote.notes.map {
-      note in return note % 12
-    }
+    let zeroBasedNotes = MusicUtil.zeroBasedScale(chordNote.notes)
     var bassNote = MusicUtil.closestNoteToNote(closeTo, fromScale: zeroBasedNotes)
     // TODO: Implement min/max
     
