@@ -80,6 +80,47 @@ extension MusicUtil {
     return notes
   }
   
+  /*
+    Picks the closest note in a scale to that note. Could return the same note.
+    If there is a tie, picks a random note to return
+  */
+  class func closestNoteToNote(note: Int8, fromScale scale: [Int8]) -> (note: Int8, scaleIndex: Int) {
+    var minDistance: Int8 = 13
+    var closestNotesIndex: [Int] = []
+    for (index, scaleNote) in enumerate(scale) {
+      let distance = noteDistance(scaleNote, note)
+      if distance == minDistance {
+        closestNotesIndex.append(index)
+      } else if distance < minDistance {
+        closestNotesIndex = [index]
+        minDistance = distance
+      }
+    }
+    
+    let zeroBasedNoteIndex = closestNotesIndex.randomElement()
+    return (noteFromScale(scale[zeroBasedNoteIndex], closestToNote: note), zeroBasedNoteIndex)
+  }
+  
+  // Returns the note distance assuming both are as close as could be
+  // As in, distance between 0 and 1 + 12*5 is 1
+  class func noteDistance(note: Int8, _ otherNote: Int8) -> Int8 {
+    let baseNote = note % 12
+    let baseOtherNote = otherNote % 12
+    let difference = abs(baseNote - baseOtherNote)
+    // If the difference is above 6, then return 12 - difference since it'll be less. Max distance of two notes is 6
+    return difference < 6 ? difference : 12 - difference
+  }
+  
+  class func noteFromScale(var scaleNote: Int8, closestToNote note: Int8) -> Int8 {
+    assert(note >= 12)
+    assert(scaleNote < 12)
+    
+    while abs(scaleNote + 12 - note) < abs(scaleNote - note) {
+      scaleNote += 12
+    }
+    return scaleNote
+  }
+  
   class func scaleNotesBetween(#start: Int8, destination: Int8, chordScale: [Int8]) -> [Int8] {
     if start == destination {
       return []

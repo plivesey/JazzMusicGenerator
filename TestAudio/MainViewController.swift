@@ -32,7 +32,7 @@ class MainViewController: UIViewController {
     let endChord = chords[0]
     let endMelody = [MelodyMeasure(notes: [(melody[0].notes[0].note, 4)])]
     let endBassline = [MelodyMeasure(notes: [(bassline[0].notes[0].note, 4)])]
-    let endRhythm = [ChordNoteMeasure(notes: [ChordNote(notes: [bassline[0].notes[0].note], beats: 4)])]
+    let endRhythm = [rhythm[0]]
     let endDrums = [ChordNoteMeasure(notes: [ChordNote(notes: [52], beats: 4)])]
     
     scoreText = ""
@@ -48,6 +48,14 @@ class MainViewController: UIViewController {
         scoreText += "\(MusicUtil.noteToString(zeroBased)) (\(value)) - \(note.beats)\n"
       }
       scoreText += "\n"
+    }
+    
+    scoreText += "Solo Chords: \n"
+    
+    for measure in soloChords {
+      for chord in measure.chords {
+        scoreText += "Playing chord: \(chord.chord) for beats: \(chord.beats)\n"
+      }
     }
     
     let main = createScore(chords: rhythm, melody: melody, bassline: bassline, drums: drums, secondsPerBeat: 0.5)

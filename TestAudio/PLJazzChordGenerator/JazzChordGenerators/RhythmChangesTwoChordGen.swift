@@ -18,7 +18,7 @@ class RhythmChangesTwoChordGen: ChordGenProtocol {
     -> (chords:[ChordMeasure], nextChord: ChordData) {
       let key = ChordFactory.CBasedNote.fromRaw((startingChord.baseNote + 8) % 12)!
       let chords = [
-        ChordFactory.iiiChord(key: key),
+        startingChord, // This is actually the iii
         ChordFactory.viChord(key: key),
         ChordFactory.iiChordMajorABForm(key: key),
         ChordFactory.VChordMinorABForm(key: key)

@@ -9,19 +9,18 @@
 import Foundation
 
 // Shouldn't be global
-let CHORD_TRANSPOSITION: Int8 = 48
+let CHORD_TRANSPOSITION: Int8 = 54
 
 class RhythmSectionGenerator {
   
   class func rhythmSectionFromChords(chords: [ChordMeasure]) -> [ChordNoteMeasure] {
     var measures = [ChordNoteMeasure]()
+    var bassNote = CHORD_TRANSPOSITION
     for measure in chords {
       var notes = [ChordNote]()
       for chord in measure.chords {
         let rhythm = rhythms(chord.beats).randomElement()
-        let chordNotes = chord.chord.chordNotes.map {
-          x in x + CHORD_TRANSPOSITION
-        }
+        let chordNotes = chord.chord.chordNotes
         for part in rhythm {
           if part.rest {
             notes.append(ChordNote(notes: [], beats: part.beats))
@@ -30,7 +29,15 @@ class RhythmSectionGenerator {
           }
         }
       }
-      measures.append(ChordNoteMeasure(notes: notes))
+      let voicedNotes: [ChordNote] = notes.map {
+        chordNote in
+        let newChordNote = ChordVoicer.voicedChordFromChordNote(chordNote, closeTo: bassNote, min: 0, max: 0)
+        if newChordNote.notes.count > 0 {
+          bassNote = newChordNote.notes[0]
+        }
+        return newChordNote
+      }
+      measures.append(ChordNoteMeasure(notes: voicedNotes))
     }
     return measures
   }

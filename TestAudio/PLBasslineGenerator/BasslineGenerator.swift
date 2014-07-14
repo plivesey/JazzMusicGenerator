@@ -75,7 +75,7 @@ class BasslineGenerator {
       return highNote
     }
     // TODO: Should be a constant
-    if highNote > 53 {
+    if highNote > 55 {
       return lowNote
     }
     if currentNote - lowNote > highNote - currentNote {

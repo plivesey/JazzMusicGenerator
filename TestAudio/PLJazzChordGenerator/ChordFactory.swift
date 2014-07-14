@@ -49,6 +49,30 @@ class ChordFactory {
     return ChordData(baseNote: bassNote, type: type, chordScale: chordScales, importantScaleIndexes: important, chordNotes: chord, root: bassNote)
   }
   
+  class func IVChord(#key: CBasedNote) -> ChordData {
+    let bassNote = (CBasedNote.F.toRaw() + key.toRaw()) % 12
+    let type = ChordType.Major7
+    let chordScales = [
+      noteArray([.F, .G, .A, .B, .C, .D, .E], key: key),
+      noteArray([.F, .G, .Ab, .A, .B, .C, .D, .E], key: key)
+    ]
+    let chord = noteArray([.F, .A, .C, .E], key: key)
+    let important = [0, 2, 4, 6]
+    return ChordData(baseNote: bassNote, type: type, chordScale: chordScales, importantScaleIndexes: important, chordNotes: chord, root: bassNote)
+  }
+  
+  class func ivChord(#key: CBasedNote) -> ChordData {
+    let bassNote = (CBasedNote.F.toRaw() + key.toRaw()) % 12
+    let type = ChordType.Major7
+    let chordScales = [
+      noteArray([.F, .G, .Ab, .Bb, .C, .D, .E], key: key),
+      noteArray([.F, .G, .Ab, .Bb, .B, .C, .D, .E], key: key)
+    ]
+    let chord = noteArray([.F, .A, .C, .E], key: key)
+    let important = [0, 2, 4, 6]
+    return ChordData(baseNote: bassNote, type: type, chordScale: chordScales, importantScaleIndexes: important, chordNotes: chord, root: bassNote)
+  }
+  
   class func viChord(#key: CBasedNote) -> ChordData {
     let bassNote = (CBasedNote.A.toRaw() + key.toRaw()) % 12
     let type = ChordType.Minor7
@@ -57,6 +81,18 @@ class ChordFactory {
       noteArray([.A, .B, .C, .D, .Eb, .E, .F, .G], key: key),
     ]
     let chord = noteArray([.A, .C, .E, .G], key: key)
+    let important = [0, 2, 4, 6]
+    return ChordData(baseNote: bassNote, type: type, chordScale: chordScales, importantScaleIndexes: important, chordNotes: chord, root: bassNote)
+  }
+  
+  class func viiChord(#key: CBasedNote) -> ChordData {
+    let bassNote = (CBasedNote.B.toRaw() + key.toRaw()) % 12
+    let type = ChordType.DimPartial
+    let chordScales = [
+      noteArray([.B, .C, .D, .E, .F, .G, .A], key: key),
+      noteArray([.B, .Db, .D, .E, .F, .G, .Gb], key: key)
+    ]
+    let chord = noteArray([.B, .D, .F, .A], key: key)
     let important = [0, 2, 4, 6]
     return ChordData(baseNote: bassNote, type: type, chordScale: chordScales, importantScaleIndexes: important, chordNotes: chord, root: bassNote)
   }
@@ -186,6 +222,7 @@ class ChordFactory {
     let bassNote = (CBasedNote.Db.toRaw() + key.toRaw()) % 12
     let type = ChordType.DimFully
     let chordScales = [
+      noteArray([.Db, .D, .E, .F, .G, .A, .Bb], key: key),
       noteArray([.Db, .Eb, .E, .Gb, .G, .A, .Bb, .C], key: key)
     ]
     let chord = noteArray([.Db, .E, .G, .Bb], key: key)
@@ -197,6 +234,7 @@ class ChordFactory {
     let bassNote = (CBasedNote.Eb.toRaw() + key.toRaw()) % 12
     let type = ChordType.DimFully
     let chordScales = [
+      noteArray([.Eb, .E, .Gb, .G, .A, .B, .C], key: key),
       noteArray([.Eb, .F, .Gb, .Ab, .A, .B, .C, .Db], key: key)
     ]
     let chord = noteArray([.Eb, .Gb, .A, .C], key: key)

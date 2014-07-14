@@ -14,13 +14,25 @@ func createScore(#chords: [ChordNoteMeasure], #melody: [MelodyMeasure], #basslin
   var music = [PLMusicPlayerNote]()
   
   // Rhythm section
-  music.extend(notesFromChords(chords, instrument: .Piano, velocity: 60, secondsPerBeat: secondsPerBeat))
+  music.extend(notesFromChords(chords, instrument: .Piano, velocity: 50, secondsPerBeat: secondsPerBeat))
   
   // Add melody
+//  music.extend(notesFromMelody(melody, instrument: .Sax, velocity: 70, secondsPerBeat: secondsPerBeat))
   music.extend(notesFromMelody(melody, instrument: .Piano, velocity: 80, secondsPerBeat: secondsPerBeat))
 
   // Add bassline
-  music.extend(notesFromMelody(bassline, instrument: .Bass, velocity: 80, secondsPerBeat: secondsPerBeat))
+  var bassLine = notesFromMelody(bassline, instrument: .Bass, velocity: 70, secondsPerBeat: secondsPerBeat)
+  // TODO: HACK. Make the higher notes quieter
+  bassLine = bassLine.map {
+    note in
+    return PLMusicPlayerNote(note: note.note,
+      instrument: note.instrument,
+      velocity: note.velocity - note.note + 40,
+      start: note.start,
+      duration: note.duration,
+      channel: note.channel)
+  }
+  music.extend(bassLine)
   
   // Add drums
   music.extend(notesFromChords(drums, instrument: .Drums, velocity: 70, secondsPerBeat: secondsPerBeat))
@@ -64,7 +76,7 @@ func notesFromMelody(melody: [MelodyMeasure], #instrument: PLMusicPlayer.Instrum
     for note in measure.notes {
       let duration = note.beats
       if note.note != -1 {
-        let playerNote = PLMusicPlayerNote(note: UInt8(note.note+SONG_TRANSPOSITION), instrument: instrument, velocity: velocity, start: start+measureStart, duration: duration * secondsPerBeat, channel: 0)
+        let playerNote = PLMusicPlayerNote(note: UInt8(note.note+SONG_TRANSPOSITION), instrument: instrument, velocity: velocity + UInt8(RandomHelpers.randomNumberInclusive(0, 4)) - 2, start: start+measureStart, duration: duration * secondsPerBeat, channel: 0)
         music.append(playerNote)
       }
       start += duration * secondsPerBeat

@@ -62,7 +62,9 @@ class JazzChordGenerator {
       (AscendingDimChordGen(), weight: 1),
       (StrayCatStrutChordGen(), weight: 1),
       (RhythmChangesOneChordGen(), weight: 1),
-      (RhythmChangesTwoChordGen(), weight: 1)
+      (RhythmChangesTwoChordGen(), weight: 1),
+      (ToFlatVIIChordGen(), weight: 1),
+      (ClassicalStateMachineChordGen(), weight: 1)
     ]
   }
 

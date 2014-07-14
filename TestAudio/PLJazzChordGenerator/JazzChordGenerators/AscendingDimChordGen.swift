@@ -18,7 +18,7 @@ class AscendingDimChordGen: ChordGenProtocol {
     -> (chords:[ChordMeasure], nextChord: ChordData) {
       let key = ChordFactory.CBasedNote.fromRaw(startingChord.baseNote)!
       let chords = [
-        ChordFactory.IChord(key: key),
+        startingChord,
         ChordFactory.sharpiDimChord(key: key),
         ChordFactory.iiChord(key: key),
         ChordFactory.sharpiiDimChord(key: key)

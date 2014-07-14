@@ -18,7 +18,7 @@ class StrayCatStrutChordGen: ChordGenProtocol {
     -> (chords:[ChordMeasure], nextChord: ChordData) {
       let key = ChordFactory.CBasedNote.fromRaw(startingChord.baseNote)!
       let chords = [
-        ChordFactory.iChordMinor9(key: key),
+        startingChord,
         ChordFactory.iOverVII(key: key),
         ChordFactory.flatVISharp11(key: key),
         ChordFactory.VChordMinorABForm(key: key)

@@ -57,16 +57,8 @@ class JazzMelodyGenerator {
     let zeroBasedNote = destinationChord.mainChordScale[destinationChord.importantScaleIndexes[index]]
     let lowHigh = surroundingNotes(currentNote, zeroBasedDestination: zeroBasedNote)
     let destination = selectDestination(lowHigh, currentNote:currentNote)
-    let nextNotes = nextChordNotes(currentNote: currentNote, destinationNote: destination, chordScale: chord.mainChordScale, number: 1, beatsPerNote: 2)
+    let nextNotes: [MelodyNote] = [ (currentNote, 2) ]
     return (nextNotes, destination)
-  }
-  
-  class func nextChordNotes(var #currentNote: Int8, destinationNote: Int8, chordScale: [Int8], number: Int, beatsPerNote: Float) -> [MelodyNote] {
-    let notes = MusicUtil.notesToDestination(destinationNote, fromStart: currentNote, numberOfNotes: number, chordScale: chordScale)
-    return notes.map {
-      note in
-      return (note, beatsPerNote)
-    }
   }
   
   class func generateMelody(#chordMeasures: [ChordMeasure], melodyOutline: [MelodyMeasure], solo: Bool) -> [MelodyMeasure] {
@@ -158,10 +150,22 @@ class JazzMelodyGenerator {
     return currentNote
   }
   
-  class func melodyNotes(#startNote: Int8, destinationNote: Int8, beats: Float, scale: [Int8], var rhythm: [Float]) -> [MelodyNote] {
+  class func melodyNotes(#startNote: Int8, var destinationNote: Int8, beats: Float, scale: [Int8], var rhythm: [Float]) -> [MelodyNote] {
     
     var currentNote = startNote
     var notes = [MelodyNote]()
+    
+    // Play an approach note at the end
+    var lastNoteOp: (note: Int8, beats: Float)? = nil
+    if rhythm.count >= 2 && RandomHelpers.randomNumberInclusive(0, 2) == 0 {
+      let aNotes = approachNotes(destinationNote, scaleAbove: noteAbove(destinationNote, scale: scale), scaleBelow: noteBelow(destinationNote, scale: scale))
+      let approachNote = aNotes.randomElement().note
+      lastNoteOp = (approachNote, rhythm[rhythm.count - 1])
+      
+      rhythm = Array(rhythm[0..<rhythm.count - 1])
+      
+      destinationNote = approachNote
+    }
     
     // Don't hit the down beat. Instead, play an approach pattern
     if rhythm.count >= 2 && rhythm[0] <= 1 && RandomHelpers.randomNumberInclusive(0, 2) == 0 {
@@ -176,6 +180,10 @@ class JazzMelodyGenerator {
     
     for (index, duration) in enumerate(rhythm) {
       notes.append((notesToPlay[index], duration))
+    }
+    
+    if let lastNote = lastNoteOp {
+      notes.append(lastNote)
     }
     
     return notes
