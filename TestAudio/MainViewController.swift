@@ -17,14 +17,16 @@ class MainViewController: UIViewController {
   
   init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
     
+    let startNote: Int8 = 70 + Int8(RandomHelpers.randomNumberInclusive(0, 11))
+    
     let chords = JazzChordGenerator.generateRandomChords(numMeasures: 8)
-    let melody = JazzMelodyGenerator.generateMelodyMeasures(chordMeasures: chords, solo: false)
+    let melody = SongComposer.generateMelodyForChordMeasures(chords, startNote: startNote, endNote: startNote)
     let bassline = BasslineGenerator.generateBasslineForChordMeasures(chords)
     let rhythm = RhythmSectionGenerator.rhythmSectionFromChords(chords)
     let drums = DrumGenerator.generateDrums(numberOfMeasures: chords.count)
     
     let soloChords = JazzChordGenerator.generateRandomChords(numMeasures: 16)
-    let soloMelody = JazzMelodyGenerator.generateMelodyMeasures(chordMeasures: soloChords, solo: true)
+    let soloMelody = SongComposer.generateSoloSection(soloChords, startNote: startNote, endNote: startNote)
     let soloBassline = BasslineGenerator.generateBasslineForChordMeasures(soloChords)
     let soloRhythm = RhythmSectionGenerator.rhythmSectionFromChords(soloChords)
     let soloDrums = DrumGenerator.generateDrums(numberOfMeasures: soloChords.count)

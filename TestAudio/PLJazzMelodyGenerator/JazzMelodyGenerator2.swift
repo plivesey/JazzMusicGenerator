@@ -13,15 +13,24 @@ class JazzMelodyGenerator {
   let MELODY_HIGH = 112
   let MELODY_LOW = 64
   
-  class func generateMelodyMeasures(#chordMeasures: [ChordMeasure], solo: Bool) -> [MelodyMeasure] {
-    let outline = generateMelodyOutline(chordMeasures: chordMeasures)
-    return generateMelody(chordMeasures: chordMeasures, melodyOutline: outline, solo: solo)
+  class func generateMelodyMeasuresFromChordMeasures(
+    chordMeasures: [ChordMeasure],
+    startingNote: Int8,
+    endingNote: Int8,
+    rhythm: [RhythmMeasure],
+    solo: Bool) -> [MelodyMeasure] {
+      let outline = generateMelodyOutlineFromChordMeasures(chordMeasures, startingNote: startingNote)
+      return generateMelodyFromChordMeasures(chordMeasures,
+        melodyOutline: outline,
+        endingNote: endingNote,
+        rhythm: rhythm,
+        solo: solo)
   }
   
   // Private
   
-  class func generateMelodyOutline(#chordMeasures: [ChordMeasure]) -> [MelodyMeasure] {
-    var currentNote: Int8 = 76
+  class func generateMelodyOutlineFromChordMeasures(chordMeasures: [ChordMeasure], startingNote: Int8) -> [MelodyMeasure] {
+    var currentNote = startingNote
     var measures = [MelodyMeasure]()
     
     var beats: Float = 0
@@ -61,59 +70,37 @@ class JazzMelodyGenerator {
     return (nextNotes, destination)
   }
   
-  class func generateMelody(#chordMeasures: [ChordMeasure], melodyOutline: [MelodyMeasure], solo: Bool) -> [MelodyMeasure] {
-    var measures = [MelodyMeasure]()
-    
-    var rhythmState = MelodyRhythmGenerator.Speed.Slow
-    if solo {
-      rhythmState = MelodyRhythmGenerator.Speed.Medium
-    }
-    var rhythms: [[Float]] = []
-    
-    var count = 6
-    if solo {
-      // Totally random
-      count = melodyOutline.count * 2
-    }
-    
-    for _ in 0..<count {
-      let rhythmTuple = MelodyRhythmGenerator.rhythmForState(rhythmState, solo: solo)
-      rhythms.append(rhythmTuple.rhythm)
-      rhythmState = rhythmTuple.nextState
-    }
-    
-    var measuresLeftBeforeEnd = 3
-    var rhythmIndex = 0
-    
-    for i in 0..<melodyOutline.count {
-      let melodyMeasure = melodyOutline[i]
-      let chordMeasure = chordMeasures[i]
+  class func generateMelodyFromChordMeasures(
+    chordMeasures: [ChordMeasure],
+    melodyOutline: [MelodyMeasure],
+    endingNote: Int8,
+    rhythm: [RhythmMeasure],
+    solo: Bool) -> [MelodyMeasure] {
       
-      var notes = [MelodyNote]()
+      assert(chordMeasures.count == melodyOutline.count)
+      assert(rhythm.count == chordMeasures.count)
       
-      if measuresLeftBeforeEnd == 0 && !solo {
-        notes.append((melodyMeasure.notes[0].note, 2))
-        notes.append((-1, 2))
-        measuresLeftBeforeEnd = 3
-        rhythmIndex = 0
-      } else {
-        measuresLeftBeforeEnd--
+      var measures = [MelodyMeasure]()
+      
+      for i in 0..<melodyOutline.count {
+        let melodyMeasure = melodyOutline[i]
+        let chordMeasure = chordMeasures[i]
         
-        var currentBeat: Float = 0
+        var notes = [MelodyNote]()
+        let measureRhythm = rhythm[i]
         
         assert(melodyMeasure.notes.count <= 2)
         
-        for noteIndex in 0..<melodyMeasure.notes.count {
-          let beats: Float = 2
-          let currentNote = melodyMeasure.notes[noteIndex].note
+        for (noteIndex, note) in enumerate(melodyMeasure.notes) {
+          let currentNote = note.note
           var destinationNote = MusicUtil.findNextNoteInMelody(melodyOutline, measureIndex: i, noteIndex: noteIndex)
-          // TODO: This is a hack. If there's nothing at the end, should go towards start
+          // We're at the end of the melody, so let's use the passed in param
           if destinationNote == -1 {
-            destinationNote = 76
+            destinationNote = endingNote
           }
           
           var chord = chordMeasure.chords[0].chord
-          if (currentBeat >= 2) {
+          if (noteIndex == 1) {
             chord = chordBeat3(chordMeasure)
           }
           
@@ -124,18 +111,20 @@ class JazzMelodyGenerator {
             scale = chord.chordScale.randomElement()
           }
           
-          let rhythm = rhythms[rhythmIndex++]
+          let currentRhythm = measureRhythm.rhythms[noteIndex]
           
-          let melody = melodyNotes(startNote: currentNote, destinationNote: destinationNote, beats: beats, scale: scale, rhythm: rhythm)
-          notes.extend(melody)
-          
-          currentBeat += beats
+          if currentRhythm.count == 0 {
+            // This is a rest
+            notes.append((-1, 2))
+          } else {
+            let melody = melodyNotes(startNote: currentNote, destinationNote: destinationNote, beats: 2, scale: scale, rhythm: currentRhythm)
+            notes.extend(melody)
+          }
         }
+        
+        measures.append(MelodyMeasure(notes: notes))
       }
-      
-      measures.append(MelodyMeasure(notes: notes))
-    }
-    return measures
+      return measures
   }
   
   class func stepNote(var currentNote: Int8, destinationNote: Int8, chordScale: [Int8]) -> Int8 {

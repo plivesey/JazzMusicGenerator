@@ -8,12 +8,38 @@
 
 import Foundation
 
+struct RhythmMeasure {
+  let rhythms: [[Float]]
+  
+  init(rhythms: [[Float]]) {
+    assert(rhythms.count == 2)
+    self.rhythms = rhythms
+  }
+}
+
 class MelodyRhythmGenerator {
   enum Speed {
     case Slow
     case Medium
     case Fast
     case ExtendedFast
+  }
+  
+  class func rhythmMeasuresWithNumber(number: Int, solo: Bool) -> [RhythmMeasure] {
+    var measures: [RhythmMeasure] = []
+    var state = Speed.Medium
+    for _ in 0..<number {
+      var rhythms: [[Float]] = []
+      for _ in 0..<2 {
+        let next = rhythmForState(state, solo: solo)
+        state = next.nextState
+        rhythms.append(next.rhythm)
+      }
+      measures.append(RhythmMeasure(rhythms: rhythms))
+    }
+    
+    assert(measures.count == number)
+    return measures
   }
   
   class func rhythmForState(state: Speed, solo: Bool) -> (rhythm: [Float], nextState: Speed) {
@@ -69,6 +95,10 @@ class MelodyRhythmGenerator {
         return (rhythms, Speed.Medium)
       }
     }
+  }
+  
+  class func transitionRhythm() -> RhythmMeasure {
+    return RhythmMeasure(rhythms: [[2] , []])
   }
   
   class func twoBeatRhythmForSpeed(speed: Speed) -> [Float] {

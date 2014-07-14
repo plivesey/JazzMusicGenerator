@@ -34,6 +34,7 @@
 		362F1D28196BA5C200E5D200 /* DrumGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 362F1D27196BA5C200E5D200 /* DrumGenerator.swift */; };
 		362F1D2A196BAB8200E5D200 /* MusicUtil+NotePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 362F1D29196BAB8200E5D200 /* MusicUtil+NotePicker.swift */; };
 		368FB13719735E5500509FAB /* ChordVoicer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 368FB13619735E5500509FAB /* ChordVoicer.swift */; };
+		368FB13A19746D0200509FAB /* SongComposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 368FB13919746D0200509FAB /* SongComposer.swift */; };
 		36A4FCCB196E3B8700754927 /* MelodyRhythmGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36A4FCCA196E3B8700754927 /* MelodyRhythmGenerator.swift */; };
 		36A8E901196F0FA70083C2F5 /* ChordGenProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36A8E900196F0FA70083C2F5 /* ChordGenProtocol.swift */; };
 		36A8E903196F10850083C2F5 /* TwoFiveOneChordGen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36A8E902196F10850083C2F5 /* TwoFiveOneChordGen.swift */; };
@@ -91,6 +92,7 @@
 		362F1D27196BA5C200E5D200 /* DrumGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DrumGenerator.swift; sourceTree = "<group>"; };
 		362F1D29196BAB8200E5D200 /* MusicUtil+NotePicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MusicUtil+NotePicker.swift"; sourceTree = "<group>"; };
 		368FB13619735E5500509FAB /* ChordVoicer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChordVoicer.swift; sourceTree = "<group>"; };
+		368FB13919746D0200509FAB /* SongComposer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SongComposer.swift; sourceTree = "<group>"; };
 		36A4FCCA196E3B8700754927 /* MelodyRhythmGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MelodyRhythmGenerator.swift; sourceTree = "<group>"; };
 		36A8E900196F0FA70083C2F5 /* ChordGenProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChordGenProtocol.swift; sourceTree = "<group>"; };
 		36A8E902196F10850083C2F5 /* TwoFiveOneChordGen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TwoFiveOneChordGen.swift; sourceTree = "<group>"; };
@@ -147,6 +149,7 @@
 		361A5E9F19483347000B51A0 /* TestAudio */ = {
 			isa = PBXGroup;
 			children = (
+				368FB13819746CFA00509FAB /* SongStructureGenerator */,
 				36B973331960BB4F007BF730 /* PLMusicRepresentationHelpers */,
 				362F1D0E196286E800E5D200 /* PLBasslineGenerator */,
 				36AEF2AB1953F83C00ACAED1 /* PLScoreCreator */,
@@ -294,6 +297,14 @@
 			path = PLDrumGenerator;
 			sourceTree = "<group>";
 		};
+		368FB13819746CFA00509FAB /* SongStructureGenerator */ = {
+			isa = PBXGroup;
+			children = (
+				368FB13919746D0200509FAB /* SongComposer.swift */,
+			);
+			path = SongStructureGenerator;
+			sourceTree = "<group>";
+		};
 		36A8E8FF196F0F7C0083C2F5 /* JazzChordGenerators */ = {
 			isa = PBXGroup;
 			children = (
@@ -436,6 +447,7 @@
 				362F1D12196287F600E5D200 /* MusicUtil+Finder.swift in Sources */,
 				361C300F194E70C600A61A63 /* AccurateDispatchTimer.swift in Sources */,
 				361C3015194FF1F700A61A63 /* JazzChordGenerator.swift in Sources */,
+				368FB13A19746D0200509FAB /* SongComposer.swift in Sources */,
 				36A8E901196F0FA70083C2F5 /* ChordGenProtocol.swift in Sources */,
 				361C3005194CE2CE00A61A63 /* PLMusicPlayer.swift in Sources */,
 				36A4FCCB196E3B8700754927 /* MelodyRhythmGenerator.swift in Sources */,
