@@ -187,6 +187,32 @@ class ChordFactory {
   Inversions
   */
   
+  class func i9OverV(#key: CBasedNote) -> ChordData {
+    let bassNote = (CBasedNote.C.toRaw() + key.toRaw()) % 12
+    let type = ChordType.Minor7
+    let chordScales = [
+    noteArray([.C, .D, .Eb, .F, .G, .Ab, .Bb], key: key),
+    noteArray([.C, .D, .Eb, .F, .Gb, .G, .Ab, .Bb], key: key)
+    ]
+    let chord = noteArray([.Eb, .G, .Bb, .D], key: key)
+    let important = [0, 2, 4, 6]
+    let root = (CBasedNote.G.toRaw() + key.toRaw()) % 12
+    return ChordData(baseNote: bassNote, type: type, chordScale: chordScales, importantScaleIndexes: important, chordNotes: chord, root: root)
+  }
+  
+  class func I9OverV(#key: CBasedNote) -> ChordData {
+    let bassNote = (CBasedNote.C.toRaw() + key.toRaw()) % 12
+    let type = ChordType.Major7
+    let chordScales = [
+      noteArray([.C, .D, .E, .F, .G, .A, .B], key: key),
+      noteArray([.C, .D, .Eb, .E, .F, .G, .A, .B], key: key)
+    ]
+    let chord = noteArray([.E, .G, .B, .D], key: key)
+    let important = [0, 2, 4, 6]
+    let root = (CBasedNote.G.toRaw() + key.toRaw()) % 12
+    return ChordData(baseNote: bassNote, type: type, chordScale: chordScales, importantScaleIndexes: important, chordNotes: chord, root: root)
+  }
+  
   class func iOverVII(#key: CBasedNote) -> ChordData {
     let bassNote = (CBasedNote.C.toRaw() + key.toRaw()) % 12
     let type = ChordType.Minor7

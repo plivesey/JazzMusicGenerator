@@ -67,7 +67,7 @@ class MelodyRhythmGenerator {
         }
       case .Fast:
         let rand = RandomHelpers.randomNumberInclusive(0, 9)
-        if rand < 4 {
+        if rand < 3 {
           return (rhythms, Speed.Fast)
         } else if rand < 6 {
           return (rhythms, Speed.ExtendedFast)

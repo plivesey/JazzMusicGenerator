@@ -58,13 +58,15 @@ class JazzChordGenerator {
   // TODO: This should return an array of classes. See below
   class func chordGenerators() -> [(ChordGenProtocol, weight: Int)] {
     return [
-      (TwoFiveOneChordGen(), weight: 1), // TODO: Make more important?
+      (TwoFiveOneChordGen(), weight: 2), // TODO: Make more important?
       (AscendingDimChordGen(), weight: 1),
       (StrayCatStrutChordGen(), weight: 1),
-      (RhythmChangesOneChordGen(), weight: 1),
-      (RhythmChangesTwoChordGen(), weight: 1),
+      (RhythmChangesOneChordGen(), weight: 2),
+      (RhythmChangesTwoChordGen(), weight: 2),
       (ToFlatVIIChordGen(), weight: 1),
-      (ClassicalStateMachineChordGen(), weight: 1)
+      (ClassicalStateMachineChordGen(), weight: 2),
+      (SubdominantChordGen(), weight: 1),
+      (Circle5ChordGen(), weight: 1)
     ]
   }
 

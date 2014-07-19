@@ -11,7 +11,8 @@ import Foundation
 class ToFlatVIIChordGen: ChordGenProtocol {
   
   func canStartOnChord(chord: ChordData, numberOfMeasures: Int) -> Bool {
-    return chord.type == ChordType.Major7
+    // If it's a dom7, then it'll play the A train chords
+    return chord.type == ChordType.Major7 || chord.type == ChordType.Dom7
   }
   
   func generateNextChords(#startingChord: ChordData, numberOfMeasures: Int, scale: [(note: Int8, type: ChordType)])
