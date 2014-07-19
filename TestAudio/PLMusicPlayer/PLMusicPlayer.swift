@@ -89,14 +89,6 @@ class PLMusicPlayer {
     // fill out a bank preset data structure
     var bpData = AUSamplerBankPresetData(bankURL: Unmanaged<CFURL>(_private: soundBankURL), bankMSB: UInt8(kAUSampler_DefaultMelodicBankMSB), bankLSB: UInt8(kAUSampler_DefaultBankLSB), presetID: presetID, reserved: 0)
     
-    let y: COpaquePointer!
-    var x = ConstUnsafePointer<Void>()
-    let bpDataPointer: ConstUnsafePointer<()> = ConstUnsafePointer()
-    
-//    let i = &bpData as ConstUnsafePointer
-//    var bpDataPointer = UnsafePointer(i)
-//    bpDataPointer.initialize(&bpData)
-    
     // set the kAUSamplerProperty_LoadPresetFromBank property
     result = AudioUnitSetProperty(samplerAudioUnit,
       UInt32(kAUSamplerProperty_LoadPresetFromBank),

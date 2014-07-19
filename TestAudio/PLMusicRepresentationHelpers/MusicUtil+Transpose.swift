@@ -19,6 +19,38 @@ extension MusicUtil {
     }
   }
   
+  class func invertedMelody(melody: [MelodyMeasure]) -> [MelodyMeasure] {
+    var maxValue: Int8 = Int8.min
+    var minValue: Int8 = Int8.max
+    for measure in melody {
+      for note in measure.notes {
+        if note.note > maxValue {
+          maxValue = note.note
+        }
+        if note.note < minValue {
+          minValue = note.note
+        }
+      }
+    }
+    
+    let measures: [MelodyMeasure] = melody.map {
+      measure in
+      return self.invertMeasure(measure, max: maxValue, min: minValue)
+    }
+    return measures
+  }
+  
+  class func invertMeasure(measure: MelodyMeasure, max: Int8, min: Int8) -> MelodyMeasure {
+    let notes: [MelodyNote] = measure.notes.map {
+      note in
+      // Max is 10, min is 5
+      // Note is 9 should go to 6
+      // 5 + 10 - 9 = max + min - value
+      return (max - note.note + min, note.beats)
+    }
+    return MelodyMeasure(notes: notes)
+  }
+  
   class func transformMeasure(measure: MelodyMeasure, fitToChords chordMeasure: ChordMeasure) -> MelodyMeasure {
     var beats: Float = 0
     var previousNote: Int8 = -1
@@ -35,8 +67,27 @@ extension MusicUtil {
         // First, pick a scale
         let scale = MusicUtil.zeroBasedScale(chord.chordScale.randomElement())
         newNote = MusicUtil.closestNoteToNote(newNote, fromScale: scale).note
+        
+        if newNote == previousNote {
+          // We don't want a repeated note
+          let above = noteAbove(newNote, scale: scale)
+          let below = noteBelow(newNote, scale: scale)
+          
+          if above - newNote == newNote - below {
+            if RandomHelpers.randomNumberInclusive(0, 1) == 1 {
+              newNote = above
+            } else {
+              newNote = below
+            }
+          } else if above - newNote > newNote - below {
+            newNote = below
+          } else {
+            newNote = above
+          }
+        }
       }
       
+      previousNote = newNote
       beats += note.beats
       
       return (newNote, note.beats)

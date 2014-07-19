@@ -48,52 +48,85 @@ class SongComposer {
     var repeatedRhythm = MelodyRhythmGenerator.rhythmMeasuresWithNumber(2, solo: true, state: .Medium)
     
     for index in 0..<numberOfMeasures / 2 {
-      var end = newSoloStartNote(start)
+      var suggestedEnd = newSoloStartNote(start)
       if index == numberOfMeasures/2 - 1 {
-        end = endNote
+        suggestedEnd = endNote
       }
+      
+      let chords = Array(chordMeasures[index*2..<(index+1)*2])
       
       let randPercent = RandomHelpers.randomNumberInclusive(0, 99)
       
-      if index == 0 || randPercent < 60 {
-        
-        let chords = Array(chordMeasures[index*2..<(index+1)*2])
+      if index == 0 || index == numberOfMeasures/2 - 1 || randPercent < 50 {
+        // Totally new section. Always do at the start and the end
         
         if RandomHelpers.randomNumberInclusive(0, 1) == 0 {
           // Generate a new rhythm
           repeatedRhythm = MelodyRhythmGenerator.rhythmMeasuresWithNumber(2, solo: true, state: repeatedRhythm.nextState)
         }
         
-        let nextMelody = JazzMelodyGenerator.generateMelodyMeasuresFromChordMeasures(chords, startingNote: start, endingNote: end, rhythm: repeatedRhythm.rhythm, solo: true)
+        let nextMelody = JazzMelodyGenerator.generateMelodyMeasuresFromChordMeasures(chords, startingNote: start, endingNote: suggestedEnd, rhythm: repeatedRhythm.rhythm, solo: true)
         measures.extend(nextMelody)
         
-      } else if randPercent < 30 {
+        start = suggestedEnd
+        
+      } else if randPercent < 70 {
+        // Take a previous passage and play it again but transposed
+        let measureIndex = RandomHelpers.randomNumberFromRange(0..<(measures.count/2))
+        
+        var originalMelody = Array(measures[measureIndex * 2...measureIndex * 2 + 1])
+        if RandomHelpers.randomNumberInclusive(0, 1) == 0 {
+          // 50/50 Chance
+          originalMelody = MusicUtil.invertedMelody(originalMelody)
+        }
+        
+        // Start is 81, previous note is 77. Delta should be 4
+        let delta = start - originalMelody[0].notes[0].note
+        
+        let transposedMeasures = MusicUtil.transposeMelody(originalMelody, delta: delta)
+        let actualMeasures = MusicUtil.transformedMelody(transposedMeasures, fitToChords: chords)
+        
+        measures.extend(actualMeasures)
+        
+        let lastMeasure = actualMeasures[actualMeasures.count - 1]
+        let lastNote = lastMeasure.notes[lastMeasure.notes.count - 1].note
+        
+        start = Int8(RandomHelpers.randomNumberInclusive(0, 1) * 2 - 1) + lastNote
+        
+      } else if randPercent < 90 {
         // Generate a transposed melody
         let rhythm = MelodyRhythmGenerator.rhythmMeasuresWithNumber(1, solo: true, state: repeatedRhythm.nextState).rhythm
         
         // First part
         let firstChords = [chordMeasures[index*2]]
-        let firstMelody = JazzMelodyGenerator.generateMelodyMeasuresFromChordMeasures(firstChords, startingNote: start, endingNote: end, rhythm: rhythm, solo: true)
+        let firstMelody = JazzMelodyGenerator.generateMelodyMeasuresFromChordMeasures(firstChords, startingNote: start, endingNote: suggestedEnd, rhythm: rhythm, solo: true)
         
         // Second part
         let secondChords = [chordMeasures[index*2 + 1]]
-        let transpose = 7 + Int8(RandomHelpers.randomNumberInclusive(0, 14))
-        let transposedMelody = MusicUtil.transposeMelody(firstMelody, delta: transpose)
+        let transpose = 5 + Int8(RandomHelpers.randomNumberInclusive(0, 10))
+        
+        var originalMelody = firstMelody
+        if RandomHelpers.randomNumberInclusive(0, 1) == 0 {
+          // 50/50 Chance
+          originalMelody = MusicUtil.invertedMelody(originalMelody)
+        }
+        
+        let transposedMelody = MusicUtil.transposeMelody(originalMelody, delta: transpose)
         let secondMelody = MusicUtil.transformedMelody(transposedMelody, fitToChords: secondChords)
         
         measures.extend(firstMelody)
         measures.extend(secondMelody)
+        
+        start = suggestedEnd
       } else {
         // Take some space
-        let chords = Array(chordMeasures[index*2..<(index+1)*2])
-        
         let rhythm = [repeatedRhythm.rhythm[0], MelodyRhythmGenerator.transitionRhythm()]
         
-        let nextMelody = JazzMelodyGenerator.generateMelodyMeasuresFromChordMeasures(chords, startingNote: start, endingNote: end, rhythm: rhythm, solo: true)
+        let nextMelody = JazzMelodyGenerator.generateMelodyMeasuresFromChordMeasures(chords, startingNote: start, endingNote: suggestedEnd, rhythm: rhythm, solo: true)
         measures.extend(nextMelody)
+        
+        start = suggestedEnd
       }
-      
-      start = end
     }
     
     assert(measures.count == chordMeasures.count)

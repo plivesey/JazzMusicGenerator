@@ -30,22 +30,33 @@ class JazzMelodyGenerator {
   // Private
   
   class func generateMelodyOutlineFromChordMeasures(chordMeasures: [ChordMeasure], startingNote: Int8) -> [MelodyMeasure] {
-    var currentNote = startingNote
-    var measures = [MelodyMeasure]()
     
-    var beats: Float = 0
+    // Find first note
+    let firstChord = chordMeasures[0].chords[0].chord
+    var scale: [Int8] = firstChord.importantScaleIndexes.map {
+      index in
+      return firstChord.mainChordScale[index]
+    }
+    scale = MusicUtil.zeroBasedScale(scale)
+    var currentNote = MusicUtil.closestNoteToNote(startingNote, fromScale: scale).note
+    
+    var measures = [MelodyMeasure]()
     
     for (measureIndex, chordMeasure) in enumerate(chordMeasures) {
       var notes = [MelodyNote]()
       for (chordIndex, chord) in enumerate(chordMeasure.chords) {
-        let destinationChordOp = MusicUtil.findNextChordInMeaures(chordMeasures, measureIndex: measureIndex, chordIndex: chordIndex)
+        var destinationChordOp = MusicUtil.findNextChordInMeaures(chordMeasures, measureIndex: measureIndex, chordIndex: chordIndex)
         var iterations = 1
         if chord.beats == 4 {
           iterations = 2
         }
         if let destinationChord = destinationChordOp {
-          for _ in 0..<iterations {
-            let next = nextNotes(currentNote: currentNote, chord: chord.chord, destinationChord: destinationChord)
+          for iteration in 0..<iterations {
+            var actualDestination = destinationChord
+            if chord.beats == 4 && iteration == 0 {
+              actualDestination = chord.chord
+            }
+            let next = nextNotes(currentNote: currentNote, destinationChord: actualDestination)
             currentNote = next.newCurrent
             notes.extend(next.melody)
           }
@@ -61,7 +72,7 @@ class JazzMelodyGenerator {
     return measures
   }
   
-  class func nextNotes(#currentNote: Int8, chord: ChordData, destinationChord: ChordData) -> (melody: [MelodyNote], newCurrent: Int8) {
+  class func nextNotes(#currentNote: Int8, destinationChord: ChordData) -> (melody: [MelodyNote], newCurrent: Int8) {
     let index = RandomHelpers.randomNumberInclusive(0, destinationChord.importantScaleIndexes.count-1)
     let zeroBasedNote = destinationChord.mainChordScale[destinationChord.importantScaleIndexes[index]]
     let lowHigh = surroundingNotes(currentNote, zeroBasedDestination: zeroBasedNote)

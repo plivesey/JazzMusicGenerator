@@ -20,14 +20,12 @@
 		361C3015194FF1F700A61A63 /* JazzChordGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 361C3014194FF1F700A61A63 /* JazzChordGenerator.swift */; };
 		361C3017194FF27E00A61A63 /* ChordMeasure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 361C3016194FF27E00A61A63 /* ChordMeasure.swift */; };
 		361C301A194FF4E400A61A63 /* RandomArrayExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 361C3019194FF4E400A61A63 /* RandomArrayExtension.swift */; };
-		361C301E195161F200A61A63 /* jazzBass.sf2 in Resources */ = {isa = PBXBuildFile; fileRef = 361C301D195161F200A61A63 /* jazzBass.sf2 */; };
 		361C30201952B85300A61A63 /* ChordFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 361C301F1952B85300A61A63 /* ChordFactory.swift */; };
 		361C30231953DBF500A61A63 /* JazzMelodyGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 361C30221953DBF500A61A63 /* JazzMelodyGenerator.swift */; };
 		361C30261953EEBF00A61A63 /* MelodyMeasure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 361C30251953EEBF00A61A63 /* MelodyMeasure.swift */; };
 		362F1D10196286F100E5D200 /* BasslineGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 362F1D0F196286F100E5D200 /* BasslineGenerator.swift */; };
 		362F1D12196287F600E5D200 /* MusicUtil+Finder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 362F1D11196287F600E5D200 /* MusicUtil+Finder.swift */; };
 		362F1D151965204600E5D200 /* RhythmSectionGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 362F1D141965204600E5D200 /* RhythmSectionGenerator.swift */; };
-		362F1D1919688FC500E5D200 /* Piano.sf2 in Resources */ = {isa = PBXBuildFile; fileRef = 362F1D1819688FC500E5D200 /* Piano.sf2 */; };
 		362F1D211968EA1700E5D200 /* trumpet.sf2 in Resources */ = {isa = PBXBuildFile; fileRef = 362F1D201968EA1700E5D200 /* trumpet.sf2 */; };
 		362F1D231968F43F00E5D200 /* sax.sf2 in Resources */ = {isa = PBXBuildFile; fileRef = 362F1D221968F43F00E5D200 /* sax.sf2 */; };
 		362F1D25196BA2C600E5D200 /* drums.sf2 in Resources */ = {isa = PBXBuildFile; fileRef = 362F1D24196BA2C600E5D200 /* drums.sf2 */; };
@@ -38,6 +36,8 @@
 		368FB13C197483F300509FAB /* MusicUtil+Transpose.swift in Sources */ = {isa = PBXBuildFile; fileRef = 368FB13B197483F300509FAB /* MusicUtil+Transpose.swift */; };
 		368FB13E19748A6E00509FAB /* MusicUtil+Scales.swift in Sources */ = {isa = PBXBuildFile; fileRef = 368FB13D19748A6D00509FAB /* MusicUtil+Scales.swift */; };
 		36A4FCCB196E3B8700754927 /* MelodyRhythmGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36A4FCCA196E3B8700754927 /* MelodyRhythmGenerator.swift */; };
+		36A8105A1978785200A1E328 /* jazzBass.sf2 in Resources */ = {isa = PBXBuildFile; fileRef = 36A810591978785200A1E328 /* jazzBass.sf2 */; };
+		36A8105C1978786700A1E328 /* Piano.sf2 in Resources */ = {isa = PBXBuildFile; fileRef = 36A8105B1978786700A1E328 /* Piano.sf2 */; };
 		36A8E901196F0FA70083C2F5 /* ChordGenProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36A8E900196F0FA70083C2F5 /* ChordGenProtocol.swift */; };
 		36A8E903196F10850083C2F5 /* TwoFiveOneChordGen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36A8E902196F10850083C2F5 /* TwoFiveOneChordGen.swift */; };
 		36AEF2AD1953F84200ACAED1 /* ScoreCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36AEF2AC1953F84200ACAED1 /* ScoreCreator.swift */; };
@@ -80,14 +80,12 @@
 		361C3014194FF1F700A61A63 /* JazzChordGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JazzChordGenerator.swift; sourceTree = "<group>"; };
 		361C3016194FF27E00A61A63 /* ChordMeasure.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChordMeasure.swift; sourceTree = "<group>"; };
 		361C3019194FF4E400A61A63 /* RandomArrayExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RandomArrayExtension.swift; sourceTree = "<group>"; };
-		361C301D195161F200A61A63 /* jazzBass.sf2 */ = {isa = PBXFileReference; lastKnownFileType = file; name = jazzBass.sf2; path = ../../../Downloads/Bass/jazzBass.sf2; sourceTree = "<group>"; };
 		361C301F1952B85300A61A63 /* ChordFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChordFactory.swift; sourceTree = "<group>"; };
 		361C30221953DBF500A61A63 /* JazzMelodyGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JazzMelodyGenerator.swift; sourceTree = "<group>"; };
 		361C30251953EEBF00A61A63 /* MelodyMeasure.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MelodyMeasure.swift; sourceTree = "<group>"; };
 		362F1D0F196286F100E5D200 /* BasslineGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasslineGenerator.swift; sourceTree = "<group>"; };
 		362F1D11196287F600E5D200 /* MusicUtil+Finder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MusicUtil+Finder.swift"; sourceTree = "<group>"; };
 		362F1D141965204600E5D200 /* RhythmSectionGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RhythmSectionGenerator.swift; sourceTree = "<group>"; };
-		362F1D1819688FC500E5D200 /* Piano.sf2 */ = {isa = PBXFileReference; lastKnownFileType = file; name = Piano.sf2; path = "../../../Downloads/25 Piano Soundfonts/Piano.sf2"; sourceTree = "<group>"; };
 		362F1D201968EA1700E5D200 /* trumpet.sf2 */ = {isa = PBXFileReference; lastKnownFileType = file; path = trumpet.sf2; sourceTree = "<group>"; };
 		362F1D221968F43F00E5D200 /* sax.sf2 */ = {isa = PBXFileReference; lastKnownFileType = file; path = sax.sf2; sourceTree = "<group>"; };
 		362F1D24196BA2C600E5D200 /* drums.sf2 */ = {isa = PBXFileReference; lastKnownFileType = file; path = drums.sf2; sourceTree = "<group>"; };
@@ -98,6 +96,8 @@
 		368FB13B197483F300509FAB /* MusicUtil+Transpose.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MusicUtil+Transpose.swift"; sourceTree = "<group>"; };
 		368FB13D19748A6D00509FAB /* MusicUtil+Scales.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MusicUtil+Scales.swift"; sourceTree = "<group>"; };
 		36A4FCCA196E3B8700754927 /* MelodyRhythmGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MelodyRhythmGenerator.swift; sourceTree = "<group>"; };
+		36A810591978785200A1E328 /* jazzBass.sf2 */ = {isa = PBXFileReference; lastKnownFileType = file; path = jazzBass.sf2; sourceTree = "<group>"; };
+		36A8105B1978786700A1E328 /* Piano.sf2 */ = {isa = PBXFileReference; lastKnownFileType = file; path = Piano.sf2; sourceTree = "<group>"; };
 		36A8E900196F0FA70083C2F5 /* ChordGenProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChordGenProtocol.swift; sourceTree = "<group>"; };
 		36A8E902196F10850083C2F5 /* TwoFiveOneChordGen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TwoFiveOneChordGen.swift; sourceTree = "<group>"; };
 		36AEF2AC1953F84200ACAED1 /* ScoreCreator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScoreCreator.swift; sourceTree = "<group>"; };
@@ -167,8 +167,8 @@
 				361A5EA219483347000B51A0 /* AppDelegate.swift */,
 				36B9734019613CE9007BF730 /* MainViewController.swift */,
 				36B9734119613CE9007BF730 /* MainViewController.xib */,
-				361C301D195161F200A61A63 /* jazzBass.sf2 */,
-				362F1D1819688FC500E5D200 /* Piano.sf2 */,
+				36A810591978785200A1E328 /* jazzBass.sf2 */,
+				36A8105B1978786700A1E328 /* Piano.sf2 */,
 				362F1D221968F43F00E5D200 /* sax.sf2 */,
 				362F1D201968EA1700E5D200 /* trumpet.sf2 */,
 				362F1D24196BA2C600E5D200 /* drums.sf2 */,
@@ -423,11 +423,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				362F1D1919688FC500E5D200 /* Piano.sf2 in Resources */,
+				36A8105C1978786700A1E328 /* Piano.sf2 in Resources */,
 				361A5EA519483347000B51A0 /* Images.xcassets in Resources */,
 				362F1D231968F43F00E5D200 /* sax.sf2 in Resources */,
 				36B9734319613CE9007BF730 /* MainViewController.xib in Resources */,
-				361C301E195161F200A61A63 /* jazzBass.sf2 in Resources */,
+				36A8105A1978785200A1E328 /* jazzBass.sf2 in Resources */,
 				362F1D211968EA1700E5D200 /* trumpet.sf2 in Resources */,
 				362F1D25196BA2C600E5D200 /* drums.sf2 in Resources */,
 			);

@@ -48,16 +48,26 @@ class RhythmSectionGenerator {
         [RhythmPart(2, false)],
         [RhythmPart(1, true), RhythmPart(1, false)],
         [RhythmPart(1, false), RhythmPart(1, false)],
-        [RhythmPart(0.66, false), RhythmPart(0.34, false), RhythmPart(0.66, true), RhythmPart(0.34, false)]
+        [RhythmPart(1.66, false), RhythmPart(0.34, false)],
+        [RhythmPart(0.66, true), RhythmPart(1, false), RhythmPart(0.34, true)],
+        [RhythmPart(0.66, false), RhythmPart(0.66, false), RhythmPart(0.34, true), RhythmPart(0.34, false)]
       ]
     } else {
-      return [
+      var fourBeatRhythms = [
         [RhythmPart(4, false)],
         [RhythmPart(3, false), RhythmPart(1, false)],
         [RhythmPart(1, true), RhythmPart(1, false), RhythmPart(1, true), RhythmPart(1, false)],
-        [RhythmPart(1.5, false), RhythmPart(1.5, false), RhythmPart(0.5, false)],
-        [RhythmPart(1, true), RhythmPart(0.5, false), RhythmPart(0.5, false), RhythmPart(1, true), RhythmPart(1, false)]
+        [RhythmPart(1.5, false), RhythmPart(1.5, false), RhythmPart(0.5, false)]
       ]
+      let twoBeatRhythms = rhythms(2)
+      for r1 in twoBeatRhythms {
+        for r2 in twoBeatRhythms {
+          let fourBeat = r1 + r2
+          fourBeatRhythms.append(fourBeat)
+        }
+      }
+      
+      return fourBeatRhythms
     }
   }
   
