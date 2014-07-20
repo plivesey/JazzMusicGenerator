@@ -29,16 +29,16 @@ func testDrums() {
 //  // Chromatic scale
 //  var music = PLMusicPlayerNote[]()
 //  for i in 0..6 {
-//    let note = UInt8(i+48)
+//    let note = UInt(i+48)
 //    let playerNote = PLMusicPlayerNote(note:note, velocity: 90, start:Float(i), duration:1, channel:0)
 //    music.append(playerNote)
 //  }
 //  // More chromatics, now with chords
 //  for i in 6..9 {
-//    let note = UInt8(i+48)
+//    let note = UInt(i+48)
 //    let playerNote = PLMusicPlayerNote(note:note, velocity: 90, start:Float(i), duration:1, channel:0)
 //    music.append(playerNote)
-//    let note2 = UInt8(i+52)
+//    let note2 = UInt(i+52)
 //    let playerNote2 = PLMusicPlayerNote(note:note2, velocity: 90, start:Float(i), duration:1, channel:0)
 //    music.append(playerNote2)
 //  }
@@ -49,7 +49,7 @@ func testDrums() {
 //func testEighthNotes() {
 //  // Chromatic scale with some eighth notes
 //  var music = PLMusicPlayerNote[]()
-//  var note: UInt8 = 48
+//  var note: UInt = 48
 //  for i in 0..5 {
 //    let playerNote = PLMusicPlayerNote(note:note++, velocity: 90, start:Float(i)/2, duration:0.5, channel:0)
 //    music.append(playerNote)

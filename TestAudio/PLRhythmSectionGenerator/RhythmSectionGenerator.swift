@@ -9,7 +9,7 @@
 import Foundation
 
 // Shouldn't be global
-let CHORD_TRANSPOSITION: Int8 = 54
+let CHORD_TRANSPOSITION: Int = 54
 
 class RhythmSectionGenerator {
   

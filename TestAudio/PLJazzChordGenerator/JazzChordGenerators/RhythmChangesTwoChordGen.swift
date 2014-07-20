@@ -14,7 +14,7 @@ class RhythmChangesTwoChordGen: ChordGenProtocol {
     return chord.type == ChordType.Minor7
   }
   
-  func generateNextChords(#startingChord: ChordData, numberOfMeasures: Int, scale: [(note: Int8, type: ChordType)])
+  func generateNextChords(#startingChord: ChordData, numberOfMeasures: Int, scale: [(note: Int, type: ChordType)])
     -> (chords:[ChordMeasure], nextChord: ChordData) {
       let key = ChordFactory.CBasedNote.fromRaw((startingChord.baseNote + 8) % 12)!
       let chords = [

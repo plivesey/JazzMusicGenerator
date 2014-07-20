@@ -9,10 +9,10 @@
 import Foundation
 
 // TODO: These shouldn't be global
-let bass: Int8 = 36
-let snare: Int8 = 38
-let ride: Int8 = 51
-let highHat: Int8 = 44
+let bass: Int = 36
+let snare: Int = 38
+let ride: Int = 51
+let highHat: Int = 44
 
 class DrumGenerator {
   

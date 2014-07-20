@@ -8,7 +8,7 @@
 
 import Foundation
 
-let SONG_TRANSPOSITION: Int8 = 0
+let SONG_TRANSPOSITION: Int = 0
 
 func createScore(#chords: [ChordNoteMeasure], #melody: [MelodyMeasure], #bassline: [MelodyMeasure], #drums: [ChordNoteMeasure], #secondsPerBeat: Float) -> [PLMusicPlayerNote] {
   var music = [PLMusicPlayerNote]()
@@ -57,7 +57,7 @@ func notesFromChords(melody: [ChordNoteMeasure], #instrument: PLMusicPlayer.Inst
       let duration = chord.beats
       
       for note in chord.notes {
-        let playerNote = PLMusicPlayerNote(note: UInt8(note+SONG_TRANSPOSITION), instrument: instrument, velocity: velocity, start: start+measureStart, duration: duration * secondsPerBeat, channel: 0)
+        let playerNote = PLMusicPlayerNote(note: MusicUtil.UInt8MusicRepresentation(note+SONG_TRANSPOSITION), instrument: instrument, velocity: velocity, start: start+measureStart, duration: duration * secondsPerBeat, channel: 0)
         music.append(playerNote)
       }
       start += duration * secondsPerBeat
@@ -76,7 +76,7 @@ func notesFromMelody(melody: [MelodyMeasure], #instrument: PLMusicPlayer.Instrum
     for note in measure.notes {
       let duration = note.beats
       if note.note != -1 {
-        let playerNote = PLMusicPlayerNote(note: UInt8(note.note+SONG_TRANSPOSITION), instrument: instrument, velocity: velocity + UInt8(RandomHelpers.randomNumberInclusive(0, 4)) - 2, start: start+measureStart, duration: duration * secondsPerBeat, channel: 0)
+        let playerNote = PLMusicPlayerNote(note: MusicUtil.UInt8MusicRepresentation(note.note+SONG_TRANSPOSITION), instrument: instrument, velocity: velocity + UInt8(RandomHelpers.randomNumberInclusive(0, 4)) - 2, start: start+measureStart, duration: duration * secondsPerBeat, channel: 0)
         music.append(playerNote)
       }
       start += duration * secondsPerBeat
@@ -93,7 +93,7 @@ func createSimpleMusicFromChords(chords: [ChordMeasure], secondsPerBeat: Float) 
     for chord in measure.chords {
       let duration = secondsPerBeat * chord.beats
       for note in chord.chord.chordNotes {
-        let playerNote = PLMusicPlayerNote(note: UInt8(note), instrument: .Piano, velocity: 98, start: start, duration: duration, channel: 0)
+        let playerNote = PLMusicPlayerNote(note: MusicUtil.UInt8MusicRepresentation(note), instrument: .Piano, velocity: 98, start: start, duration: duration, channel: 0)
         music.append(playerNote)
       }
       start += duration

@@ -15,7 +15,7 @@ class ToFlatVIIChordGen: ChordGenProtocol {
     return chord.type == ChordType.Major7 || chord.type == ChordType.Dom7
   }
   
-  func generateNextChords(#startingChord: ChordData, numberOfMeasures: Int, scale: [(note: Int8, type: ChordType)])
+  func generateNextChords(#startingChord: ChordData, numberOfMeasures: Int, scale: [(note: Int, type: ChordType)])
     -> (chords:[ChordMeasure], nextChord: ChordData) {
       let key = ChordFactory.CBasedNote.fromRaw((startingChord.baseNote + 10) % 12)!
       let chords = [

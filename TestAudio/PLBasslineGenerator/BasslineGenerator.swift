@@ -45,7 +45,7 @@ class BasslineGenerator {
     return measures
   }
   
-  class func generateBassNotesFromCurrentNote(var currentNote: Int8, destination: Int8, chordScale: [Int8], beats: Float) -> [MelodyNote] {
+  class func generateBassNotesFromCurrentNote(var currentNote: Int, destination: Int, chordScale: [Int], beats: Float) -> [MelodyNote] {
     var notes = [MelodyNote]()
     
     let scaleAbove = noteAbove(destination, scale: chordScale)
@@ -64,7 +64,7 @@ class BasslineGenerator {
     return notes
   }
   
-  class func destinationNoteForChord(#currentNote: Int8, destinationChord: ChordData) -> Int8 {
+  class func destinationNoteForChord(#currentNote: Int, destinationChord: ChordData) -> Int {
     var highNote = destinationChord.root
     while highNote < currentNote {
       highNote += 12

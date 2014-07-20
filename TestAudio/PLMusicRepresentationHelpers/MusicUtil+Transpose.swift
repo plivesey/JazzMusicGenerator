@@ -20,8 +20,8 @@ extension MusicUtil {
   }
   
   class func invertedMelody(melody: [MelodyMeasure]) -> [MelodyMeasure] {
-    var maxValue: Int8 = Int8.min
-    var minValue: Int8 = Int8.max
+    var maxValue: Int = Int.min
+    var minValue: Int = Int.max
     for measure in melody {
       for note in measure.notes {
         if note.note > maxValue {
@@ -40,7 +40,7 @@ extension MusicUtil {
     return measures
   }
   
-  class func invertMeasure(measure: MelodyMeasure, max: Int8, min: Int8) -> MelodyMeasure {
+  class func invertMeasure(measure: MelodyMeasure, max: Int, min: Int) -> MelodyMeasure {
     let notes: [MelodyNote] = measure.notes.map {
       note in
       // Max is 10, min is 5
@@ -53,7 +53,7 @@ extension MusicUtil {
   
   class func transformMeasure(measure: MelodyMeasure, fitToChords chordMeasure: ChordMeasure) -> MelodyMeasure {
     var beats: Float = 0
-    var previousNote: Int8 = -1
+    var previousNote: Int = -1
     let notes: [MelodyNote] = measure.notes.map {
       note in
       var chord = chordMeasure.chords[0].chord
@@ -95,7 +95,7 @@ extension MusicUtil {
     return MelodyMeasure(notes: notes)
   }
   
-  class func transposeMelody(melody: [MelodyMeasure], delta: Int8) -> [MelodyMeasure] {
+  class func transposeMelody(melody: [MelodyMeasure], delta: Int) -> [MelodyMeasure] {
     return melody.map {
       measure in
       let notes: [MelodyNote] = measure.notes.map {

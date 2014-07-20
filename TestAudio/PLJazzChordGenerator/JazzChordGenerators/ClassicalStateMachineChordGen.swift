@@ -28,7 +28,7 @@ class ClassicalStateMachineChordGen: ChordGenProtocol {
       chord.type == ChordType.DimPartial
   }
   
-  func generateNextChords(#startingChord: ChordData, numberOfMeasures: Int, scale: [(note: Int8, type: ChordType)]) -> (chords:[ChordMeasure], nextChord: ChordData) {
+  func generateNextChords(#startingChord: ChordData, numberOfMeasures: Int, scale: [(note: Int, type: ChordType)]) -> (chords:[ChordMeasure], nextChord: ChordData) {
     let initial = firstChord(startingChord)
     let key = ChordFactory.CBasedNote.fromRaw(initial.transposition % 12)!
     var state = initial.state
@@ -124,14 +124,14 @@ class ClassicalStateMachineChordGen: ChordGenProtocol {
     return possibleChords.randomElement()
   }
 
-  func firstChord(chord: ChordData) -> (state: ChordNumber, transposition: Int8) {
+  func firstChord(chord: ChordData) -> (state: ChordNumber, transposition: Int) {
     
     // TODO: REMOVE THIS MADNESS
     struct Temp {
       let state: ChordNumber
-      let transposition: Int8
+      let transposition: Int
       
-      init(_ state: ChordNumber, _ transpose: Int8) {
+      init(_ state: ChordNumber, _ transpose: Int) {
         self.state = state
         self.transposition = transpose
       }

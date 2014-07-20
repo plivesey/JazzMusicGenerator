@@ -15,8 +15,8 @@ class JazzMelodyGenerator {
   
   class func generateMelodyMeasuresFromChordMeasures(
     chordMeasures: [ChordMeasure],
-    startingNote: Int8,
-    endingNote: Int8,
+    startingNote: Int,
+    endingNote: Int,
     rhythm: [RhythmMeasure],
     solo: Bool) -> [MelodyMeasure] {
       let outline = generateMelodyOutlineFromChordMeasures(chordMeasures, startingNote: startingNote)
@@ -29,11 +29,11 @@ class JazzMelodyGenerator {
   
   // Private
   
-  class func generateMelodyOutlineFromChordMeasures(chordMeasures: [ChordMeasure], startingNote: Int8) -> [MelodyMeasure] {
+  class func generateMelodyOutlineFromChordMeasures(chordMeasures: [ChordMeasure], startingNote: Int) -> [MelodyMeasure] {
     
     // Find first note
     let firstChord = chordMeasures[0].chords[0].chord
-    var scale: [Int8] = firstChord.importantScaleIndexes.map {
+    var scale: [Int] = firstChord.importantScaleIndexes.map {
       index in
       return firstChord.mainChordScale[index]
     }
@@ -72,7 +72,7 @@ class JazzMelodyGenerator {
     return measures
   }
   
-  class func nextNotes(#currentNote: Int8, destinationChord: ChordData) -> (melody: [MelodyNote], newCurrent: Int8) {
+  class func nextNotes(#currentNote: Int, destinationChord: ChordData) -> (melody: [MelodyNote], newCurrent: Int) {
     let index = RandomHelpers.randomNumberInclusive(0, destinationChord.importantScaleIndexes.count-1)
     let zeroBasedNote = destinationChord.mainChordScale[destinationChord.importantScaleIndexes[index]]
     let lowHigh = surroundingNotes(currentNote, zeroBasedDestination: zeroBasedNote)
@@ -84,7 +84,7 @@ class JazzMelodyGenerator {
   class func generateMelodyFromChordMeasures(
     chordMeasures: [ChordMeasure],
     melodyOutline: [MelodyMeasure],
-    endingNote: Int8,
+    endingNote: Int,
     rhythm: [RhythmMeasure],
     solo: Bool) -> [MelodyMeasure] {
       
@@ -138,7 +138,7 @@ class JazzMelodyGenerator {
       return measures
   }
   
-  class func stepNote(var currentNote: Int8, destinationNote: Int8, chordScale: [Int8]) -> Int8 {
+  class func stepNote(var currentNote: Int, destinationNote: Int, chordScale: [Int]) -> Int {
     let upwardDirection = currentNote < destinationNote
     do {
       if (upwardDirection) {
@@ -150,13 +150,13 @@ class JazzMelodyGenerator {
     return currentNote
   }
   
-  class func melodyNotes(#startNote: Int8, var destinationNote: Int8, beats: Float, scale: [Int8], var rhythm: [Float]) -> [MelodyNote] {
+  class func melodyNotes(#startNote: Int, var destinationNote: Int, beats: Float, scale: [Int], var rhythm: [Float]) -> [MelodyNote] {
     
     var currentNote = startNote
     var notes = [MelodyNote]()
     
     // Play an approach note at the end
-    var lastNoteOp: (note: Int8, beats: Float)? = nil
+    var lastNoteOp: (note: Int, beats: Float)? = nil
     if rhythm.count >= 2 && RandomHelpers.randomNumberInclusive(0, 2) == 0 {
       let aNotes = approachNotes(destinationNote, scaleAbove: noteAbove(destinationNote, scale: scale), scaleBelow: noteBelow(destinationNote, scale: scale))
       let approachNote = aNotes.randomElement().note
@@ -229,7 +229,7 @@ class JazzMelodyGenerator {
   }
   
   // TODO: This function crashes when currentNote goes out of range
-  class func surroundingNotes(currentNote: Int8, var zeroBasedDestination: Int8) -> (low: Int8, high: Int8) {
+  class func surroundingNotes(currentNote: Int, var zeroBasedDestination: Int) -> (low: Int, high: Int) {
     while (zeroBasedDestination <= currentNote) {
       zeroBasedDestination += 12
     }
@@ -240,7 +240,7 @@ class JazzMelodyGenerator {
     }
   }
   
-  class func selectDestination(lowHigh: (low: Int8, high: Int8), currentNote: Int8) -> Int8 {
+  class func selectDestination(lowHigh: (low: Int, high: Int), currentNote: Int) -> Int {
     // Check to see if its too low or high
     if (lowHigh.low < MELODY_MIN) {
       return lowHigh.high

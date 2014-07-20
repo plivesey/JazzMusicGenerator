@@ -12,7 +12,7 @@ class MusicUtil {
   
   // Input: Any positive number or -1
   // Output: A string representation of the note.
-  class func noteToString(var note: Int8) -> String {
+  class func noteToString(var note: Int) -> String {
     note = note % 12
     switch note {
     case -1:

@@ -103,7 +103,15 @@ class MelodyRhythmGenerator {
   }
   
   class func transitionRhythm() -> RhythmMeasure {
-    return RhythmMeasure(rhythms: [[2] , []])
+    return [
+      RhythmMeasure(rhythms: [[2] , []]),
+      RhythmMeasure(rhythms: [[2] , [2]]),
+      RhythmMeasure(rhythms: [[1, 1] , []]),
+      RhythmMeasure(rhythms: [[1, 1] , [2]]),
+      RhythmMeasure(rhythms: [[1.66, 0.34] , []]),
+      RhythmMeasure(rhythms: [[1.66, 0.34] , [2]]),
+      RhythmMeasure(rhythms: [[0.66, 1, 0.34] , [2]]),
+      ].randomElement()
   }
   
   class func twoBeatRhythmForSpeed(speed: Speed) -> [Float] {

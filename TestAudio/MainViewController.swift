@@ -17,7 +17,7 @@ class MainViewController: UIViewController {
   
   init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
     
-    let startNote: Int8 = 70 + Int8(RandomHelpers.randomNumberInclusive(0, 11))
+    let startNote = 70 + RandomHelpers.randomNumberInclusive(0, 11)
     
     let chords = JazzChordGenerator.generateRandomChords(numMeasures: 8)
     let melody = SongComposer.generateMelodyForChordMeasures(chords, startNote: startNote, endNote: startNote)

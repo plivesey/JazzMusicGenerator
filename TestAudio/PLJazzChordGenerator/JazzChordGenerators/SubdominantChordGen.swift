@@ -14,7 +14,7 @@ class SubdominantChordGen: ChordGenProtocol {
     return true
   }
   
-  func generateNextChords(#startingChord: ChordData, numberOfMeasures: Int, scale: [(note: Int8, type: ChordType)])
+  func generateNextChords(#startingChord: ChordData, numberOfMeasures: Int, scale: [(note: Int, type: ChordType)])
     -> (chords:[ChordMeasure], nextChord: ChordData) {
       
       // Don't go to one

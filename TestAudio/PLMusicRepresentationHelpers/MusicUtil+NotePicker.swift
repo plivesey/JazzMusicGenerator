@@ -13,7 +13,7 @@ extension MusicUtil {
   /*
   Returns an array of notes to get to a destination. It never plays the destination note.
   */
-  class func notesToDestination(destination: Int8, fromStart start: Int8, numberOfNotes: Int, chordScale: [Int8]) -> [Int8] {
+  class func notesToDestination(destination: Int, fromStart start: Int, numberOfNotes: Int, chordScale: [Int]) -> [Int] {
     assert(numberOfNotes > 0)
     
     let notesBetween = scaleNotesBetween(start: start, destination: destination, chordScale: chordScale)
@@ -24,7 +24,7 @@ extension MusicUtil {
     notes between is too many - play all the notes then end on above/below
     notes between arn't enough - skip over some of the notes
     */
-    var notes = [Int8]()
+    var notes = [Int]()
     if notesBetween.count + 1 <= numberOfNotes {
       notes.append(start)
       notes.extend(notesBetween)
@@ -84,8 +84,8 @@ extension MusicUtil {
     Picks the closest note in a scale to that note. Could return the same note.
     If there is a tie, picks a random note to return
   */
-  class func closestNoteToNote(note: Int8, fromScale scale: [Int8]) -> (note: Int8, scaleIndex: Int) {
-    var minDistance: Int8 = 13
+  class func closestNoteToNote(note: Int, fromScale scale: [Int]) -> (note: Int, scaleIndex: Int) {
+    var minDistance: Int = 13
     var closestNotesIndex: [Int] = []
     for (index, scaleNote) in enumerate(scale) {
       let distance = noteDistance(scaleNote, note)
@@ -103,7 +103,7 @@ extension MusicUtil {
   
   // Returns the note distance assuming both are as close as could be
   // As in, distance between 0 and 1 + 12*5 is 1
-  class func noteDistance(note: Int8, _ otherNote: Int8) -> Int8 {
+  class func noteDistance(note: Int, _ otherNote: Int) -> Int {
     let baseNote = note % 12
     let baseOtherNote = otherNote % 12
     let difference = abs(baseNote - baseOtherNote)
@@ -111,7 +111,7 @@ extension MusicUtil {
     return difference < 6 ? difference : 12 - difference
   }
   
-  class func noteFromScale(var scaleNote: Int8, closestToNote note: Int8) -> Int8 {
+  class func noteFromScale(var scaleNote: Int, closestToNote note: Int) -> Int {
     assert(note >= 12)
     assert(scaleNote < 12)
     
@@ -121,11 +121,11 @@ extension MusicUtil {
     return scaleNote
   }
   
-  class func scaleNotesBetween(#start: Int8, destination: Int8, chordScale: [Int8]) -> [Int8] {
+  class func scaleNotesBetween(#start: Int, destination: Int, chordScale: [Int]) -> [Int] {
     if start == destination {
       return []
     }
-    var notes = [Int8]()
+    var notes = [Int]()
     var currentNote = start
     if start < destination {
       // Need to go up
@@ -146,7 +146,7 @@ extension MusicUtil {
   }
   
   // Steps towards the destination without playing it
-  class func stepNote(var currentNote: Int8, destinationNote: Int8, chordScale: [Int8]) -> Int8 {
+  class func stepNote(var currentNote: Int, destinationNote: Int, chordScale: [Int]) -> Int {
     let upwardDirection = currentNote < destinationNote
     do {
       if (upwardDirection) {

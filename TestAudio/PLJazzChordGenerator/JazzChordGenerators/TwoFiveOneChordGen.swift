@@ -14,7 +14,7 @@ class TwoFiveOneChordGen: ChordGenProtocol {
     return true
   }
   
-  func generateNextChords(#startingChord: ChordData, numberOfMeasures: Int, scale: [(note: Int8, type: ChordType)]) -> (chords:[ChordMeasure], nextChord: ChordData) {
+  func generateNextChords(#startingChord: ChordData, numberOfMeasures: Int, scale: [(note: Int, type: ChordType)]) -> (chords:[ChordMeasure], nextChord: ChordData) {
     
     // Don't go to one
     var possibleDestinations = Array(scale[1..<scale.count])

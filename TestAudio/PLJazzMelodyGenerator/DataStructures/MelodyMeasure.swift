@@ -8,7 +8,7 @@
 
 import Foundation
 
-typealias MelodyNote = (note: Int8, beats: Float)
+typealias MelodyNote = (note: Int, beats: Float)
 
 struct MelodyMeasure {
   let notes: [MelodyNote]
@@ -19,6 +19,6 @@ struct ChordNoteMeasure {
 }
 
 struct ChordNote {
-  let notes: [Int8]
+  let notes: [Int]
   let beats: Float
 }

@@ -10,7 +10,7 @@ import Foundation
 
 class ChordVoicer {
   
-  class func voicedChordFromChordNote(chordNote: ChordNote, closeTo: Int8, min: Int8, max: Int8) -> ChordNote {
+  class func voicedChordFromChordNote(chordNote: ChordNote, closeTo: Int, min: Int, max: Int) -> ChordNote {
     if chordNote.notes.count == 0 {
       // No voicing needed
       return chordNote
@@ -23,7 +23,7 @@ class ChordVoicer {
     // TODO: Implement min/max
     
     //TODO: Clean up this code
-    var otherOrderedNotes: [Int8] = [ ]
+    var otherOrderedNotes: [Int] = [ ]
     var scaleIndex = bassNote.scaleIndex + 1
     while scaleIndex != bassNote.scaleIndex {
       if scaleIndex >= zeroBasedNotes.count {

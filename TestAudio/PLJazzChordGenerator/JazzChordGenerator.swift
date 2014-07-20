@@ -8,7 +8,7 @@
 
 import Foundation
 
-let scale: [(note: Int8, type: ChordType)] = [
+let scale: [(note: Int, type: ChordType)] = [
   (0, .Major7),
   (2, .Minor7),
   (4, .Minor7),

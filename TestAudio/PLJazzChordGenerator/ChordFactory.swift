@@ -270,7 +270,7 @@ class ChordFactory {
   
   // Helpers
   
-  enum CBasedNote: Int8 {
+  enum CBasedNote: Int {
     case C = 0
     case Db
     case D
@@ -286,17 +286,17 @@ class ChordFactory {
   }
   
   // Returns an always ascending sequence of notes
-  class func noteArray(notes: [CBasedNote], key: CBasedNote) -> [Int8] {
+  class func noteArray(notes: [CBasedNote], key: CBasedNote) -> [Int] {
     
     let transpose = key.toRaw()
     
-    let intNotes: [Int8] = notes.map {
+    let intNotes: [Int] = notes.map {
       note in
       return (note.toRaw() + transpose) % 12
     }
     
-    var octave: Int8 = 0
-    var previousNote: Int8 = -1
+    var octave: Int = 0
+    var previousNote: Int = -1
     return intNotes.map {
       note in
       if (note < previousNote) {

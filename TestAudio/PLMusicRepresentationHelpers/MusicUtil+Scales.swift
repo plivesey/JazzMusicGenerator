@@ -12,7 +12,7 @@ extension MusicUtil {
   
   // Returns a zero based scale
   // Keeps the current order so it will not be always ascending
-  class func zeroBasedScale(scale: [Int8]) -> [Int8] {
+  class func zeroBasedScale(scale: [Int]) -> [Int] {
     return scale.map {
       note in return note % 12
     }

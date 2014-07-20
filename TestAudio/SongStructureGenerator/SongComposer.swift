@@ -10,24 +10,24 @@ import Foundation
 
 class SongComposer {
   
-  class func generateMelodyForChordMeasures(chordMeasures: [ChordMeasure], startNote: Int8, endNote: Int8) -> [MelodyMeasure] {
+  class func generateMelodyForChordMeasures(chordMeasures: [ChordMeasure], startNote: Int, endNote: Int) -> [MelodyMeasure] {
     
     let numberOfMeasures = chordMeasures.count
     assert(numberOfMeasures % 4 == 0)
     
-    // Keep rhythm the same for every 4 note
-    var rhythm = MelodyRhythmGenerator.rhythmMeasuresWithNumber(3, solo: false)
-    rhythm.append(MelodyRhythmGenerator.transitionRhythm())
+    // Keep rhythm the same for every 4 note except the last measure
+    let rhythmStart = MelodyRhythmGenerator.rhythmMeasuresWithNumber(3, solo: false)
     
     var measures: [MelodyMeasure] = []
     var start = startNote
     for index in 0..<numberOfMeasures/4 {
-      var end = start - 7 + Int8(RandomHelpers.randomNumberInclusive(0, 14))
+      var end = start - 7 + Int(RandomHelpers.randomNumberInclusive(0, 14))
       if index == numberOfMeasures/4 - 1 {
         end = endNote
       }
       
       let chords = Array(chordMeasures[index*4..<(index+1)*4])
+      let rhythm = rhythmStart + [MelodyRhythmGenerator.transitionRhythm()]
       let nextMelody = JazzMelodyGenerator.generateMelodyMeasuresFromChordMeasures(chords, startingNote: start, endingNote: end, rhythm: rhythm, solo: false)
       measures.extend(nextMelody)
       
@@ -36,7 +36,7 @@ class SongComposer {
     return measures
   }
   
-  class func generateSoloSection(chordMeasures: [ChordMeasure], startNote: Int8, endNote: Int8) -> [MelodyMeasure] {
+  class func generateSoloSection(chordMeasures: [ChordMeasure], startNote: Int, endNote: Int) -> [MelodyMeasure] {
     
     assert(chordMeasures.count % 2 == 0)
     
@@ -91,7 +91,7 @@ class SongComposer {
         let lastMeasure = actualMeasures[actualMeasures.count - 1]
         let lastNote = lastMeasure.notes[lastMeasure.notes.count - 1].note
         
-        start = Int8(RandomHelpers.randomNumberInclusive(0, 1) * 2 - 1) + lastNote
+        start = Int(RandomHelpers.randomNumberInclusive(0, 1) * 2 - 1) + lastNote
         
       } else if randPercent < 90 {
         // Generate a transposed melody
@@ -103,7 +103,7 @@ class SongComposer {
         
         // Second part
         let secondChords = [chordMeasures[index*2 + 1]]
-        let transpose = 5 + Int8(RandomHelpers.randomNumberInclusive(0, 10))
+        let transpose = 5 + Int(RandomHelpers.randomNumberInclusive(0, 10))
         
         var originalMelody = firstMelody
         if RandomHelpers.randomNumberInclusive(0, 1) == 0 {
@@ -133,8 +133,8 @@ class SongComposer {
     return measures
   }
   
-  class func newSoloStartNote(current: Int8) -> Int8 {
-    var next = current - 7 + Int8(RandomHelpers.randomNumberInclusive(0, 14))
+  class func newSoloStartNote(current: Int) -> Int {
+    var next = current - 7 + Int(RandomHelpers.randomNumberInclusive(0, 14))
     if next > 100 {
       return 110
     }

@@ -14,7 +14,7 @@ class AscendingDimChordGen: ChordGenProtocol {
     return chord.type == ChordType.Major7
   }
   
-  func generateNextChords(#startingChord: ChordData, numberOfMeasures: Int, scale: [(note: Int8, type: ChordType)])
+  func generateNextChords(#startingChord: ChordData, numberOfMeasures: Int, scale: [(note: Int, type: ChordType)])
     -> (chords:[ChordMeasure], nextChord: ChordData) {
       let key = ChordFactory.CBasedNote.fromRaw(startingChord.baseNote)!
       let chords = [
