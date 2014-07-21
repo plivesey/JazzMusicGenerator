@@ -25,23 +25,35 @@ class JazzChordGenerator {
     var chords = [ChordMeasure]()
     while (countElements(chords) < numMeasures) {
       if (countElements(chords) == numMeasures - 4) {
-        chords.append(ChordMeasure(chords: [(nextChord, 4)]))
-        chords.append(ChordMeasure(chords: [(nextChord, 4)]))
-        chords.append(ChordMeasure(chords: [(ChordFactory.iiChordMajorABForm(key: .C), 4)]))
-        chords.append(ChordMeasure(chords: [(ChordFactory.VChordMajorABForm(key: .C), 4)]))
+        let result = generateEndingChordsStarting(nextChord, numberOfMeasures: 4)
+        chords += result
       } else if (countElements(chords) == numMeasures - 2) {
-        chords.append(ChordMeasure(chords: [(nextChord, 4)]))
-        chords.append(ChordMeasure(chords: [(ChordFactory.iiChordMajorABForm(key: .C), 2), (ChordFactory.VChordMajorABForm(key: .C), 2)]))
+        let result = generateEndingChordsStarting(nextChord, numberOfMeasures: 2)
+        chords += result
       } else {
         let numberOfMeasures = (arc4random_uniform(2)+1)*2
         let result = generateNextChords(startingChord: nextChord, numberOfMeasures: Int(numberOfMeasures))
         nextChord = result.nextChord
-        for chordMeasure in result.chords {
-          chords.append(chordMeasure)
-        }
+        chords += result.chords
       }
     }
     return chords
+  }
+  
+  class func generateEndingChordsStarting(startingChord: ChordData, numberOfMeasures: Int) -> [ChordMeasure] {
+    let destination = ChordFactory.IChord(key: .C)
+    let chordGens = endingChordGenerators().filter {
+      chordGenerator in
+      return chordGenerator.0.canGenerateEndingStartingOnChord(startingChord, numberOfMeasures: numberOfMeasures, destination: destination)
+    }
+    let chordGenerator = RandomHelpers.randomElementFromWeightedList(chordGens)
+    return chordGenerator.generateEndingChords(startingChord: startingChord, numberOfMeasures: numberOfMeasures, destination: destination)
+  }
+  
+  class func endingChordGenerators() -> [(ChordEndingGenProtocol, weight: Int)] {
+    return [
+      (TwoFiveOneChordGen(), weight: 2)
+    ]
   }
   
   class func generateNextChords(#startingChord: ChordData, numberOfMeasures: Int)

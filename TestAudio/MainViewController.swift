@@ -54,17 +54,42 @@ class MainViewController: UIViewController {
     
     scoreText += "Solo Chords: \n"
     
-    for measure in soloChords {
-      for chord in measure.chords {
-        scoreText += "Playing chord: \(chord.chord) for beats: \(chord.beats)\n"
+    let charsPerMeasure = 20
+    for (measureIndex, measure) in enumerate(soloChords) {
+      scoreText += "| "
+      var measureText = ""
+      for (chordIndex, chord) in enumerate(measure.chords) {
+        if chordIndex > 0 {
+          
+          measureText += "- "
+        }
+        measureText += "\(chord.chord) "
+      }
+      
+      var end = true
+      while measureText.lengthOfBytesUsingEncoding(NSUTF8StringEncoding) < charsPerMeasure {
+        if end {
+          measureText += " "
+        } else {
+          measureText = " " + measureText
+        }
+        end = !end
+      }
+      
+      scoreText += measureText
+      
+      if measureIndex % 2 == 1 {
+        scoreText += " |\n"
       }
     }
     
-    let main = createScore(chords: rhythm, melody: melody, bassline: bassline, drums: drums, secondsPerBeat: 0.5)
-    let solo = createScore(chords: soloRhythm, melody: soloMelody, bassline: soloBassline, drums: soloDrums, secondsPerBeat: 0.5)
-    let end = createScore(chords: endRhythm, melody: endMelody, bassline: endBassline, drums: endDrums, secondsPerBeat: 0.5)
+    let secondsPerBeat: Float = 0.5
     
-    let sectionLength: Float = 0.5 * 4 * 8
+    let main = createScore(chords: rhythm, melody: melody, bassline: bassline, drums: drums, secondsPerBeat: secondsPerBeat)
+    let solo = createScore(chords: soloRhythm, melody: soloMelody, bassline: soloBassline, drums: soloDrums, secondsPerBeat: secondsPerBeat)
+    let end = createScore(chords: endRhythm, melody: endMelody, bassline: endBassline, drums: endDrums, secondsPerBeat: secondsPerBeat)
+    
+    let sectionLength: Float = secondsPerBeat * 4 * 8
     
     var song: [PLMusicPlayerNote] = []
     song.extend(main)
@@ -89,8 +114,17 @@ class MainViewController: UIViewController {
       return x
       })
     
+    var soloLoop = solo
+    for i in 1..<3 {
+      soloLoop.extend(solo.map {
+        (var x) in
+        x.start = x.start + sectionLength * 2 * Float(i)
+        return x
+        })
+    }
+    
     music = song
-//    music = solo
+//    music = soloLoop
     
     super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
   }

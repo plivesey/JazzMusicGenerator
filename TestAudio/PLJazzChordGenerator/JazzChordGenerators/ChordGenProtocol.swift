@@ -13,3 +13,9 @@ protocol ChordGenProtocol {
   func generateNextChords(#startingChord: ChordData, numberOfMeasures: Int, scale: [(note: Int, type: ChordType)])
     -> (chords:[ChordMeasure], nextChord: ChordData)
 }
+
+protocol ChordEndingGenProtocol {
+  func canGenerateEndingStartingOnChord(chord: ChordData, numberOfMeasures: Int, destination: ChordData) -> Bool
+  func generateEndingChords(#startingChord: ChordData, numberOfMeasures: Int, destination: ChordData)
+    -> [ChordMeasure]
+}

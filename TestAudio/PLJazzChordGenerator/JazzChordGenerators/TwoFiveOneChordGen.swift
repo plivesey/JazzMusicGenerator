@@ -8,14 +8,23 @@
 
 import Foundation
 
-class TwoFiveOneChordGen: ChordGenProtocol {
+class TwoFiveOneChordGen: ChordGenProtocol, ChordEndingGenProtocol {
   
   func canStartOnChord(chord: ChordData, numberOfMeasures: Int) -> Bool {
     return true
   }
   
+  func canGenerateEndingStartingOnChord(chord: ChordData, numberOfMeasures: Int, destination: ChordData) -> Bool {
+    return true
+  }
+  
+  func generateEndingChords(#startingChord: ChordData, numberOfMeasures: Int, destination: ChordData) -> [ChordMeasure] {
+      let baseNote = destination.baseNote
+      let key = ChordFactory.CBasedNote.fromRaw(baseNote)!
+      return generateChords(startingChord: startingChord, numberOfMeasures: numberOfMeasures, key: key, type: destination.type).chords
+  }
+  
   func generateNextChords(#startingChord: ChordData, numberOfMeasures: Int, scale: [(note: Int, type: ChordType)]) -> (chords:[ChordMeasure], nextChord: ChordData) {
-    
     // Don't go to one
     var possibleDestinations = Array(scale[1..<scale.count])
     
@@ -43,7 +52,12 @@ class TwoFiveOneChordGen: ChordGenProtocol {
     
     let key = ChordFactory.CBasedNote.fromRaw(oneNote.note)!
     
-    if (oneNote.type == ChordType.Major7) {
+    return generateChords(startingChord: startingChord, numberOfMeasures: numberOfMeasures, key: key, type: oneNote.type)
+  }
+  
+  func generateChords(#startingChord: ChordData, numberOfMeasures: Int, key: ChordFactory.CBasedNote, type: ChordType) -> (chords:[ChordMeasure], nextChord: ChordData) {
+    
+    if (type == ChordType.Major7) {
       // TODO: Sometimes go to 6
       let one = ChordFactory.IChordMajor9(key: key)
       let two = ChordFactory.iiChordMajorABForm(key: key)
