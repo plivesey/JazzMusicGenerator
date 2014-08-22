@@ -287,7 +287,7 @@ func chordBeat3(chordMeasure: ChordMeasure) -> ChordData {
       return chord.chord
     }
   }
-  return nil!
+  return chordMeasure.chords[0].chord
 }
 
 func approachNotes(note: Int, #scaleAbove: Int, #scaleBelow: Int) -> [MelodyNote] {

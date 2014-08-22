@@ -17,4 +17,24 @@ extension MusicUtil {
       note in return note % 12
     }
   }
+  
+  class func scaleWithScale(scale: [Int], differentMode mode: Int) -> [Int] {
+    var newScale: [Int] = []
+    var currentIndex = mode
+    var addition = 0
+    while newScale.count < scale.count {
+      newScale.append(scale[currentIndex] + addition)
+      currentIndex++
+      if currentIndex >= scale.count {
+        currentIndex = 0
+        addition = 12
+      }
+    }
+    if newScale[0] >= 12 {
+      newScale = newScale.map { note in
+        return note - 12
+      }
+    }
+    return newScale
+  }
 }

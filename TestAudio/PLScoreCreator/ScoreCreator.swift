@@ -17,7 +17,7 @@ func createScore(#chords: [ChordNoteMeasure], #melody: [MelodyMeasure], #basslin
   music.extend(notesFromChords(chords, instrument: .Piano, velocity: 50, secondsPerBeat: secondsPerBeat))
   
   // Add melody
-//  music.extend(notesFromMelody(melody, instrument: .Sax, velocity: 70, secondsPerBeat: secondsPerBeat))
+//  music.extend(notesFromMelody(melody, instrument: .Sax, velocity: 50, secondsPerBeat: secondsPerBeat))
   music.extend(notesFromMelody(melody, instrument: .Piano, velocity: 80, secondsPerBeat: secondsPerBeat))
 
   // Add bassline

@@ -53,7 +53,7 @@ class BasslineGenerator {
     let appNotes = approachNotes(destination, scaleAbove: scaleAbove, scaleBelow: scaleBelow)
     let newDestination = appNotes.randomElement().note
     
-    for _ in 0..<beats-1 {
+    for _ in 0..<Int(beats-1) {
       notes.append((currentNote, 1))
       let newNote = JazzMelodyGenerator.stepNote(currentNote, destinationNote: newDestination, chordScale: chordScale)
       currentNote = newNote

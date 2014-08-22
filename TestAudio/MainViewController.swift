@@ -13,9 +13,9 @@ class MainViewController: UIViewController {
   let music: [PLMusicPlayerNote]
   let scoreText: String
   
-  @IBOutlet var textView: UITextView
+  @IBOutlet var textView: UITextView!
   
-  init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
+  override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
     
     let startNote = 70 + RandomHelpers.randomNumberInclusive(0, 11)
     
@@ -127,6 +127,10 @@ class MainViewController: UIViewController {
 //    music = soloLoop
     
     super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+  }
+
+  required init(coder aDecoder: NSCoder) {
+      fatalError("init(coder:) has not been implemented")
   }
   
   override func viewDidLoad()  {

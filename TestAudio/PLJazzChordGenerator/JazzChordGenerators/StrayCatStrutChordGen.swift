@@ -20,7 +20,7 @@ class StrayCatStrutChordGen: ChordGenProtocol {
       let chords = [
         startingChord,
         ChordFactory.iOverVII(key: key),
-        ChordFactory.flatVISharp11(key: key),
+        ChordFactory.flatVISharp11Dom(key: key),
         ChordFactory.VChordMinorABForm(key: key)
       ]
       let destination = ChordFactory.iChordMinor9(key: key)

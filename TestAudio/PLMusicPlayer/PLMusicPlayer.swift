@@ -29,6 +29,8 @@ class PLMusicPlayer {
   let sax: AVAudioUnitMIDIInstrument
   let drums: AVAudioUnitMIDIInstrument
   
+  var currentlyPlaying = false
+  
   var playingNotes = Dictionary<PlayingNote, Int>()
   
   class var sharedInstance:PLMusicPlayer {
@@ -37,7 +39,7 @@ class PLMusicPlayer {
         static var instance : PLMusicPlayer? = nil
       }
       
-      if !StaticMusicPlayerContainer.instance {
+      if StaticMusicPlayerContainer.instance == nil {
         StaticMusicPlayerContainer.instance = PLMusicPlayer()
       }
       
@@ -66,7 +68,7 @@ class PLMusicPlayer {
     
     var error: NSError? = nil
     audioEngine.startAndReturnError(&error)
-    if error {
+    if (error != nil) {
       println("ERROR \(error)")
     }
   }
@@ -78,28 +80,44 @@ class PLMusicPlayer {
       componentFlags: 0,
       componentFlagsMask: 0)
     
-    let instrument = AVAudioUnitMIDIInstrument(audioComponentDescription: description)
+    let instrument = AVAudioUnitSampler(audioComponentDescription: description)
     
     let soundBankPath = NSBundle.mainBundle().pathForResource(fileName, ofType: "sf2")
-    let soundBankURL = NSURL.fileURLWithPath(soundBankPath)
+    let soundBankURL = NSURL.fileURLWithPath(soundBankPath!)
     
-    let samplerAudioUnit = instrument.audioUnit
-    var result = OSStatus(noErr)
+    var error: NSError? = nil
+    instrument.loadSoundBankInstrumentAtURL(soundBankURL, program: presetID, bankMSB: UInt8(kAUSampler_DefaultMelodicBankMSB), bankLSB: UInt8(kAUSampler_DefaultBankLSB), error: &error)
+    if error != nil {
+      println("ERROR LOADING INSTRUMENT")
+    }
     
-    // fill out a bank preset data structure
-    var bpData = AUSamplerBankPresetData(bankURL: Unmanaged<CFURL>(_private: soundBankURL), bankMSB: UInt8(kAUSampler_DefaultMelodicBankMSB), bankLSB: UInt8(kAUSampler_DefaultBankLSB), presetID: presetID, reserved: 0)
-    
-    // set the kAUSamplerProperty_LoadPresetFromBank property
-    result = AudioUnitSetProperty(samplerAudioUnit,
-      UInt32(kAUSamplerProperty_LoadPresetFromBank),
-      UInt32(kAudioUnitScope_Global),
-      0, &bpData, 8)
+//    var result = OSStatus(noErr)
+//    
+//    // fill out a bank preset data structure
+//    var bpData = AUSamplerBankPresetData(bankURL: Unmanaged<CFURL>(_private: soundBankURL), bankMSB: UInt8(kAUSampler_DefaultMelodicBankMSB), bankLSB: UInt8(kAUSampler_DefaultBankLSB), presetID: presetID, reserved: 0)
+//    
+//    // set the kAUSamplerProperty_LoadPresetFromBank property
+//    result = AudioUnitSetProperty(samplerAudioUnit,
+//      UInt32(kAUSamplerProperty_LoadPresetFromBank),
+//      UInt32(kAudioUnitScope_Global),
+//      0, &bpData, 8)
     
     return instrument
   }
   
   func playMusic(music: [PLMusicPlayerNote], maxNumberOfTimers: Int) {
+    currentlyPlaying = true
     playMusic(music, maxNumberOfTimers: maxNumberOfTimers, playedSoFar: 0)
+  }
+  
+  func stopMusic() {
+    currentlyPlaying = false
+    audioEngine.pause()
+    audioEngine.disconnectNodeInput(bass)
+    audioEngine.disconnectNodeInput(piano)
+    audioEngine.disconnectNodeInput(drums)
+    audioEngine.disconnectNodeInput(sax)
+    audioEngine.stop()
   }
   
   func playMusic(music: [PLMusicPlayerNote], maxNumberOfTimers: Int, playedSoFar: Float) {
@@ -116,6 +134,11 @@ class PLMusicPlayer {
       index = chordTuple.nextIndex
       
       dispatchAccuratelyAfter(start, queue: dispatch_get_main_queue()) {
+        if !self.currentlyPlaying {
+          // Don't send anything
+          return
+        }
+        
         for i in 0..<countElements(chord) {
           let note = chord[i].note
           let velocity = chord[i].velocity
@@ -139,6 +162,11 @@ class PLMusicPlayer {
           }
         }
         dispatchAccuratelyAfter(chord[0].duration, queue:dispatch_get_main_queue()) {
+          if !self.currentlyPlaying {
+            // Don't send anything
+            return
+          }
+          
           for i in 0..<countElements(chord) {
             let playingNote = PlayingNote(instrument: chord[i].instrument, note: chord[i].note)
             // We can unwrap this because we'll always have set this when we started the note
@@ -169,6 +197,10 @@ class PLMusicPlayer {
       let newStart = music[index].start
       
       dispatchAccuratelyAfter(newStart-playedSoFar, queue:dispatch_get_main_queue()) {
+        if !self.currentlyPlaying {
+          // Don't send anything
+          return
+        }
         self.playMusic(newMusic, maxNumberOfTimers:maxNumberOfTimers, playedSoFar:newStart)
       }
     }

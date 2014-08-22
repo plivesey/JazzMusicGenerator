@@ -10,6 +10,51 @@ import Foundation
 
 class ChordFactory {
   /*
+    Generic chord
+  */
+  class func genericChord(#key: CBasedNote, scaleDegree: Int) -> ChordData {
+    assert(scaleDegree >= 0)
+    assert(scaleDegree < 7)
+    let scaleNotes = [0, 2, 4, 5, 7, 9, 11]
+    let keyNote = CBasedNote.C.toRaw() + key.toRaw()
+    let bassNote = (keyNote + scaleNotes[scaleDegree]) % 12
+    let chordType = chordTypeFromScaleDegree(scaleDegree)
+    
+    var chordScale = MusicUtil.scaleWithScale(scaleNotes, differentMode: scaleDegree)
+    chordScale = chordScale.map { note in
+      return note + key.toRaw()
+    }
+    if chordScale[0] > 12 {
+      chordScale = chordScale.map { note in
+        return note - 12
+      }
+    }
+    
+    let rootNote = chordScale[0]
+    let important = [0, 2, 4, 6]
+    let chordNotes: [Int] = important.map { index in
+      return chordScale[index]
+    }
+    
+    return ChordData(baseNote: bassNote, type: chordType, chordScale: [chordScale], importantScaleIndexes: important, chordNotes: chordNotes, root: bassNote)
+  }
+  
+  class func chordTypeFromScaleDegree(scaleDegree: Int) -> ChordType {
+    switch (scaleDegree) {
+    case 0, 3:
+      return .Major7
+    case 1, 2, 5:
+        return .Minor7
+    case 4:
+      return .Dom7
+    case 6:
+      return .DimPartial
+    default:
+      assert(false, "Should never get here. Invalide scale degree")
+      return .Major7
+    }
+  }
+  /*
     Root position basic chords
   */
   
@@ -229,13 +274,25 @@ class ChordFactory {
   /*
   Minor based chords
   */
-  class func flatVISharp11(#key: CBasedNote) -> ChordData {
+  class func flatVISharp11Dom(#key: CBasedNote) -> ChordData {
     let bassNote = (CBasedNote.Ab.toRaw() + key.toRaw()) % 12
     let type = ChordType.Dom7
     let chordScales = [
       noteArray([.Ab, .Bb, .C, .D, .Eb, .F, .Gb], key: key)
     ]
     let chord = noteArray([.Ab, .C, .Eb, .Gb], key: key)
+    let important = [0, 2, 4, 6]
+    let root = (CBasedNote.Ab.toRaw() + key.toRaw()) % 12
+    return ChordData(baseNote: bassNote, type: type, chordScale: chordScales, importantScaleIndexes: important, chordNotes: chord, root: root)
+  }
+  
+  class func flatVISharp11(#key: CBasedNote) -> ChordData {
+    let bassNote = (CBasedNote.Ab.toRaw() + key.toRaw()) % 12
+    let type = ChordType.Major7
+    let chordScales = [
+      noteArray([.Ab, .Bb, .C, .D, .Eb, .F, .G], key: key)
+    ]
+    let chord = noteArray([.Ab, .C, .Eb, .G], key: key)
     let important = [0, 2, 4, 6]
     let root = (CBasedNote.Ab.toRaw() + key.toRaw()) % 12
     return ChordData(baseNote: bassNote, type: type, chordScale: chordScales, importantScaleIndexes: important, chordNotes: chord, root: root)
