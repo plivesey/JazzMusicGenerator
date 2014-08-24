@@ -18,12 +18,15 @@ struct ChordNote {
   
   var note: Int {
     get {
-      return notes[0]
+      if notes.count > 0 {
+        return notes[0]
+      } else {
+        return -1
+      }
     }
   }
   
   init(notes: [Int], beats: Float) {
-    assert(notes.count > 0)
     self.notes = notes
     self.beats = beats
   }
