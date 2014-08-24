@@ -10,7 +10,7 @@ import Foundation
 
 extension MusicUtil {
   
-  class func transformedMelody(melody: [MelodyMeasure], fitToChords chords: [ChordMeasure]) -> [MelodyMeasure] {
+  class func transformedMelody(melody: [ChordNoteMeasure], fitToChords chords: [ChordMeasure]) -> [ChordNoteMeasure] {
     var index = 0
     return melody.map {
       measure in
@@ -19,7 +19,7 @@ extension MusicUtil {
     }
   }
   
-  class func invertedMelody(melody: [MelodyMeasure]) -> [MelodyMeasure] {
+  class func invertedMelody(melody: [ChordNoteMeasure]) -> [ChordNoteMeasure] {
     var maxValue: Int = Int.min
     var minValue: Int = Int.max
     for measure in melody {
@@ -33,28 +33,28 @@ extension MusicUtil {
       }
     }
     
-    let measures: [MelodyMeasure] = melody.map {
+    let measures: [ChordNoteMeasure] = melody.map {
       measure in
       return self.invertMeasure(measure, max: maxValue, min: minValue)
     }
     return measures
   }
   
-  class func invertMeasure(measure: MelodyMeasure, max: Int, min: Int) -> MelodyMeasure {
-    let notes: [MelodyNote] = measure.notes.map {
+  class func invertMeasure(measure: ChordNoteMeasure, max: Int, min: Int) -> ChordNoteMeasure {
+    let notes: [ChordNote] = measure.notes.map {
       note in
       // Max is 10, min is 5
       // Note is 9 should go to 6
       // 5 + 10 - 9 = max + min - value
-      return (max - note.note + min, note.beats)
+      return ChordNote(notes: [max - note.note + min], beats: note.beats)
     }
-    return MelodyMeasure(notes: notes)
+    return ChordNoteMeasure(notes: notes)
   }
   
-  class func transformMeasure(measure: MelodyMeasure, fitToChords chordMeasure: ChordMeasure) -> MelodyMeasure {
+  class func transformMeasure(measure: ChordNoteMeasure, fitToChords chordMeasure: ChordMeasure) -> ChordNoteMeasure {
     var beats: Float = 0
     var previousNote: Int = -1
-    let notes: [MelodyNote] = measure.notes.map {
+    let notes: [ChordNote] = measure.notes.map {
       note in
       var chord = chordMeasure.chords[0].chord
       if (beats >= 2) {
@@ -90,19 +90,19 @@ extension MusicUtil {
       previousNote = newNote
       beats += note.beats
       
-      return (newNote, note.beats)
+      return ChordNote(notes: [newNote], beats: note.beats)
     }
-    return MelodyMeasure(notes: notes)
+    return ChordNoteMeasure(notes: notes)
   }
   
-  class func transposeMelody(melody: [MelodyMeasure], delta: Int) -> [MelodyMeasure] {
+  class func transposeMelody(melody: [ChordNoteMeasure], delta: Int) -> [ChordNoteMeasure] {
     return melody.map {
       measure in
-      let notes: [MelodyNote] = measure.notes.map {
+      let notes: [ChordNote] = measure.notes.map {
         note in
-        return (note.note + delta, note.beats)
+        return ChordNote(notes: [note.note + delta], beats: note.beats)
       }
-      return MelodyMeasure(notes: notes)
+      return ChordNoteMeasure(notes: notes)
     }
   }
 }

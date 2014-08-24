@@ -19,21 +19,21 @@ class MainViewController: UIViewController {
     
     let startNote = 70 + RandomHelpers.randomNumberInclusive(0, 11)
     
-    let chords = JazzChordGenerator.generateRandomChords(numMeasures: 8)
+    let chords = JazzChordGenerator.generateRandomChords(numMeasures: 8, key: 1)
     let melody = SongComposer.generateMelodyForChordMeasures(chords, startNote: startNote, endNote: startNote)
     let bassline = BasslineGenerator.generateBasslineForChordMeasures(chords)
     let rhythm = RhythmSectionGenerator.rhythmSectionFromChords(chords)
     let drums = DrumGenerator.generateDrums(numberOfMeasures: chords.count)
     
-    let soloChords = JazzChordGenerator.generateRandomChords(numMeasures: 16)
+    let soloChords = JazzChordGenerator.generateRandomChords(numMeasures: 16, key: 1)
     let soloMelody = SongComposer.generateSoloSection(soloChords, startNote: startNote, endNote: startNote)
     let soloBassline = BasslineGenerator.generateBasslineForChordMeasures(soloChords)
     let soloRhythm = RhythmSectionGenerator.rhythmSectionFromChords(soloChords)
     let soloDrums = DrumGenerator.generateDrums(numberOfMeasures: soloChords.count)
     
     let endChord = chords[0]
-    let endMelody = [MelodyMeasure(notes: [(melody[0].notes[0].note, 4)])]
-    let endBassline = [MelodyMeasure(notes: [(bassline[0].notes[0].note, 4)])]
+    let endMelody = [ChordNoteMeasure(notes: [ChordNote(notes: [melody[0].notes[0].note], beats: 4)])]
+    let endBassline = [ChordNoteMeasure(notes: [ChordNote(notes: [bassline[0].notes[0].note], beats: 4)])]
     let endRhythm = [rhythm[0]]
     let endDrums = [ChordNoteMeasure(notes: [ChordNote(notes: [52], beats: 4)])]
     
@@ -42,7 +42,7 @@ class MainViewController: UIViewController {
       
       scoreText += "---[\(i)]---\n"
       for chord in chords[i].chords {
-        scoreText += "Playing chord: \(chord.chord) for beats: \(chord.beats)\n"
+        scoreText += "Playing chord: \(chord.chord) (\(chord.chord.chordNotes[0]), \(chord.chord.chordNotes[1]), \(chord.chord.chordNotes[2])) for beats: \(chord.beats)\n"
       }
       for note in melody[i].notes {
         let value = note.note
@@ -85,9 +85,24 @@ class MainViewController: UIViewController {
     
     let secondsPerBeat: Float = 0.5
     
-    let main = createScore(chords: rhythm, melody: melody, bassline: bassline, drums: drums, secondsPerBeat: secondsPerBeat)
-    let solo = createScore(chords: soloRhythm, melody: soloMelody, bassline: soloBassline, drums: soloDrums, secondsPerBeat: secondsPerBeat)
-    let end = createScore(chords: endRhythm, melody: endMelody, bassline: endBassline, drums: endDrums, secondsPerBeat: secondsPerBeat)
+    let main = ScoreCreator.createScore([
+      ScoreCreator.instrumentScore(melody, .Piano, 80),
+      ScoreCreator.instrumentScore(rhythm, .Piano, 70),
+      ScoreCreator.instrumentScore(bassline, .Bass, 70),
+      ScoreCreator.instrumentScore(drums, .Drums, 50)
+      ], secondsPerBeat: secondsPerBeat)
+    let solo = ScoreCreator.createScore([
+      ScoreCreator.instrumentScore(melody, .Piano, 80),
+      ScoreCreator.instrumentScore(rhythm, .Piano, 70),
+      ScoreCreator.instrumentScore(bassline, .Bass, 70),
+      ScoreCreator.instrumentScore(drums, .Drums, 50)
+      ], secondsPerBeat: secondsPerBeat)
+    let end = ScoreCreator.createScore([
+      ScoreCreator.instrumentScore(melody, .Piano, 80),
+      ScoreCreator.instrumentScore(rhythm, .Piano, 70),
+      ScoreCreator.instrumentScore(bassline, .Bass, 70),
+      ScoreCreator.instrumentScore(drums, .Drums, 50)
+      ], secondsPerBeat: secondsPerBeat)
     
     let sectionLength: Float = secondsPerBeat * 4 * 8
     

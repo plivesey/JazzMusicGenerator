@@ -10,7 +10,7 @@ import Foundation
 
 class SongComposer {
   
-  class func generateMelodyForChordMeasures(chordMeasures: [ChordMeasure], startNote: Int, endNote: Int) -> [MelodyMeasure] {
+  class func generateMelodyForChordMeasures(chordMeasures: [ChordMeasure], startNote: Int, endNote: Int) -> [ChordNoteMeasure] {
     
     let numberOfMeasures = chordMeasures.count
     assert(numberOfMeasures % 4 == 0)
@@ -18,7 +18,7 @@ class SongComposer {
     // Keep rhythm the same for every 4 note except the last measure
     let rhythmStart = MelodyRhythmGenerator.rhythmMeasuresWithNumber(3, solo: false)
     
-    var measures: [MelodyMeasure] = []
+    var measures: [ChordNoteMeasure] = []
     var start = startNote
     for index in 0..<numberOfMeasures/4 {
       var end = start - 7 + Int(RandomHelpers.randomNumberInclusive(0, 14))
@@ -36,13 +36,13 @@ class SongComposer {
     return measures
   }
   
-  class func generateSoloSection(chordMeasures: [ChordMeasure], startNote: Int, endNote: Int) -> [MelodyMeasure] {
+  class func generateSoloSection(chordMeasures: [ChordMeasure], startNote: Int, endNote: Int) -> [ChordNoteMeasure] {
     
     assert(chordMeasures.count % 2 == 0)
     
     let numberOfMeasures = chordMeasures.count
     
-    var measures: [MelodyMeasure] = []
+    var measures: [ChordNoteMeasure] = []
     var start = startNote
     
     var repeatedRhythm = MelodyRhythmGenerator.rhythmMeasuresWithNumber(2, solo: true, state: .Medium)

@@ -8,12 +8,6 @@
 
 import Foundation
 
-typealias MelodyNote = (note: Int, beats: Float)
-
-struct MelodyMeasure {
-  let notes: [MelodyNote]
-}
-
 struct ChordNoteMeasure {
   let notes: [ChordNote]
 }
@@ -21,4 +15,21 @@ struct ChordNoteMeasure {
 struct ChordNote {
   let notes: [Int]
   let beats: Float
+  
+  var note: Int {
+    get {
+      return notes[0]
+    }
+  }
+  
+  init(notes: [Int], beats: Float) {
+    assert(notes.count > 0)
+    self.notes = notes
+    self.beats = beats
+  }
+  
+  init(note: Int, beats: Float) {
+    self.notes = [note]
+    self.beats = beats
+  }
 }

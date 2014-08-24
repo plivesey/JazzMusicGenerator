@@ -18,8 +18,8 @@ let MELODY_MIN: Int = 70
 let MELODY_MAX: Int = 90
 let MELODY_VARIANCE = 12
 
-func generateMelodyMeasures(#chordMeasures: [ChordMeasure]) -> [MelodyMeasure] {
-  var melody = [MelodyMeasure]()
+func generateMelodyMeasures(#chordMeasures: [ChordMeasure]) -> [ChordNoteMeasure] {
+  var melody = [ChordNoteMeasure]()
   var currentIndex = 0
   while (melody.count < chordMeasures.count) {
     let melodyMeasuresLeft = chordMeasures.count - melody.count
@@ -43,7 +43,7 @@ func generateMelodyMeasures(#chordMeasures: [ChordMeasure]) -> [MelodyMeasure] {
       let maxNumberOfRests = RandomHelpers.randomNumberInclusive(MIN_NUMBER_OF_RESTS, MAX_NUMBER_OF_RESTS)
       let numberOfRests = min(melodyMeasuresLeft, maxNumberOfRests)
       for _ in 0..<numberOfRests {
-        melody.append(MelodyMeasure(notes: []))
+        melody.append(ChordNoteMeasure(notes: []))
         currentIndex++
       }
     }
@@ -95,13 +95,13 @@ func melodyOutline(#numberOfMeasures: Int) -> [Int] {
   return melodyOutline
 }
 
-func melodicPhrase2(#chords: [ChordMeasure]) -> [MelodyMeasure] {
-  var melody = [MelodyMeasure]()
+func melodicPhrase2(#chords: [ChordMeasure]) -> [ChordNoteMeasure] {
+  var melody = [ChordNoteMeasure]()
   
   let rhythms = rhythmMotifs()
   var currentNote = Int(RandomHelpers.randomNumberInclusive(Int(MELODY_MIN), Int(MELODY_MAX)))
   for chordMeasure in chords {
-    var notes = [MelodyNote]()
+    var notes = [ChordNote]()
     let chord = chordMeasure.chords[0].chord
     
     let firstNotes = generateNext2Beats(chord: chord, startNote: currentNote, rhythms: rhythms)
@@ -113,13 +113,13 @@ func melodicPhrase2(#chords: [ChordMeasure]) -> [MelodyMeasure] {
     notes.extend(nextNotes.notes)
     currentNote = nextNotes.nextNote
     
-    melody.append(MelodyMeasure(notes: notes))
+    melody.append(ChordNoteMeasure(notes: notes))
   }
   return melody
 }
 
-func generateNext2Beats(#chord: ChordData, #startNote: Int, #rhythms: [[Float]]) -> (notes: [MelodyNote], nextNote: Int) {
-  var notes = [MelodyNote]()
+func generateNext2Beats(#chord: ChordData, #startNote: Int, #rhythms: [[Float]]) -> (notes: [ChordNote], nextNote: Int) {
+  var notes = [ChordNote]()
   let scale = chord.mainChordScale
   var currentNote = startNote
   
@@ -132,9 +132,9 @@ func generateNext2Beats(#chord: ChordData, #startNote: Int, #rhythms: [[Float]])
   for beat in motif {
     if (RandomHelpers.randomNumberInclusive(0, 9) == 0) {
       // Add a rest
-      notes.append((-1, beat))
+      notes.append(ChordNote(note: -1, beats: beat))
     } else {
-      notes.append((currentNote, beat))
+      notes.append(ChordNote(note: currentNote, beats: beat))
       // calculate next note
       let direction = RandomHelpers.randomNumberInclusive(0, 3)
       if (direction >= generalDirection) {
@@ -217,10 +217,10 @@ func rhythmMotifs() -> [[Float]] {
   return result
 }
 
-func melodicPhrase(#melodyOutline: [Int], #chords: [ChordMeasure]) -> [MelodyMeasure] {
-  var melody = [MelodyMeasure]()
+func melodicPhrase(#melodyOutline: [Int], #chords: [ChordMeasure]) -> [ChordNoteMeasure] {
+  var melody = [ChordNoteMeasure]()
   for i in 0..<melodyOutline.count/2 {
-    var notes = [MelodyNote]()
+    var notes = [ChordNote]()
     let chordMeasure = chords[i]
     let currentChord = chordMeasure.chords[0].chord
     let goalChord = chordBeat3(chordMeasure)
@@ -236,16 +236,16 @@ func melodicPhrase(#melodyOutline: [Int], #chords: [ChordMeasure]) -> [MelodyMea
       notes.extend(nextNotes)
     }
     
-    melody.append(MelodyMeasure(notes: notes))
+    melody.append(ChordNoteMeasure(notes: notes))
   }
   return melody
 }
 
-func nextTwoBeats(#chord: ChordData, #nextChord: ChordData, #melodyOutlineNotes: Slice<Int>) -> [MelodyNote] {
-  var notes = [MelodyNote]()
+func nextTwoBeats(#chord: ChordData, #nextChord: ChordData, #melodyOutlineNotes: Slice<Int>) -> [ChordNote] {
+  var notes = [ChordNote]()
   
   let startTuple = importantNote(chord: chord, melodyOutlineNote: melodyOutlineNotes[melodyOutlineNotes.startIndex])
-  notes.append((note: startTuple.note, beats: 1))
+  notes.append(ChordNote(note: startTuple.note, beats: 1))
   
   println("\(chord): \(chord.mainChordScale) chosen: \(startTuple.note)")
   
@@ -253,7 +253,7 @@ func nextTwoBeats(#chord: ChordData, #nextChord: ChordData, #melodyOutlineNotes:
   let fromAbove = scaleFromAbove(nextChord.mainChordScale, index: goalTuple.index) + goalTuple.tranposition
   let fromBelow = scaleFromBelow(nextChord.mainChordScale, index: goalTuple.index) + goalTuple.tranposition
   let approachNote = approachNotes(goalTuple.note, scaleAbove: fromAbove, scaleBelow: fromBelow)[0]
-  notes.append((note: approachNote.note, beats: 1))
+  notes.append(ChordNote(note: approachNote.note, beats: 1))
   
   return notes
 }
@@ -290,21 +290,21 @@ func chordBeat3(chordMeasure: ChordMeasure) -> ChordData {
   return chordMeasure.chords[0].chord
 }
 
-func approachNotes(note: Int, #scaleAbove: Int, #scaleBelow: Int) -> [MelodyNote] {
+func approachNotes(note: Int, #scaleAbove: Int, #scaleBelow: Int) -> [ChordNote] {
   let random = RandomHelpers.randomNumberInclusive(0, 2)
   switch(random) {
   case 0:
     // chrom from below
-    return [(note - 1, 1)]
+    return [ChordNote(note: note - 1, beats: 1)]
   case 1:
     // chrom from above
-    return [(note + 1, 1)]
+    return [ChordNote(note: note + 1, beats: 1)]
   case 2:
     // scale from below
-    return [(scaleBelow, 1)]
+    return [ChordNote(note: scaleBelow, beats: 1)]
   default:
     // scale from above
-    return [(scaleAbove, 1)]
+    return [ChordNote(note: scaleAbove, beats: 1)]
   }
 }
 

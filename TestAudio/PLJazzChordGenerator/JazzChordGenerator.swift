@@ -20,6 +20,17 @@ let scale: [(note: Int, type: ChordType)] = [
 
 class JazzChordGenerator {
   
+  class func generateRandomChords(#numMeasures: Int, key: Int) -> [ChordMeasure] {
+    assert(key >= 0 && key < 12)
+    let cChords = generateRandomChords(numMeasures: numMeasures)
+    return cChords.map { measure in
+      let newChords: [(chord: ChordData, beats: Float)] = measure.chords.map { chord in
+        return (chord.chord.transposedChord(key), chord.beats)
+      }
+      return ChordMeasure(chords: newChords)
+    }
+  }
+  
   class func generateRandomChords(#numMeasures: Int) -> [ChordMeasure] {
     var nextChord = ChordFactory.IChord(key: .C)
     var chords = [ChordMeasure]()
@@ -70,15 +81,15 @@ class JazzChordGenerator {
   // TODO: This should return an array of classes. See below
   class func chordGenerators() -> [(ChordGenProtocol, weight: Int)] {
     return [
-      (TwoFiveOneChordGen(), weight: 3), // TODO: Make more important?
-      (AscendingDimChordGen(), weight: 1),
-      (StrayCatStrutChordGen(), weight: 2),
-      (RhythmChangesOneChordGen(), weight: 3),
-      (RhythmChangesTwoChordGen(), weight: 3),
-      (ToFlatVIIChordGen(), weight: 2),
-      (ClassicalStateMachineChordGen(), weight: 3),
-      (SubdominantChordGen(), weight: 1),
-      (Circle5ChordGen(), weight: 1)
+      (TwoFiveOneChordGen(), weight: 100), // TODO: Make more important?
+      (AscendingDimChordGen(), weight: 30),
+      (StrayCatStrutChordGen(), weight: 50),
+      (RhythmChangesOneChordGen(), weight: 70),
+      (RhythmChangesTwoChordGen(), weight: 70),
+      (ToFlatVIIChordGen(), weight: 60),
+      (ClassicalStateMachineChordGen(), weight: 100),
+      (SubdominantChordGen(), weight: 30),
+      (Circle5ChordGen(), weight: 20)
     ]
   }
 

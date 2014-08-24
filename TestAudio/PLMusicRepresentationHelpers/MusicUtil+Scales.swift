@@ -37,4 +37,17 @@ extension MusicUtil {
     }
     return newScale
   }
+
+  class func transposedScale(scale: [Int], transposition: Int) -> [Int] {
+    assert(transposition >= 0 && transposition < 12)
+    var newScale: [Int] = scale.map { note in
+      return note + transposition
+    }
+    if newScale[0] >= 12 {
+      newScale = newScale.map { note in
+        return note - 12
+      }
+    }
+    return newScale
+  }
 }

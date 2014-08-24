@@ -10,7 +10,7 @@ import Foundation
 
 extension MusicUtil {
   
-  class func findNextNoteInMelody(melody: [MelodyMeasure], measureIndex: Int, noteIndex: Int) -> Int {
+  class func findNextNoteInMelody(melody: [ChordNoteMeasure], measureIndex: Int, noteIndex: Int) -> Int {
     let currentMeasure = melody[measureIndex]
     if noteIndex + 1 < currentMeasure.notes.count {
       return currentMeasure.notes[noteIndex + 1].note

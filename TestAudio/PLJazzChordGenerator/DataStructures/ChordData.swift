@@ -73,6 +73,16 @@ struct ChordData: Printable {
     assertLegitimateBaseNote(root)
   }
   
+  func transposedChord(transposition: Int) -> ChordData {
+    let newBaseNote = (baseNote + transposition) % 12
+    let newChordScale: [[Int]] = chordScale.map { scale in
+      return MusicUtil.transposedScale(scale, transposition: transposition)
+    }
+    let newChordNotes = MusicUtil.transposedScale(chordNotes, transposition: transposition)
+    let newRoot = (root + transposition) % 12
+    return ChordData(baseNote: newBaseNote, type: type, chordScale: newChordScale, importantScaleIndexes: importantScaleIndexes, chordNotes: newChordNotes, root: newRoot)
+  }
+  
   func assertLegitimateBaseNote(note: Int) {
     assert(note >= 0 && note <= 11, "First note in chord scale out of range")
   }
