@@ -19,13 +19,13 @@ class MainViewController: UIViewController {
     
     let startNote = 70 + RandomHelpers.randomNumberInclusive(0, 11)
     
-    let chords = JazzChordGenerator.generateRandomChords(numMeasures: 8, key: 1)
+    let chords = JazzChordGenerator.generateRandomChords(numMeasures: 8, key: 0)
     let melody = SongComposer.generateMelodyForChordMeasures(chords, startNote: startNote, endNote: startNote)
     let bassline = BasslineGenerator.generateBasslineForChordMeasures(chords)
     let rhythm = RhythmSectionGenerator.rhythmSectionFromChords(chords)
     let drums = DrumGenerator.generateDrums(numberOfMeasures: chords.count)
     
-    let soloChords = JazzChordGenerator.generateRandomChords(numMeasures: 16, key: 1)
+    let soloChords = JazzChordGenerator.generateRandomChords(numMeasures: 16, key: 0)
     let soloMelody = SongComposer.generateSoloSection(soloChords, startNote: startNote, endNote: startNote)
     let soloBassline = BasslineGenerator.generateBasslineForChordMeasures(soloChords)
     let soloRhythm = RhythmSectionGenerator.rhythmSectionFromChords(soloChords)

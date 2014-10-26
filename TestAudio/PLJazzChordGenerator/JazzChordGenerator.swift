@@ -63,7 +63,14 @@ class JazzChordGenerator {
   
   class func endingChordGenerators() -> [(ChordEndingGenProtocol, weight: Int)] {
     return [
-      (TwoFiveOneChordGen(), weight: 2)
+      (TwoFiveOneChordGen(), weight: 4),
+      (FiveOverOneEndingChordGen(), weight: 1),
+      (FiveOfFiveEndingChordGen(), weight: 1),
+      (SevenDimChordEndingGen(), weight: 1),
+      (FiveSusChordEndingGen(), weight: 1),
+      (FlatSevenDiminishedEndingChordGen(), weight: 1),
+      (TwoFiveTwoFiveEndingChordGen(), weight: 2),
+      (TwoSevenTwoFiveOneEndingChordGen(), weight: 1)
     ]
   }
   

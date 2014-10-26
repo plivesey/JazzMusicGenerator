@@ -325,6 +325,36 @@ class ChordFactory {
     return ChordData(baseNote: bassNote, type: type, chordScale: chordScales, importantScaleIndexes: important, chordNotes: chord, root: bassNote)
   }
   
+  /*
+  Other Diminished Chords
+  */
+  class func flatSevenDimChord(#key: CBasedNote) -> ChordData {
+    let bassNote = (CBasedNote.Bb.rawValue + key.rawValue) % 12
+    let type = ChordType.DimFully
+    let chordScales = [
+      noteArray([.Bb, .B, .Db, .Eb, .E, .Gb, .G], key: key),
+      noteArray([.Bb, .C, .Db, .Eb, .E, .Gb, .G, .A], key: key)
+    ]
+    let chord = noteArray([.Bb, .Db, .E, .G], key: key)
+    let important = [0, 2, 4, 6]
+    return ChordData(baseNote: bassNote, type: type, chordScale: chordScales, importantScaleIndexes: important, chordNotes: chord, root: bassNote)
+  }
+  
+  /*
+  Suspended Chords
+  */
+  class func suspendedVChord(#key: CBasedNote) -> ChordData {
+    let bassNote = (CBasedNote.G.rawValue + key.rawValue) % 12
+    let type = ChordType.Sus7
+    let chordScales = [
+      noteArray([.G, .A, .B, .C, .D, .E, .F], key: key)
+    ]
+    let chord = noteArray([.C, .D, .F, .G], key: key)
+    let important = [0, 3, 4, 6]
+    let root = bassNote
+    return ChordData(baseNote: bassNote, type: type, chordScale: chordScales, importantScaleIndexes: important, chordNotes: chord, root: root)
+  }
+  
   // Helpers
   
   enum CBasedNote: Int {

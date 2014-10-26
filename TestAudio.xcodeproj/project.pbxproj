@@ -38,6 +38,13 @@
 		368FB13A19746D0200509FAB /* SongComposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 368FB13919746D0200509FAB /* SongComposer.swift */; };
 		368FB13C197483F300509FAB /* MusicUtil+Transpose.swift in Sources */ = {isa = PBXBuildFile; fileRef = 368FB13B197483F300509FAB /* MusicUtil+Transpose.swift */; };
 		368FB13E19748A6E00509FAB /* MusicUtil+Scales.swift in Sources */ = {isa = PBXBuildFile; fileRef = 368FB13D19748A6D00509FAB /* MusicUtil+Scales.swift */; };
+		369892DA19FD9BC10070ACFA /* FiveOverOneEndingChordGen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 369892D919FD9BC10070ACFA /* FiveOverOneEndingChordGen.swift */; };
+		369892DC19FD9D870070ACFA /* FiveOfFiveEndingChordGen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 369892DB19FD9D870070ACFA /* FiveOfFiveEndingChordGen.swift */; };
+		369892DE19FD9EA10070ACFA /* SevenDimChordEndingGen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 369892DD19FD9EA10070ACFA /* SevenDimChordEndingGen.swift */; };
+		369892E019FD9EFC0070ACFA /* FiveSusChordEndingGen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 369892DF19FD9EFC0070ACFA /* FiveSusChordEndingGen.swift */; };
+		369892E219FDA3F30070ACFA /* FlatSevenDiminishedEndingChordGen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 369892E119FDA3F20070ACFA /* FlatSevenDiminishedEndingChordGen.swift */; };
+		369892E419FDA4FB0070ACFA /* TwoFiveTwoFiveEndingChordGen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 369892E319FDA4FB0070ACFA /* TwoFiveTwoFiveEndingChordGen.swift */; };
+		369892E619FDA60F0070ACFA /* TwoSevenTwoFiveOneEndingChordGen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 369892E519FDA60F0070ACFA /* TwoSevenTwoFiveOneEndingChordGen.swift */; };
 		36A4FCCB196E3B8700754927 /* MelodyRhythmGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36A4FCCA196E3B8700754927 /* MelodyRhythmGenerator.swift */; };
 		36A8105A1978785200A1E328 /* jazzBass.sf2 in Resources */ = {isa = PBXBuildFile; fileRef = 36A810591978785200A1E328 /* jazzBass.sf2 */; };
 		36A8105C1978786700A1E328 /* Piano.sf2 in Resources */ = {isa = PBXBuildFile; fileRef = 36A8105B1978786700A1E328 /* Piano.sf2 */; };
@@ -102,6 +109,13 @@
 		368FB13919746D0200509FAB /* SongComposer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SongComposer.swift; sourceTree = "<group>"; };
 		368FB13B197483F300509FAB /* MusicUtil+Transpose.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MusicUtil+Transpose.swift"; sourceTree = "<group>"; };
 		368FB13D19748A6D00509FAB /* MusicUtil+Scales.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MusicUtil+Scales.swift"; sourceTree = "<group>"; };
+		369892D919FD9BC10070ACFA /* FiveOverOneEndingChordGen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FiveOverOneEndingChordGen.swift; sourceTree = "<group>"; };
+		369892DB19FD9D870070ACFA /* FiveOfFiveEndingChordGen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FiveOfFiveEndingChordGen.swift; sourceTree = "<group>"; };
+		369892DD19FD9EA10070ACFA /* SevenDimChordEndingGen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SevenDimChordEndingGen.swift; sourceTree = "<group>"; };
+		369892DF19FD9EFC0070ACFA /* FiveSusChordEndingGen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FiveSusChordEndingGen.swift; sourceTree = "<group>"; };
+		369892E119FDA3F20070ACFA /* FlatSevenDiminishedEndingChordGen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlatSevenDiminishedEndingChordGen.swift; sourceTree = "<group>"; };
+		369892E319FDA4FB0070ACFA /* TwoFiveTwoFiveEndingChordGen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TwoFiveTwoFiveEndingChordGen.swift; sourceTree = "<group>"; };
+		369892E519FDA60F0070ACFA /* TwoSevenTwoFiveOneEndingChordGen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TwoSevenTwoFiveOneEndingChordGen.swift; sourceTree = "<group>"; };
 		36A4FCCA196E3B8700754927 /* MelodyRhythmGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MelodyRhythmGenerator.swift; sourceTree = "<group>"; };
 		36A810591978785200A1E328 /* jazzBass.sf2 */ = {isa = PBXFileReference; lastKnownFileType = file; path = jazzBass.sf2; sourceTree = "<group>"; };
 		36A8105B1978786700A1E328 /* Piano.sf2 */ = {isa = PBXFileReference; lastKnownFileType = file; path = Piano.sf2; sourceTree = "<group>"; };
@@ -330,6 +344,13 @@
 				360C31BC1971B03D003D1E53 /* ClassicalStateMachineChordGen.swift */,
 				36480AD9197B0B4D00AD76C0 /* SubdominantChordGen.swift */,
 				36480ADB197B145900AD76C0 /* Circle5ChordGen.swift */,
+				369892D919FD9BC10070ACFA /* FiveOverOneEndingChordGen.swift */,
+				369892DB19FD9D870070ACFA /* FiveOfFiveEndingChordGen.swift */,
+				369892DD19FD9EA10070ACFA /* SevenDimChordEndingGen.swift */,
+				369892DF19FD9EFC0070ACFA /* FiveSusChordEndingGen.swift */,
+				369892E119FDA3F20070ACFA /* FlatSevenDiminishedEndingChordGen.swift */,
+				369892E319FDA4FB0070ACFA /* TwoFiveTwoFiveEndingChordGen.swift */,
+				369892E519FDA60F0070ACFA /* TwoSevenTwoFiveOneEndingChordGen.swift */,
 			);
 			path = JazzChordGenerators;
 			sourceTree = "<group>";
@@ -460,7 +481,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				36B973351960BB75007BF730 /* MusicUtil.swift in Sources */,
+				369892DC19FD9D870070ACFA /* FiveOfFiveEndingChordGen.swift in Sources */,
 				361C3013194FEFC300A61A63 /* ChordData.swift in Sources */,
+				369892DA19FD9BC10070ACFA /* FiveOverOneEndingChordGen.swift in Sources */,
+				369892E019FD9EFC0070ACFA /* FiveSusChordEndingGen.swift in Sources */,
 				36480ADA197B0B4D00AD76C0 /* SubdominantChordGen.swift in Sources */,
 				361C30261953EEBF00A61A63 /* MelodyMeasure.swift in Sources */,
 				36480ADC197B145900AD76C0 /* Circle5ChordGen.swift in Sources */,
@@ -472,6 +496,7 @@
 				368FB13C197483F300509FAB /* MusicUtil+Transpose.swift in Sources */,
 				361C3005194CE2CE00A61A63 /* PLMusicPlayer.swift in Sources */,
 				36A4FCCB196E3B8700754927 /* MelodyRhythmGenerator.swift in Sources */,
+				369892E619FDA60F0070ACFA /* TwoSevenTwoFiveOneEndingChordGen.swift in Sources */,
 				361C300A194CE44500A61A63 /* PLMusicPlayerNote.swift in Sources */,
 				362F1D2A196BAB8200E5D200 /* MusicUtil+NotePicker.swift in Sources */,
 				36A8E903196F10850083C2F5 /* TwoFiveOneChordGen.swift in Sources */,
@@ -493,7 +518,10 @@
 				36F0E127196F5EE0009A0162 /* StrayCatStrutChordGen.swift in Sources */,
 				361C30201952B85300A61A63 /* ChordFactory.swift in Sources */,
 				368FB13E19748A6E00509FAB /* MusicUtil+Scales.swift in Sources */,
+				369892DE19FD9EA10070ACFA /* SevenDimChordEndingGen.swift in Sources */,
 				36E70C1B19A9335500DB306D /* MusicUtil+Measures.swift in Sources */,
+				369892E219FDA3F30070ACFA /* FlatSevenDiminishedEndingChordGen.swift in Sources */,
+				369892E419FDA4FB0070ACFA /* TwoFiveTwoFiveEndingChordGen.swift in Sources */,
 				36B97332195D3DC4007BF730 /* JazzMelodyGenerator2.swift in Sources */,
 				361C3017194FF27E00A61A63 /* ChordMeasure.swift in Sources */,
 				361C301A194FF4E400A61A63 /* RandomArrayExtension.swift in Sources */,

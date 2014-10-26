@@ -15,6 +15,7 @@ enum ChordType {
   case MinorMajor7
   case DimPartial
   case DimFully
+  case Sus7
 }
 
 struct ChordData: Printable {
@@ -122,6 +123,8 @@ struct ChordData: Printable {
       output += "°"
     case .DimPartial:
       output += "ø"
+    case .Sus7:
+      output += " sus"
     }
     
     if root != baseNote {
