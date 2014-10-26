@@ -16,13 +16,13 @@ class ChordFactory {
     assert(scaleDegree >= 0)
     assert(scaleDegree < 7)
     let scaleNotes = [0, 2, 4, 5, 7, 9, 11]
-    let keyNote = CBasedNote.C.toRaw() + key.toRaw()
+    let keyNote = CBasedNote.C.rawValue + key.rawValue
     let bassNote = (keyNote + scaleNotes[scaleDegree]) % 12
     let chordType = chordTypeFromScaleDegree(scaleDegree)
     
     var chordScale = MusicUtil.scaleWithScale(scaleNotes, differentMode: scaleDegree)
     chordScale = chordScale.map { note in
-      return note + key.toRaw()
+      return note + key.rawValue
     }
     if chordScale[0] > 12 {
       chordScale = chordScale.map { note in
@@ -59,7 +59,7 @@ class ChordFactory {
   */
   
   class func IChord(#key: CBasedNote) -> ChordData {
-    let bassNote = (CBasedNote.C.toRaw() + key.toRaw()) % 12
+    let bassNote = (CBasedNote.C.rawValue + key.rawValue) % 12
     let type = ChordType.Major7
     let chordScales = [
       noteArray([.C, .D, .E, .F, .G, .A, .B], key: key),
@@ -71,7 +71,7 @@ class ChordFactory {
   }
   
   class func iiChord(#key: CBasedNote) -> ChordData {
-    let bassNote = (CBasedNote.D.toRaw() + key.toRaw()) % 12
+    let bassNote = (CBasedNote.D.rawValue + key.rawValue) % 12
     let type = ChordType.Minor7
     let chordScales = [
       noteArray([.D, .E, .F, .G, .A, .B, .C], key: key),
@@ -83,7 +83,7 @@ class ChordFactory {
   }
   
   class func iiiChord(#key: CBasedNote) -> ChordData {
-    let bassNote = (CBasedNote.E.toRaw() + key.toRaw()) % 12
+    let bassNote = (CBasedNote.E.rawValue + key.rawValue) % 12
     let type = ChordType.Minor7
     let chordScales = [
       noteArray([.E, .F, .G, .A, .B, .C, .D], key: key),
@@ -95,7 +95,7 @@ class ChordFactory {
   }
   
   class func IVChord(#key: CBasedNote) -> ChordData {
-    let bassNote = (CBasedNote.F.toRaw() + key.toRaw()) % 12
+    let bassNote = (CBasedNote.F.rawValue + key.rawValue) % 12
     let type = ChordType.Major7
     let chordScales = [
       noteArray([.F, .G, .A, .B, .C, .D, .E], key: key),
@@ -107,7 +107,7 @@ class ChordFactory {
   }
   
   class func ivChord(#key: CBasedNote) -> ChordData {
-    let bassNote = (CBasedNote.F.toRaw() + key.toRaw()) % 12
+    let bassNote = (CBasedNote.F.rawValue + key.rawValue) % 12
     let type = ChordType.Major7
     let chordScales = [
       noteArray([.F, .G, .Ab, .Bb, .C, .D, .E], key: key),
@@ -119,7 +119,7 @@ class ChordFactory {
   }
   
   class func viChord(#key: CBasedNote) -> ChordData {
-    let bassNote = (CBasedNote.A.toRaw() + key.toRaw()) % 12
+    let bassNote = (CBasedNote.A.rawValue + key.rawValue) % 12
     let type = ChordType.Minor7
     let chordScales = [
       noteArray([.A, .B, .C, .D, .E, .F, .G], key: key),
@@ -131,7 +131,7 @@ class ChordFactory {
   }
   
   class func viiChord(#key: CBasedNote) -> ChordData {
-    let bassNote = (CBasedNote.B.toRaw() + key.toRaw()) % 12
+    let bassNote = (CBasedNote.B.rawValue + key.rawValue) % 12
     let type = ChordType.DimPartial
     let chordScales = [
       noteArray([.B, .C, .D, .E, .F, .G, .A], key: key),
@@ -149,7 +149,7 @@ class ChordFactory {
   */
   
   class func IChordMajor9(#key: CBasedNote) -> ChordData {
-    let bassNote = (CBasedNote.C.toRaw() + key.toRaw()) % 12
+    let bassNote = (CBasedNote.C.rawValue + key.rawValue) % 12
     let type = ChordType.Major7
     let chordScales = [
       noteArray([.C, .D, .E, .F, .G, .A, .B], key: key),
@@ -161,7 +161,7 @@ class ChordFactory {
   }
   
   class func iiChordMajorABForm(#key: CBasedNote) -> ChordData {
-    let bassNote = (CBasedNote.D.toRaw() + key.toRaw()) % 12
+    let bassNote = (CBasedNote.D.rawValue + key.rawValue) % 12
     let type = ChordType.Minor7
     let chordScales = [
       noteArray([.D, .E, .F, .G, .A, .B, .C], key: key),
@@ -173,7 +173,7 @@ class ChordFactory {
   }
   
   class func VChordMajorABForm(#key: CBasedNote) -> ChordData {
-    let bassNote = (CBasedNote.G.toRaw() + key.toRaw()) % 12
+    let bassNote = (CBasedNote.G.rawValue + key.rawValue) % 12
     let type = ChordType.Dom7
     // Mixolydian scale and a whole tone scale
     let chordScales = [
@@ -190,7 +190,7 @@ class ChordFactory {
   Minor ii-V-i chords
   */
   class func iChordMinor9(#key: CBasedNote) -> ChordData {
-    let bassNote = (CBasedNote.C.toRaw() + key.toRaw()) % 12
+    let bassNote = (CBasedNote.C.rawValue + key.rawValue) % 12
     let type = ChordType.Minor7
     let chordScales = [
       noteArray([.C, .D, .Eb, .F, .G, .Ab, .Bb], key: key),
@@ -203,7 +203,7 @@ class ChordFactory {
   }
   
   class func iiChordMinorABForm(#key: CBasedNote) -> ChordData {
-    let bassNote = (CBasedNote.D.toRaw() + key.toRaw()) % 12
+    let bassNote = (CBasedNote.D.rawValue + key.rawValue) % 12
     let type = ChordType.DimPartial
     let chordScales = [
       noteArray([.D, .Eb, .F, .G, .Ab, .Bb, .C], key: key),
@@ -216,7 +216,7 @@ class ChordFactory {
   }
   
   class func VChordMinorABForm(#key: CBasedNote) -> ChordData {
-    let bassNote = (CBasedNote.G.toRaw() + key.toRaw()) % 12
+    let bassNote = (CBasedNote.G.rawValue + key.rawValue) % 12
     let type = ChordType.Dom7
     let chordScales = [
       noteArray([.G, .Ab, .B, .C, .D, .Eb, .F], key: key),
@@ -233,7 +233,7 @@ class ChordFactory {
   */
   
   class func i9OverV(#key: CBasedNote) -> ChordData {
-    let bassNote = (CBasedNote.C.toRaw() + key.toRaw()) % 12
+    let bassNote = (CBasedNote.C.rawValue + key.rawValue) % 12
     let type = ChordType.Minor7
     let chordScales = [
     noteArray([.C, .D, .Eb, .F, .G, .Ab, .Bb], key: key),
@@ -241,12 +241,12 @@ class ChordFactory {
     ]
     let chord = noteArray([.Eb, .G, .Bb, .D], key: key)
     let important = [0, 2, 4, 6]
-    let root = (CBasedNote.G.toRaw() + key.toRaw()) % 12
+    let root = (CBasedNote.G.rawValue + key.rawValue) % 12
     return ChordData(baseNote: bassNote, type: type, chordScale: chordScales, importantScaleIndexes: important, chordNotes: chord, root: root)
   }
   
   class func I9OverV(#key: CBasedNote) -> ChordData {
-    let bassNote = (CBasedNote.C.toRaw() + key.toRaw()) % 12
+    let bassNote = (CBasedNote.C.rawValue + key.rawValue) % 12
     let type = ChordType.Major7
     let chordScales = [
       noteArray([.C, .D, .E, .F, .G, .A, .B], key: key),
@@ -254,12 +254,12 @@ class ChordFactory {
     ]
     let chord = noteArray([.E, .G, .B, .D], key: key)
     let important = [0, 2, 4, 6]
-    let root = (CBasedNote.G.toRaw() + key.toRaw()) % 12
+    let root = (CBasedNote.G.rawValue + key.rawValue) % 12
     return ChordData(baseNote: bassNote, type: type, chordScale: chordScales, importantScaleIndexes: important, chordNotes: chord, root: root)
   }
   
   class func iOverVII(#key: CBasedNote) -> ChordData {
-    let bassNote = (CBasedNote.C.toRaw() + key.toRaw()) % 12
+    let bassNote = (CBasedNote.C.rawValue + key.rawValue) % 12
     let type = ChordType.Minor7
     let chordScales = [
       noteArray([.C, .D, .Eb, .F, .G, .Ab, .Bb], key: key),
@@ -267,7 +267,7 @@ class ChordFactory {
     ]
     let chord = noteArray([.C, .Eb, .G, .Bb], key: key)
     let important = [0, 2, 4, 6]
-    let root = (CBasedNote.Bb.toRaw() + key.toRaw()) % 12
+    let root = (CBasedNote.Bb.rawValue + key.rawValue) % 12
     return ChordData(baseNote: bassNote, type: type, chordScale: chordScales, importantScaleIndexes: important, chordNotes: chord, root: root)
   }
   
@@ -275,26 +275,26 @@ class ChordFactory {
   Minor based chords
   */
   class func flatVISharp11Dom(#key: CBasedNote) -> ChordData {
-    let bassNote = (CBasedNote.Ab.toRaw() + key.toRaw()) % 12
+    let bassNote = (CBasedNote.Ab.rawValue + key.rawValue) % 12
     let type = ChordType.Dom7
     let chordScales = [
       noteArray([.Ab, .Bb, .C, .D, .Eb, .F, .Gb], key: key)
     ]
     let chord = noteArray([.Ab, .C, .Eb, .Gb], key: key)
     let important = [0, 2, 4, 6]
-    let root = (CBasedNote.Ab.toRaw() + key.toRaw()) % 12
+    let root = (CBasedNote.Ab.rawValue + key.rawValue) % 12
     return ChordData(baseNote: bassNote, type: type, chordScale: chordScales, importantScaleIndexes: important, chordNotes: chord, root: root)
   }
   
   class func flatVISharp11(#key: CBasedNote) -> ChordData {
-    let bassNote = (CBasedNote.Ab.toRaw() + key.toRaw()) % 12
+    let bassNote = (CBasedNote.Ab.rawValue + key.rawValue) % 12
     let type = ChordType.Major7
     let chordScales = [
       noteArray([.Ab, .Bb, .C, .D, .Eb, .F, .G], key: key)
     ]
     let chord = noteArray([.Ab, .C, .Eb, .G], key: key)
     let important = [0, 2, 4, 6]
-    let root = (CBasedNote.Ab.toRaw() + key.toRaw()) % 12
+    let root = (CBasedNote.Ab.rawValue + key.rawValue) % 12
     return ChordData(baseNote: bassNote, type: type, chordScale: chordScales, importantScaleIndexes: important, chordNotes: chord, root: root)
   }
   
@@ -302,7 +302,7 @@ class ChordFactory {
   Diminished Ascending Chords
   */
   class func sharpiDimChord(#key: CBasedNote) -> ChordData {
-    let bassNote = (CBasedNote.Db.toRaw() + key.toRaw()) % 12
+    let bassNote = (CBasedNote.Db.rawValue + key.rawValue) % 12
     let type = ChordType.DimFully
     let chordScales = [
       noteArray([.Db, .D, .E, .F, .G, .A, .Bb], key: key),
@@ -314,7 +314,7 @@ class ChordFactory {
   }
   
   class func sharpiiDimChord(#key: CBasedNote) -> ChordData {
-    let bassNote = (CBasedNote.Eb.toRaw() + key.toRaw()) % 12
+    let bassNote = (CBasedNote.Eb.rawValue + key.rawValue) % 12
     let type = ChordType.DimFully
     let chordScales = [
       noteArray([.Eb, .E, .Gb, .G, .A, .B, .C], key: key),
@@ -345,11 +345,11 @@ class ChordFactory {
   // Returns an always ascending sequence of notes
   class func noteArray(notes: [CBasedNote], key: CBasedNote) -> [Int] {
     
-    let transpose = key.toRaw()
+    let transpose = key.rawValue
     
     let intNotes: [Int] = notes.map {
       note in
-      return (note.toRaw() + transpose) % 12
+      return (note.rawValue + transpose) % 12
     }
     
     var octave: Int = 0

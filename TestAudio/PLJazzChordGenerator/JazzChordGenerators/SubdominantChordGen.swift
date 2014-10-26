@@ -43,7 +43,7 @@ class SubdominantChordGen: ChordGenProtocol {
       
       let oneNote = possibleDestinations.randomElement()
       
-      let key = ChordFactory.CBasedNote.fromRaw(oneNote.note)!
+      let key = ChordFactory.CBasedNote(rawValue: oneNote.note)!
       
       if (oneNote.type == ChordType.Major7) {
         // TODO: Sometimes go to 6

@@ -16,7 +16,7 @@ class RhythmChangesTwoChordGen: ChordGenProtocol {
   
   func generateNextChords(#startingChord: ChordData, numberOfMeasures: Int, scale: [(note: Int, type: ChordType)])
     -> (chords:[ChordMeasure], nextChord: ChordData) {
-      let key = ChordFactory.CBasedNote.fromRaw((startingChord.baseNote + 8) % 12)!
+      let key = ChordFactory.CBasedNote(rawValue: (startingChord.baseNote + 8) % 12)!
       let chords = [
         startingChord, // This is actually the iii
         ChordFactory.viChord(key: key),

@@ -20,7 +20,7 @@ class TwoFiveOneChordGen: ChordGenProtocol, ChordEndingGenProtocol {
   
   func generateEndingChords(#startingChord: ChordData, numberOfMeasures: Int, destination: ChordData) -> [ChordMeasure] {
       let baseNote = destination.baseNote
-      let key = ChordFactory.CBasedNote.fromRaw(baseNote)!
+      let key = ChordFactory.CBasedNote(rawValue: baseNote)!
       return generateChords(startingChord: startingChord, numberOfMeasures: numberOfMeasures, key: key, type: destination.type).chords
   }
   
@@ -50,7 +50,7 @@ class TwoFiveOneChordGen: ChordGenProtocol, ChordEndingGenProtocol {
     
     let oneNote = possibleDestinations.randomElement()
     
-    let key = ChordFactory.CBasedNote.fromRaw(oneNote.note)!
+    let key = ChordFactory.CBasedNote(rawValue: oneNote.note)!
     
     return generateChords(startingChord: startingChord, numberOfMeasures: numberOfMeasures, key: key, type: oneNote.type)
   }

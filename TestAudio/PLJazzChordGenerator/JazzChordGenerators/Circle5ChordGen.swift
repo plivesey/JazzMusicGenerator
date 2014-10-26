@@ -22,11 +22,11 @@ class Circle5ChordGen: ChordGenProtocol {
       var chords: [ChordData] = [ startingChord ]
       for _ in 0..<3 {
         keyInt = (keyInt + 5) % 12
-        currentChord = ChordFactory.VChordMajorABForm(key: ChordFactory.CBasedNote.fromRaw(keyInt)!)
+        currentChord = ChordFactory.VChordMajorABForm(key: ChordFactory.CBasedNote(rawValue: keyInt)!)
         chords.append(currentChord)
       }
       
-      let finalKey = ChordFactory.CBasedNote.fromRaw(keyInt)!
+      let finalKey = ChordFactory.CBasedNote(rawValue: keyInt)!
       let destination = [
         ChordFactory.IChordMajor9(key: finalKey),
         ChordFactory.IChord(key: finalKey),

@@ -16,7 +16,7 @@ class StrayCatStrutChordGen: ChordGenProtocol {
   
   func generateNextChords(#startingChord: ChordData, numberOfMeasures: Int, scale: [(note: Int, type: ChordType)])
     -> (chords:[ChordMeasure], nextChord: ChordData) {
-      let key = ChordFactory.CBasedNote.fromRaw(startingChord.baseNote)!
+      let key = ChordFactory.CBasedNote(rawValue: startingChord.baseNote)!
       let chords = [
         startingChord,
         ChordFactory.iOverVII(key: key),

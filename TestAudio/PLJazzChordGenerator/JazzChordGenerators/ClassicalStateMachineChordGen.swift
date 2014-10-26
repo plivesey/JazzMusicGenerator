@@ -30,7 +30,7 @@ class ClassicalStateMachineChordGen: ChordGenProtocol {
   
   func generateNextChords(#startingChord: ChordData, numberOfMeasures: Int, scale: [(note: Int, type: ChordType)]) -> (chords:[ChordMeasure], nextChord: ChordData) {
     let initial = firstChord(startingChord)
-    let key = ChordFactory.CBasedNote.fromRaw(initial.transposition % 12)!
+    let key = ChordFactory.CBasedNote(rawValue: initial.transposition % 12)!
     var state = initial.state
     
     var states: [ChordNumber] = [ ]

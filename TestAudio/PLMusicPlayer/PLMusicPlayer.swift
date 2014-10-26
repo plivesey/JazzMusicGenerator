@@ -91,17 +91,6 @@ class PLMusicPlayer {
       println("ERROR LOADING INSTRUMENT")
     }
     
-//    var result = OSStatus(noErr)
-//    
-//    // fill out a bank preset data structure
-//    var bpData = AUSamplerBankPresetData(bankURL: Unmanaged<CFURL>(_private: soundBankURL), bankMSB: UInt8(kAUSampler_DefaultMelodicBankMSB), bankLSB: UInt8(kAUSampler_DefaultBankLSB), presetID: presetID, reserved: 0)
-//    
-//    // set the kAUSamplerProperty_LoadPresetFromBank property
-//    result = AudioUnitSetProperty(samplerAudioUnit,
-//      UInt32(kAUSamplerProperty_LoadPresetFromBank),
-//      UInt32(kAudioUnitScope_Global),
-//      0, &bpData, 8)
-    
     return instrument
   }
   
@@ -191,9 +180,8 @@ class PLMusicPlayer {
       // Let's call this method again with the next part of the music
       var newMusic = [PLMusicPlayerNote]()
       
-      for i in index..<countElements(music) {
-        newMusic.append(music[i])
-      }
+      newMusic = Array(music[index..<countElements(music)])
+      
       let newStart = music[index].start
       
       dispatchAccuratelyAfter(newStart-playedSoFar, queue:dispatch_get_main_queue()) {
