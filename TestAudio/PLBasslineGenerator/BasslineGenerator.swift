@@ -15,34 +15,44 @@ class BasslineGenerator {
     
     // Initialize
     // Should be a constant for 36
-    var currentNote = chordMeasures[0].chords[0].chord.root + 36
+    let startingNote = chordMeasures[0].chords[0].chord.root + 36
+    var currentNote = startingNote
     
     for (measureIndex, measure) in enumerate(chordMeasures) {
       var notes = [ChordNote]()
       for (chordIndex, chord) in enumerate(measure.chords) {
         let nextChordOp = MusicUtil.findNextChordInMeaures(chordMeasures, measureIndex: measureIndex, chordIndex: chordIndex)
-        if let nextChord = nextChordOp {
-          let destinationNote = destinationNoteForChord(currentNote: currentNote, destinationChord: nextChord)
-          
-          var chordScale = chord.chord.mainChordScale
-          if abs(currentNote - destinationNote) > 5 {
-            // If we need to make a 'large' jump, let's use the chord's notes instead of stepped notes
-            chordScale = chord.chord.importantScaleIndexes.map {
-              index in
-              return chord.chord.mainChordScale[index]
-            }
+        
+        let destinationNote: Int = {
+          if let nextChord = nextChordOp {
+            return self.destinationNoteForChord(currentNote: currentNote, destinationChord: nextChord)
+          } else {
+            // Last measure
+            return startingNote
           }
-          
-          let nextNotes = generateBassNotesFromCurrentNote(currentNote, destination: destinationNote, chordScale: chord.chord.mainChordScale, beats: chord.beats)
-          notes.extend(nextNotes)
-          currentNote = destinationNote
-        } else {
-          notes.append(ChordNote(notes: [currentNote], beats: chord.beats))
+        }()
+        
+        var chordScale = chord.chord.mainChordScale
+        if abs(currentNote - destinationNote) > 5 {
+          // If we need to make a 'large' jump, let's use the chord's notes instead of stepped notes
+          chordScale = chord.chord.importantScaleIndexes.map {
+            index in
+            return chord.chord.mainChordScale[index]
+          }
         }
+        
+        let nextNotes = generateBassNotesFromCurrentNote(currentNote, destination: destinationNote, chordScale: chord.chord.mainChordScale, beats: chord.beats)
+        notes.extend(nextNotes)
+        currentNote = destinationNote
       }
       measures.append(ChordNoteMeasure(notes: notes))
     }
     return measures
+  }
+  
+  class func generateEndingBassMeasure(chordMeasure: ChordMeasure) -> ChordNoteMeasure {
+    var currentNote = chordMeasure.chords[0].chord.root + 36
+    return ChordNoteMeasure(notes: [ChordNote(note: currentNote, beats: 4)])
   }
   
   class func generateBassNotesFromCurrentNote(var currentNote: Int, destination: Int, chordScale: [Int], beats: Float) -> [ChordNote] {

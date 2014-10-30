@@ -26,6 +26,10 @@ class DrumGenerator {
     return measures
   }
   
+  class func generateDrumsEndingMeasure() -> ChordNoteMeasure {
+    return ChordNoteMeasure(notes: [ChordNote(note: ride, beats: 4)])
+  }
+  
   class func drumMeasureNotes() -> [ChordNote] {
     var notes = [ChordNote]()
     notes.append(ChordNote(notes: [ ride, bass ], beats: 0.66))

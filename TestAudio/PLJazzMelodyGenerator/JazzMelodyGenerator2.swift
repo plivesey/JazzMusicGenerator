@@ -27,6 +27,17 @@ class JazzMelodyGenerator {
         solo: solo)
   }
   
+  class func generateFinalRestingMeasure(closeToEndNote endNote: Int, chord: ChordData) -> ChordNoteMeasure {
+    var scale: [Int] = chord.importantScaleIndexes.map {
+      index in
+      return chord.mainChordScale[index]
+    }
+    scale = MusicUtil.zeroBasedScale(scale)
+    var restingNote = MusicUtil.closestNoteToNote(endNote, fromScale: scale).note
+    
+    return ChordNoteMeasure(notes: [ChordNote(note: restingNote, beats: 4)])
+  }
+  
   // Private
   
   class func generateMelodyOutlineFromChordMeasures(chordMeasures: [ChordMeasure], startingNote: Int) -> [ChordNoteMeasure] {
@@ -115,9 +126,19 @@ class JazzMelodyGenerator {
             chord = chordBeat3(chordMeasure)
           }
           
-          // 50% main scale, 50% random scale (maybe main scale)
-          var scale = chord.mainChordScale
-          // TODO: Previously always did this if a solo. Put it back in?
+          var scale: [Int] = {
+            if solo {
+              if RandomHelpers.randomNumberInclusive(0, 1) == 0 {
+                return chord.chordScale.randomElement()
+              }
+            } else {
+              if RandomHelpers.randomNumberInclusive(0, 3) == 0 {
+                return chord.chordScale.randomElement()
+              }
+            }
+            return chord.mainChordScale
+          }()
+          
           if RandomHelpers.randomNumberInclusive(0, 1) == 1 {
             scale = chord.chordScale.randomElement()
           }
@@ -168,7 +189,7 @@ class JazzMelodyGenerator {
     }
     
     // Don't hit the down beat. Instead, play an approach pattern
-    if rhythm.count >= 2 && rhythm[0] <= 1 && RandomHelpers.randomNumberInclusive(0, 2) == 0 {
+    if rhythm.count >= 2 && rhythm[0] <= 1 && RandomHelpers.randomNumberInclusive(0, 3) == 0 {
       let aNotes = approachNotes(currentNote, scaleAbove: stepNote(currentNote, destinationNote: currentNote+8, chordScale: scale), scaleBelow: stepNote(currentNote, destinationNote: currentNote-8, chordScale: scale))
       let approachNote = aNotes.randomElement().note
       notes.append(ChordNote(note: approachNote, beats: rhythm[0]))

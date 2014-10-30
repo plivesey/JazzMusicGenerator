@@ -42,6 +42,13 @@ class RhythmSectionGenerator {
     return measures
   }
   
+  class func endingRhythmSectionForChord(chord: ChordMeasure) -> ChordNoteMeasure {
+    let chordNotes = chord.chords[0].chord.chordNotes
+    let chordNote = ChordNote(notes: chordNotes, beats: 4)
+    let voicedChordNote = ChordVoicer.voicedChordFromChordNote(chordNote, closeTo: CHORD_TRANSPOSITION, min: 0, max: 0)
+    return ChordNoteMeasure(notes: [voicedChordNote])
+  }
+  
   class func rhythms(beats: Float) -> [[RhythmPart]] {
     if beats == 2 {
       return [
