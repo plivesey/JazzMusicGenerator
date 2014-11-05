@@ -12,7 +12,7 @@ import Foundation
 let MELODY_HIGH = 112
 let MELODY_LOW = 64
 
-class JazzMelodyGenerator {
+public class JazzMelodyGenerator {
   
   class func generateMelodyMeasuresFromChordMeasures(
     chordMeasures: [ChordMeasure],
@@ -28,7 +28,7 @@ class JazzMelodyGenerator {
         solo: solo)
   }
   
-  class func generateFinalRestingMeasure(closeToEndNote endNote: Int, chord: ChordData) -> ChordNoteMeasure {
+  public class func generateFinalRestingMeasure(closeToEndNote endNote: Int, chord: ChordData) -> ChordNoteMeasure {
     var scale: [Int] = chord.importantScaleIndexes.map {
       index in
       return chord.mainChordScale[index]

@@ -15,8 +15,8 @@ extension Array {
   }
 }
 
-class RandomHelpers {
-  class func randomNumberInclusive(min: Int, _ max: Int) -> Int {
+public class RandomHelpers {
+  public class func randomNumberInclusive(min: Int, _ max: Int) -> Int {
     return Int(arc4random_uniform(UInt32(max)-UInt32(min)+1) + UInt32(min))
   }
   
@@ -24,11 +24,11 @@ class RandomHelpers {
     Example: 2..4 should return 50/50 2 or 3
     This will be rand(3-2)+2
   */
-  class func randomNumberFromRange(range: Range<Int>) -> Int {
+  public class func randomNumberFromRange(range: Range<Int>) -> Int {
     return Int(arc4random_uniform(UInt32(range.endIndex - range.startIndex)) + UInt32(range.startIndex))
   }
   
-  class func randomElementFromWeightedList<T>(list: [(T, weight: Int)]) -> T {
+  public class func randomElementFromWeightedList<T>(list: [(T, weight: Int)]) -> T {
     let sum = list.reduce(0) {
       current, nextElement in
         return current + nextElement.weight

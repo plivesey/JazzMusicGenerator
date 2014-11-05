@@ -11,13 +11,13 @@ import Foundation
 // TODO: Move inside
 let SONG_TRANSPOSITION: Int = 0
 
-class ScoreCreator {
+public class ScoreCreator {
   
-  class func instrumentScore(music: [ChordNoteMeasure], _ instrument: PLMusicPlayer.InstrumentType, _ velocity: UInt8) -> (music: [ChordNoteMeasure], instrument: PLMusicPlayer.InstrumentType, velocity: UInt8) {
+  public class func instrumentScore(music: [ChordNoteMeasure], _ instrument: PLMusicPlayer.InstrumentType, _ velocity: UInt8) -> (music: [ChordNoteMeasure], instrument: PLMusicPlayer.InstrumentType, velocity: UInt8) {
     return (music, instrument, velocity)
   }
   
-  class func createScore(input: [(music: [ChordNoteMeasure], instrument: PLMusicPlayer.InstrumentType, velocity: UInt8)], secondsPerBeat: Float) -> [PLMusicPlayerNote] {
+  public class func createScore(input: [(music: [ChordNoteMeasure], instrument: PLMusicPlayer.InstrumentType, velocity: UInt8)], secondsPerBeat: Float) -> [PLMusicPlayerNote] {
     
     var music = [PLMusicPlayerNote]()
     

@@ -12,9 +12,9 @@ import Foundation
 import AVFoundation
 
 
-class PLMusicPlayer {
+public class PLMusicPlayer {
   
-  enum InstrumentType {
+  public enum InstrumentType {
     case Piano
     case Bass
     case Sax
@@ -33,7 +33,7 @@ class PLMusicPlayer {
   
   var playingNotes = Dictionary<PlayingNote, Int>()
   
-  class var sharedInstance:PLMusicPlayer {
+  public class var sharedInstance:PLMusicPlayer {
     get {
       struct StaticMusicPlayerContainer {
         static var instance : PLMusicPlayer? = nil
@@ -47,7 +47,7 @@ class PLMusicPlayer {
     }
   }
   
-  init() {
+  public init() {
     let mixer = audioEngine.mainMixerNode
     
     piano = PLMusicPlayer.instrumentWithFileName("Piano", presetID: 1)
@@ -94,12 +94,12 @@ class PLMusicPlayer {
     return instrument
   }
   
-  func playMusic(music: [PLMusicPlayerNote], maxNumberOfTimers: Int) {
+  public func playMusic(music: [PLMusicPlayerNote], maxNumberOfTimers: Int) {
     currentlyPlaying = true
     playMusic(music, maxNumberOfTimers: maxNumberOfTimers, playedSoFar: 0)
   }
   
-  func stopMusic() {
+  public func stopMusic() {
     currentlyPlaying = false
     audioEngine.pause()
     audioEngine.disconnectNodeInput(bass)

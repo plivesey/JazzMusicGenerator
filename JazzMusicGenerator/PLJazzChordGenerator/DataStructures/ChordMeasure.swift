@@ -7,7 +7,7 @@
 //
 
 public struct ChordMeasure: Printable {
-  let chords: [(chord: ChordData, beats: Float)]
+  public let chords: [(chord: ChordData, beats: Float)]
   
   public var description: String {
   get {

@@ -8,11 +8,11 @@
 
 import Foundation
 
-struct PLMusicPlayerNote {
+public struct PLMusicPlayerNote {
   let note: UInt8
   let instrument: PLMusicPlayer.InstrumentType
   let velocity: UInt8
-  var start: Float
+  public var start: Float
   let duration: Float
   let channel: Int
 }

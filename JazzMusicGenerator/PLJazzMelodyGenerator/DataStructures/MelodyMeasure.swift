@@ -9,14 +9,14 @@
 import Foundation
 
 public struct ChordNoteMeasure {
-  let notes: [ChordNote]
+  public let notes: [ChordNote]
 }
 
 public struct ChordNote {
-  let notes: [Int]
-  let beats: Float
+  public let notes: [Int]
+  public let beats: Float
   
-  var note: Int {
+  public var note: Int {
     get {
       if notes.count > 0 {
         return notes[0]
